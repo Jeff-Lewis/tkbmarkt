@@ -1,0 +1,101 @@
+
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-body">
+		    <% if user_signed_in? %>
+		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
+		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
+		        <% end %>
+		    <% end %>
+        <%= link_to showcal_mobject_path(:page => session[:page], :dir => "<", :mtype => @mtype, :msubtype => @msubtype) do %>
+          <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-left"></i>
+        <% end %>
+        <%= link_to showcal_mobject_path(:page => session[:page], :dir => ">", :mtype => @mtype, :msubtype => @msubtype) do %>
+          <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-right"></i>
+        <% end %>
+        <ntext>Kalenderwoche <%= session[:cw].to_s + " / " + session[:year].to_s %></ntext>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <%= header("????? " + "<span class='badge'>" + @mobanz.to_s + "</span>", true) %>
+  </div>
+  
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-body">
+    		<table class="table table-striped">
+          <thead>
+            <tr>
+              <td colspan="12">
+                <div class="digg_pagination">
+                    <%= will_paginate @mobjects, :container => false, previous_label: "<", next_label: ">" %>
+                </div>	  
+              </td>
+            </tr>
+            <tr>
+              <th>Aktion</th>
+              <% for i in 0..6 %>
+                  <th>
+                    <%= $wochentage[i] %><br>
+                    <small_cal>
+                      <%= (@start+i).strftime("%d.%m") %>
+                    </small_cal>
+                  </th>
+              <% end %>
+            </tr>
+          </thead>
+          
+          <tbody>
+            <% @mobjects.each do |e| %>
+              <tr>
+                <td>
+          		    <% if avg_rating(e.id) == 0 %>
+                    <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
+          		    <% else %>
+                    <% avg_rating(e.id).times do %>
+                      <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                      <i class="glyphicon glyphicon-star"></i>
+                    <% end %>
+                  <% end %><br>
+                  <%= showFirstImage2(:small, e, e.mdetails) %>
+                  <%= link_to e do %>
+                    <i class="glyphicon glyphicon-circle-arrow-right"></i>'
+                  <% end %>
+                  <%= e.name %>
+                </td>
+                <% for i in 0..6 %>
+                    <% if AktionDatum2(@start+i,e) %>
+                      <td class="blocked">
+                    <% else %>
+                      <td class="free">
+                    <% end %>
+                    </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+	    <div class="panel-body">
+        <div id="map">
+        </div>
+      </div>
+    </div>
+  </div>
+    
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>

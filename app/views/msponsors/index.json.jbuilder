@@ -1,0 +1,1 @@
+json.array! @msponsors, partial: 'msponsors/msponsor', as: :msponsor

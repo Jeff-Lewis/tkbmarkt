@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @appparam.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @appparam.description %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @appparam.active %>
+</p>
+
+<%= link_to 'Edit', edit_appparam_path(@appparam) %> |
+<%= link_to 'Back', appparams_path %>

@@ -1,0 +1,1 @@
+json.array! @mstats, partial: 'mstats/mstat', as: :mstat

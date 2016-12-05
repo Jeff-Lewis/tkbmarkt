@@ -1,0 +1,1 @@
+json.array! @madvisors, partial: 'madvisors/madvisor', as: :madvisor

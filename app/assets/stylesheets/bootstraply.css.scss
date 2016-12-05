@@ -1,0 +1,539 @@
+/* render html5 elements as block */
+
+ $mandant: "TKB";
+ $tkb_light_green: #ACC550;         /* hellgruen */
+ $color2: #2E6B33;         /* dunkelgruen */
+ $color3: white;
+ $color4: #F5F5F5;         /* hellgrau */
+ $color5: grey;
+ $blocked: #EF8B8B;
+ 
+ $blaugruen: #61A6A7;
+ $orange: #E0633B;
+ $gelb: #F2B857;
+ 
+/* $color1: #58A5EF;
+# $color2: #14296C; */
+
+$valiant_lila: #624E94;
+$color1: $tkb_light_green;
+/*$color1: $valiant_lila; */
+$color1: $blaugruen;
+$color1: $tkb_light_green;
+
+list-h1 {
+    color: $color5!important;
+    font-size: 120%!important;
+    font-weight: bold;
+}
+
+listh1 {
+    color: $color5!important;
+    font-size: 120%!important;
+    font-weight: bold;
+}
+listh3 {
+    color: $color5!important;
+    font-size: 80%!important;
+}
+
+.kachel_min_height {
+    min-height: 200px;
+}
+
+.kachel_text {
+    line-height: 90%;
+}
+
+.list-banner {
+    padding: 15px;
+    color: white!important;
+    font-size: 100%!important;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.panel-list {
+    background: $color1!important;
+    color: white!important;
+    font-size: 120%!important;
+    a {
+        color: white!important;
+    }
+    a:hover {
+        color: $color2!important;
+    }}
+
+    .gmnoprint img {
+        max-width: none;
+    }
+
+    .panel:hover {
+#        background-color: rgb(237, 245, 252);
+        border-color: $color1!important;
+        box-shadow: 2px 2px 10px $color1;
+    }
+
+    .map {
+        min-width: 300px;
+        min-height: 470px;
+        width: 100%;
+        height: 100%;
+    }
+
+    img {
+        max-width: 110%;
+        height: auto;
+    }
+
+    .clearfix {
+        clear: both;
+    }
+
+    .rowcolor {
+        background-color: #CCCCCC;
+    }
+
+    .padall {
+        padding: 10px;
+    }
+
+    .padbig {
+        padding: 20px;
+    }
+
+    .icon {
+        font-size: 23px;
+        color: #197BB5;
+    }
+
+.nav-panel {
+   background-color: black!important;
+   border-color: black!important;
+   border-radius: 0px!important; 
+}
+
+.btn-active {
+   background-color: white!important;
+   border-color: white!important;
+   color: $color1!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.btn-inactive {
+   background-color: white!important;
+   border-color: white!important;
+   color: grey!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.btn-inactive:hover,.btn-active:hover {
+    border-color: $color1!important;
+    color: $color1!important;
+    box-shadow: 2px 2px 10px $color1;
+}
+
+li_header {
+    background: $color1;
+    color: $color2;
+    font-size: 120%;
+}
+
+small_cal {
+    font-size: 50%;
+}
+
+.container-fluid {
+    background: $color4!important;
+    background: transparent!important;
+}
+
+#picture{
+  background: url(asset-path('bluestreaks.jpg')) no-repeat;
+  width: auto;
+  background-size: 100% 100%;
+}
+
+ .dropdown {
+     font-size:150%!important;
+ }
+ .dropdown-menu {
+     font-size:100%!important;
+ } 
+marquee {
+    background: black;
+    color: $color1;
+    font-size:100%;
+    height:100%;
+}
+
+/* DB Fields */
+.form-control {
+    border-color: $color1!important;
+}
+.form-control :focus {
+    border-color:$color1!important;
+    box-shadow: 2px 2px 10px $color1!important;
+}
+
+.badge {
+    background: $color4!important;
+    color: $color5!important;
+}
+
+restlaufzeit, preis {
+  font-size: 200%;
+  color: red;
+}
+restlaufzeits, preiss, ticketstatuss, betrag {
+  color: red;
+}
+
+anzeigetext {
+  font-size: 150%;
+  color: $color5;
+}
+ntext {
+  color: $color5;
+}
+
+footer {
+    font-size:100%!important;
+    background: black!important;
+    color: $color5!important;
+    padding: 1.2em 0.5em;
+    .panel-body {
+        background: black!important;
+        border-color: black!important;
+        box-shadow: 0px 0px 0px black!important;
+    }
+ }
+ 
+main_navigation {
+    background: black!important;
+    border-color: black!important;
+    color: $color5!important;
+}
+
+footer_header {
+    font-size:150%!important;
+    background: black!important;
+    color: white!important;
+ }
+ 
+footer_text {
+    background: black!important;
+    color: $color5!important;
+}
+
+footer_text:hover {
+    background: black!important;
+    color: $color1!important;
+}
+
+a:link {
+    color: $color5!important;
+}
+a:visitied {
+    color: $color5!important;
+}
+a:hover {
+    color: $color1!important;
+}
+a:active {
+    color: $color1!important;
+}
+
+message {
+    background: black!important;
+    color: $color1!important;
+ }
+
+body{
+  background-color: white!important;
+}
+
+.row-black {
+  background: black!important;
+  border-color: black!important;
+}
+.panel-black {
+  background: black!important;
+  border-color: black!important;
+}
+
+.panel-top {
+  background: transparent!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+  height: 200px;
+    background-image: url(asset-path("Thurgau3.jpg"));
+    background-size: cover;
+}
+
+.panel-heading {
+  background: $color1!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+.panel-body {
+  background: $color3!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+media-body{
+  color: white!important;
+}
+
+.panel-info {
+  background: $color3!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+.panel-text {
+  background: $color3!important;
+  border-color: $color1!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.panel-neutral {
+  background: $color3!important;
+  border-color: $color3!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.header {
+  background: $color1!important;
+  color: $color3;
+  border-color: $color3!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.panel-title {
+  color: $color5!important;
+}
+
+.panel-title:hover {
+  color: $color1!important;
+  background: $color1!important;
+}
+
+table {
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.btn-primary {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: $color5!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.btn-warning {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: orange!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.btn-danger {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: red!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.btn-primary:hover,.btn-warning:hover,.btn-danger:hover {
+    border-color: $color1!important;
+    color: $color1!important;
+    box-shadow: 2px 2px 10px $color1;
+}
+
+h1 {
+   color: dunkelgruen!important;
+   border-color: dunkelgruen!important;
+}
+
+h2 {
+   color: $color3!important;
+}
+
+th {
+   color: $color2;
+ }
+tbody {
+   color: $color2;
+ }
+thead {
+   color: $color2!important;
+   border-color: $color2!important;
+}
+
+.blocked {
+  background: $blocked!important;
+}
+
+senior_berater {
+  color: white;
+  background: $color2;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+berater {
+  color: white;
+  background: $tkb_light_green;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+angefragt {
+  color: white;
+  background: #F7E388;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+abgelehnt {
+  color: white;
+  background: red;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+bestaetigt {
+  color: white;
+  background: $color1;
+  padding-left:1em;
+  padding-right:1em;
+}
+geblockt {
+  color: white;
+  background: #D0D7DB;;
+  padding-left:1em;
+  padding-right:1em;
+}
+.Spendenbetrag_IST {
+  font-size: 200%;
+  color: $color2;
+}
+.Spendenbetrag_SOLL {
+  color: $color1;
+}
+
+input#email {
+    background-color: white!important;
+    color: $color1!important;
+    border-color: $color1!important;
+}
+input#email:focus {
+    border-color: $color1!important;
+}
+
+.jumbotron {
+   box-shadow: 2px 2px 10px #B1B1B1;
+   background: transparent!important;
+   background: $color1!important;
+}
+
+.thumbnail {
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.thumbnail:hover {
+    border-color: $color1!important;
+    box-shadow: 2px 2px 10px $color1;
+}
+
+.thumbnail-navnav {
+   background: transparent!important;
+}
+
+.media-body:hover {
+    color: $color1!important;
+}
+
+.carousel-caption {
+    background-color: transparent!important;
+    position: relative!important;
+    text-align: center!important;
+    left: auto;
+    right: auto;
+}
+
+#map, #map2, #map3 {
+   height: 750px;
+   border-radius: 16px 16px;
+   border-color: #fff;
+   border-style: solid;
+   box-shadow: 2px 2px 10px #B1B1B1;
+   margin-top: 25px;
+   border-width: 7px;
+ }
+#map-canvas, #map-canvas2, #map-canvas3 {
+   height: 384px;
+   width: 100%;
+ }
+ 
+ /* Bootstrap Css Map Fix*/
+#map-container #map-canvas img {
+  max-width: none;
+}
+/* Bootstrap Css Map Fix*/
+#map-container #map-canvas label {
+  width: auto; display:inline;
+}
+ 
+.digg_pagination {
+  background: white;
+  cursor: default;
+  font-size:200%;
+  /* self-clearing method: */ }
+  .digg_pagination a, .digg_pagination span, .digg_pagination em {
+    padding: 0.2em 0.5em;
+    display: block;
+    float: left;
+    margin-right: 1px; }
+  .digg_pagination .disabled {
+    color: #999999;
+    border: 1px solid #dddddd; }
+  .digg_pagination .current {
+    font-style: normal;
+    font-weight: bold;
+    background: #2e6ab1;
+    background: $color1;
+    color: white;
+    border: 1px solid #2e6ab1; }
+  .digg_pagination a {
+    text-decoration: none;
+    color: #105cb6;
+    border: 1px solid #9aafe5; }
+    .digg_pagination a:hover, .digg_pagination a:focus {
+      color: #000033;
+      background: white;
+      border-color: #000033; }
+  .digg_pagination .page_info {
+    background: #2e6ab1;
+    color: white;
+    padding: 0.4em 0.6em;
+    width: 22em;
+    margin-bottom: 0.3em;
+    text-align: center; }
+    .digg_pagination .page_info b {
+      color: #000033;
+      background: #6aa6ed;
+      padding: 0.1em 0.25em; }
+  .digg_pagination:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html .digg_pagination {
+    height: 1%; }
+  *:first-child + html .digg_pagination {
+    overflow: hidden; }
+
+@import "*";
+@import "bootstrap-sprockets";
+@import "bootstrap";

@@ -1,0 +1,10 @@
+I"¡(function() {
+  jQuery(function() {
+    return $('#user_dateofbirth').datepicker({
+      dateFormat: 'yy-mm-dd',
+      firstDay: 1
+    });
+  });
+
+}).call(this);
+:ET

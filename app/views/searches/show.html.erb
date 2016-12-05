@@ -1,0 +1,40 @@
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Keywords:</strong>
+  <%= @search.keywords %>
+</p>
+
+<p>
+  <strong>Noga:</strong>
+  <%= @search.noga %>
+</p>
+
+<p>
+  <strong>Distance:</strong>
+  <%= @search.distance %>
+</p>
+
+<p>
+  <strong>From lat:</strong>
+  <%= @search.from_lat %>
+</p>
+
+<p>
+  <strong>From lgt:</strong>
+  <%= @search.from_lgt %>
+</p>
+
+<p>
+  <strong>Special:</strong>
+  <%= @search.special %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @search.rating %>
+</p>
+
+<%= link_to 'Edit', edit_search_path(@search) %> |
+<%= link_to 'Back', searches_path %>

@@ -1,0 +1,111 @@
+
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <h1>
+        Webmaster
+        <span class="badge"><%= @webanz %></span>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <br>
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+    		<!--<table class="table table-striped table-hover-->
+    		<table class="table table-striped">
+          <thead>
+            <tr>
+              <td colspan="7">
+                <div class="digg_pagination">
+                    <%= will_paginate @webmasters, :container => false, previous_label: "<", next_label: ">" %>
+                </div>	  
+              </td>
+            </tr>
+            
+            <tr>
+              <th colspan="2">Status</th>
+              <th colspan="2">Objekt</th>
+              <th>Melder</th>
+              <th>Webmaster</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @webmasters.each do |wm| %>
+              <tr>
+                <td>
+                  <% case wm.status %>
+                    <% when "CHECK" %>
+                      <i class="glyphicon glyphicon-question-sign"></i>
+                    <% when "OK" %>
+                      <i class="glyphicon glyphicon-ok-circle"></i>
+                    <% when "NOK" %>
+                      <i class="glyphicon glyphicon-ban-circle"></i>
+                  <% end %>
+                </td>
+                <td>
+        				  <%= link_to edit_webmaster_path(wm) do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                  <% end %>
+                </td>
+                  <% @item = Object.const_get(wm.object_name).find(wm.object_id) %>
+                      <% if @item != nil %>
+                        <td>
+              				  <%= link_to @item do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-info-sign"></i>
+                        <% end %>
+                        </td>
+                        <td>
+                        <anzeigetext>
+                          <%= @item.name %><br>
+                        </anzeigetext>
+                        <ntext>
+                        <% case wm.object_name %>
+                          <% when "Mobject" %>
+                            <% if @item_owner_type == "User" %>
+                                <%= @item.owner.fullname + " " + item.owner.email %>
+                            <% end %>
+                            <% if @item_owner_type == "Company" %>
+                                <%= @item.owner.name + " " + item.owner.user.email %>
+                            <% end %>
+
+                          <% when "Company" %>
+                            <%= @item.name + " " + + @item.user.email %>
+
+                          <% when "User" %>
+                            <%= @item.name + " " + @item.lastname + " " + @item.email %>
+
+                        <% end %>
+                        <br>
+                        <%= @item.created_at.strftime("%d.%m.%Y") %>
+                        </td>
+                        <td>
+                        <b><%= wm.user.name + " " + wm.user.lastname %></b><br>
+                        <cite><%= wm.user_comment %></cite>
+                        <br>
+                        <%= wm.created_at.strftime("%d.%m.%Y") %>
+                        </td>
+                        <td>
+                        <% if wm.web_user_id != nil %>
+                          <% u = User.find(wm.web_user_id) %>
+                          <% if u %>
+                            <b><%= u.name + " " + u.lastname %></b><br>
+                            <cite><%= wm.web_user_comment %></cite>
+                          <% end %>
+                        <% end %>
+                        </ntext>
+                        </td>
+                      <% else %>
+                        <td></td>
+                        <td></td>
+                      <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

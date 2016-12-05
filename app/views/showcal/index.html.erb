@@ -1,0 +1,147 @@
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-body">
+		    <% if user_signed_in? %>
+		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
+		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
+		        <% end %>
+		    <% end %>
+        <%= link_to showcal_index_path(:page => session[:page], :dir => "<", :mtype => @mtype, :msubtype => @msubtype) do %>
+          <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-left"></i>
+        <% end %>
+        <%= link_to showcal_index_path(:page => session[:page], :dir => ">", :mtype => @mtype, :msubtype => @msubtype) do %>
+          <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-right"></i>
+        <% end %>
+        <ntext>Kalenderwoche <%= session[:cw].to_s + " / " + session[:year].to_s %></ntext>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <%= header(@mtype + " " + @msubtype.to_s + "<span class='badge'>" + @mobanz.to_s + "</span>", true) %>
+  </div>
+  
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-body">
+    		<table class="table table-striped">
+          <thead>
+            <tr>
+              <td colspan="12">
+                <div class="digg_pagination">
+                    <%= will_paginate @mobjects, :container => false, previous_label: "<", next_label: ">" %>
+                </div>	  
+              </td>
+            </tr>
+            <tr>
+              <th>Aktion</th>
+              <% for i in 0..6 %>
+                  <th>
+                    <%= $wochentage[i] %><br>
+                    <small_cal>
+                      <%= (@start+i).strftime("%d.%m") %>
+                    </small_cal>
+                  </th>
+              <% end %>
+            </tr>
+          </thead>
+          
+          <tbody>
+            <% @mobjects.each do |e| %>
+              <tr>
+                <td>
+          		    <% if avg_rating2(e.id) == 0 %>
+                    <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
+          		    <% else %>
+                    <% avg_rating2(e.id).times do %>
+                      <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                      <i class="glyphicon glyphicon-star"></i>
+                    <% end %>
+                  <% end %><br>
+                  <%= showFirstImage2(:small, e, e.mdetails) %>
+                  <%= link_to e do %>
+                    <i class="glyphicon glyphicon-circle-arrow-right"></i>'
+                  <% end %>
+                  <%= e.name %>
+                </td>
+                <% for i in 0..6 %>
+                    <% if AktionDatum2(@start+i,e) %>
+                      <td class="blocked">
+                    <% else %>
+                      <td class="free">
+                    <% end %>
+                    </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+	    <div class="panel-body">
+          <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
+        <div id="map">
+        </div>
+      </div>
+    </div>
+  </div>
+    
+
+<script>
+function initialize() {
+    var map;
+    var bounds = new google.maps.LatLngBounds();
+    var mapOptions = {
+        mapTypeId: 'roadmap'
+    };
+                    
+    // Display a map on the page
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    map.setTilt(45);
+        
+    // Multiple Markers
+    var markers = <%= raw @locs %>;
+    var infoWindowContent = <%= raw @wins %>;
+    
+    // Display multiple markers on a map
+    var infoWindow = new google.maps.InfoWindow(), marker, i;
+    
+    // Loop through our array of markers & place each one on the map  
+    for( i = 0; i < markers.length; i++ ) {
+        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        bounds.extend(position);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: markers[i][0]
+        });
+        
+        // Allow each marker to have an info window    
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infoWindow.setContent(infoWindowContent[i][0]);
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+
+        // Automatically center the map fitting all markers on the screen
+        map.fitBounds(bounds);
+    }
+
+    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+        this.setZoom(10);
+        google.maps.event.removeListener(boundsListener);
+    });
+    
+}
+</script>
+
+<script>
+$(window).load(function(){ initialize() })
+</script>
+

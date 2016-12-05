@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Mdetails</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @mdetails.each do |mdetail| %>
+      <tr>
+        <td><%= mdetail.status %></td>
+        <td><%= link_to 'Show', mdetail %></td>
+        <td><%= link_to 'Edit', edit_mdetail_path(mdetail) %></td>
+        <td><%= link_to 'Destroy', mdetail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Mdetail', new_mdetail_path %>

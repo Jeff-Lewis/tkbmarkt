@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>newKMU</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP0PoTXZAKRi5IO3fM5yRO39puZPiR0iw&callback=initMap"></script>
+    <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+    <script src='//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js' type='text/javascript'></script> <!-- only if you need custom infoboxes -->  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+
+    <% $controller_list = %w[mobjects bids calenders companies donations events jobs requests services users vehicles webmasters hotspots advisors madvisors] %>
+    <% $activeapps = [] %>
+    <% apps = Appparam.all %>
+    <% apps.each do |a| %>
+      <%   $activeapps << a.name if a.active %>
+    <% end %>
+    <% $wochentage = %w[Mo Di Mi Do Fr Sa So] %>
+
+    <% $switch_color = "#ACC550" %>
+    <%= render 'layouts/header' %>
+    
+    <div class="example1">
+      <div class='container-fluid'>
+        <% flash.each do |name, msg| %>
+          <% content_tag(:div, msg, class:"alert alert-warning") %>
+        <% end %>
+
+        <%= render 'layouts/advertise' %>
+
+        <%= yield %>
+
+      </div>
+    </div>
+
+    <%= render 'layouts/footer' %>
+
+  </body>
+</html>

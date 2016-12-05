@@ -1,0 +1,581 @@
+
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+          xConnect - Funktionen<br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <%= link_to users_path do %>
+                <i class="btn btn-active glyphicon glyphicon-user"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Personen</h4>
+                Suchen und Finden Sie Personen in Ihrer Umgebung...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to companies_path do %>
+                <i class="btn btn-active glyphicon glyphicon-copyright-mark"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Institutionen</h4>
+                Suchen und Finden Sie Firmen, Vereine, Institutionen, etc. in Ihrer Umgebung...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Angebote", :msubtype => "Standard" do %>
+                <i class="btn btn-active glyphicon glyphicon-shopping-cart"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Produkte & Dienstleistungen</h4>
+                Suchen und Finden Sie Dienstleistungen von Privatpersonen & Institutionen in Ihrer Umgebung...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to link_to mobjects_path :mtype => "Angebote", :msubtype => "Aktion"  do %>
+                <i class="btn btn-active glyphicon glyphicon-time"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Sonderaktionen</h4>
+                Suchen und Finden Sie Sonderaktionen von Privatpersonen & Institutionen in Ihrer Umgebung...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Ausschreibungen", :msubtype => nil do %>
+                <i class="btn btn-active glyphicon glyphicon-pencil"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Ausschreibungen</h4>
+                Schreiben Sie Ihre Vorhaben aus und prüfen Angebote aus Ihrer Umgebung...
+            </div>
+            <br>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Kleinanzeigen", :msubtype => "Anbieten" do %>
+                <i class="btn btn-active glyphicon glyphicon-pushpin"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Kleinanzeigen</h4>
+                Geben Sie Ihre Kleinanzeigen, egal ob Sie etwas suchen oder etwas hergeben oder sogar etwas verschenken wollen...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Stellenanzeigen", :msubtype => "Anbieten" do %>
+                <i class="btn btn-active glyphicon glyphicon-user"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Stellenanzeigen</h4>
+                Finden Sie eine neue Stelle, egal ob befristet oder unbefristet...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Vermietungen", :msubtype => nil do %>
+                <i class="btn btn-active glyphicon glyphicon-retweet"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Leihen & Verleihen</h4>
+                Warum immer kaufen? Hier können Sie leihen und Ihre eigenen Mobilen verleihen...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Veranstaltungen", :msubtype => nil do %>
+                <i class="btn btn-active glyphicon glyphicon-glass"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Veranstaltungen</h4>
+                Schauen Sie in den Veranstaltungskalender und Besuchen Sie Veranstaltungen in Ihrer Region...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Ausflugsziele", :msubtype => nil do %>
+                <i class="btn btn-active glyphicon glyphicon-camera"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Sehenswürdigkeiten</h4>
+                Kennen Sie die Region. Besuchen Sie die Sehenswürdigkeiten und bewerten die Lokationen oder geben eigenen Tipps...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Crowdfunding", :msubtype => "Spenden" do %>
+                <i class="btn btn-active glyphicon glyphicon-heart"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Spendeninitiativen</h4>
+                Sehen Sie sich die Spendeninitiativen an und spenden Sie für einen guten Zweck...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Crowdfunding", :msubtype => "Belohnungen" do %>
+                <i class="btn btn-active glyphicon glyphicon-gift"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Crowdfunding mit Belohnungen</h4>
+                Setzen Sie eigene Crowdfunding Projekte auf oder unterstützen Sie welche und erhalten entsprechende Belohnungen...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to mobjects_path :mtype => "Crowdfunding", :msubtype => "Zinsen" do %>
+                <i class="btn btn-active glyphicon glyphicon-signal"></i>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Crowdfunding mit Verzinsung</h4>
+                Finanzieren Sie Ihre Projekte in der Crowd oder investieren Sie in welche und erhalten einen Zins...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <% if user_signed_in? %>
+                <%= link_to user_path(:id => current_user.id, :topic => "Kundenstatus") do %>
+                  <i class="btn btn-active glyphicon glyphicon-check"></i>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Partner Konto</h4>
+                Als Kunde der Partnerbank können Sie Konti für den Zahlunsgverkehr festlegen...
+            </div>
+            <br>
+          </div>
+        </div>
+         <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <% if user_signed_in? %>
+                <%= link_to user_path(:id => current_user.id, :topic => "Transaktionen") do %>
+                  <i class="btn btn-active glyphicon glyphicon-list"></i>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Zahlen</h4>
+                Zahlen Sie Connect Services bequem über die integrierte ZV Schnittstelle zum e-Banking Ihrer Partnerbank...
+            </div>
+            <br>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <br>
+
+<% if false %>
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+          xConnect - Partner<br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12">
+          <anzeigetext>
+          xConnect Partner <br><br>
+          </anzeigetext>
+        </div>
+      </div>
+      <br>
+      <% @companies = Company.where('partner=? and active=?', true, true) %>
+      <%= build_medialist("col-sm-6 col-md-4 col-lg-3", @companies, "companies", false) %>
+      <br>
+      <br>
+      <anzeigetext>
+      als Kunde profitieren Sie zusätzlich <br><br>
+      </anzeigetext>
+      <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <%= link_to home_index_path do %>
+                <%= image_tag('check.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Erweiterte Suchfunktionen</h4>
+                Erstellen Sie umfangreiche Abfragen und speichern Sie diese ab...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to home_index_path do %>
+                <%= image_tag('check.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Favoriten</h4>
+                Folgen Sie Personen, Vereine, Institutionen und lassen sich laufend über Veränderungen informieren...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to home_index_path do %>
+                <%= image_tag('check.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Keine Limitationen</h4>
+                Die Anzahl Ihrer Einträge, Bilder, Abfragen ist unbegrenzt; auch alte Einträge werden nicht gelöscht sondern verbleiben in xConnect...
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3">          
+          <div class="media">
+            <div class="media-left">
+              <%= link_to home_index_path do %>
+                <%= image_tag('check.png', :size => "50x50") %>
+              <% end %>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Priorität bei Suchen</h4>
+                Ihr Angebot wird bei Suchanfragen bevorzugt behandelt, d.h. bei der Sortierung prioritär berücksichtigt...
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+<% end %>
+
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+          xConnect - Kurzanleitung<br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-filter"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Filter</h4>
+                Definieren Sie Filter um komplexere Abfragen durchzuführen...Filter können gespeichert werden
+            </div>
+            <br>
+          </div>
+        </div>
+        
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-info-sign"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Weitere Informationen</h4>
+                Hiermit gelangen Sie zu Detailinformationen
+            </div>
+            <br>
+          </div>
+        </div>
+ 
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-plus"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Hinzufügen</h4>
+                Fügt neue Informationen hinzu
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-wrench"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Bearbeiten</h4>
+                Bearbeiten und Speichern Ihrer Daten
+            </div>
+            <br>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-trash"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Löschen</h4>
+                Löschen Ihrer Daten
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-list"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Zurück zur Übersicht</h4>
+                kehren Sie zur Übersicht zurück
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-eye-open"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Missbrauch melden</h4>
+                Verdächtige Informationen können Sie dem Webmaster melden
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-chevron-left"></i>
+              <i class="glyphicon glyphicon-chevron-right"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Wochenkalender</h4>
+                Navigieren Sie im Wochenkalender
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Wochenkalender</h4>
+                Navigieren Sie zum Wochenkalender der Mobilien
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-credit-card"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Sponsoring Tickets erstellen</h4>
+                Erstellen Sie Sponsoring Tickets für Veranstaltungen
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-bullhorn"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Sponsoring Tickets verteilen</h4>
+                Verteilen Sie Tickets an spezielle Kunden
+            </div>
+            <br>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-star"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Favoriten</h4>
+                Folgen Sie Personen und Institutionen und lassen sich über deren Aktivitäten informieren
+            </div>
+            <br>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="glyphicon glyphicon-euro"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">Zahlungsverkehr </h4>
+                Zahlen Sie Ihre Connect Services ganz einfach direkt in der Connect Plattform. xConnect bietet eine Schnittstelle zum eBanking Ihrer Partnerbank
+            </div>
+            <br>
+          </div>
+        </div>
+
+      </div>
+      <br>
+    </div>
+    <br>
+    
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-12">
+          <li_header>
+          über xConnect...<br>
+          </li_header>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class='container' align='center'>
+            <%= image_tag("marketplace.png", :size => "200x200") %><br>
+            <ntext>
+            <b>Version 0.91</b><br><br>
+            <i class="glyphicon glyphicon-copyright-mark"></i> 2016, alle Rechte vorbehalten
+            <br><br>
+            <i class="glyphicon glyphicon-info-sign"></i> Dies ist eine freie Testversion zu Demozwecken, sämtliche Daten, Personen, Firmen, Services, etc. sind frei erfunden, jegliche Haftung ist ausgeschlossen!
+            </ntext>
+          </div>
+        </div>
+      </div>
+      <br>
+    
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-heading header">
+            <li_header>
+              REGISTRATIONSVERLAUF Privatkunden
+            </li_header>
+          </div>
+          <div class="panel-body">
+            <%= content_tag :div, "", id: "reports_chart_user",  data: {reports: @stat_user} %>
+          </div>
+        </div>
+      </div>
+      <br>
+    
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-heading header">
+            <li_header>
+              REGISTRATIONSVERLAUF Firmen-/Gewerbekunden
+            </li_header>
+          </div>
+          <div class="panel-body">
+            <%= content_tag :div, "", id: "reports_chart_company",  data: {reports: @stat_company} %>
+          </div>
+        </div>  
+      </div>
+    </div>
+    <br>
+    
+
+<script>
+new Morris.Line({
+        element: 'reports_chart_user',
+        data: $('#reports_chart_user').data('reports'),
+        xkey: 'datum', 
+        ykeys: ['summe'], 
+        labels: ['Anzahl']
+});
+</script>
+
+<script>
+new Morris.Line({
+        element: 'reports_chart_company',
+        data: $('#reports_chart_company').data('reports'),
+        xkey: 'datum', 
+        ykeys: ['summe'], 
+        labels: ['Anzahl']
+});
+</script>

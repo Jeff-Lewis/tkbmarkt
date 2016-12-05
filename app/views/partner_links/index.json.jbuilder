@@ -1,0 +1,1 @@
+json.array! @partner_links, partial: 'partner_links/partner_link', as: :partner_link

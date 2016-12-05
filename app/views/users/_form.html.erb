@@ -1,0 +1,167 @@
+
+    <%= form_for @user, html: {multipart: true}  do |f| %>
+
+        <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+              <ul>
+                  <% @user.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="panel-heading header">
+                      <li_header>
+                      <%= link_to @user do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                      <% end %>
+                      ACCOUNT
+                      </li_header>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <div class="form-group">
+                       <%= f.label "Photo" %><br/>
+                       <%= image_tag @user.avatar.url(:medium) %><br>
+                       <%= f.file_field :avatar, class:"form-control" %>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Email" %><br/>
+                      <%= f.text_field :email, :readonly => true, class:"form-control"%>
+                    </div>
+                    <!--<%= f.hidden_field :password %>-->
+                    <div class="form-group">
+                      <%= f.label "Nachname" %><br/>
+                      <%= f.text_field :lastname, autofocus: true, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Vorname" %><br/>
+                      <%= f.text_field :name, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <%= f.label "Geburtsdatum" %><br/>
+                      <%= f.text_field :dateofbirth, class:"form-control"%>
+                    </div>
+                    <div class="form-group">
+                      <input type="checkbox" name="my-checkbox2" checked>
+                      <%= f.label "Anonym" %>
+                    </div>
+                    <div class="form-group">
+                      <input type="checkbox" name="my-checkbox1" checked>
+                      <%= f.label "Kalender" %>
+                    </div>
+                      <slider>
+                        <b>00:00 Uhr </b> <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="24" data-slider-step="1" data-slider-value="[<%= @user.time_from %>,<%= @user.time_to %>]"/> <b>24:00 Uhr</b>
+                      </slider>
+                      <br><br>
+                    <% if current_user.superuser %>
+                        <div class="form-group">
+                          <input type="checkbox" name="my-checkbox4" checked>
+                          <%= f.label "Webmaster" %>
+                        </div>
+                    <% end %>
+                    <div class="form-group">
+                       <%= f.label "Adresse" %><br/>
+                       <%= f.text_field :address1, class:"form-control" %>
+                       <%= f.text_field :address2, class:"form-control" %>
+                       <%= f.text_field :address3, class:"form-control" %>
+                    </div>
+                    <div class="form-group">
+                       <%= f.label "Telefon" %><br/>
+                       <%= f.text_field :phone1, class:"form-control" %>
+                       <%= f.text_field :phone2, class:"form-control" %>
+                    </div>
+                    <div class="form-group">
+                      <input type="checkbox" name="my-checkbox3" checked>
+                      <%= f.label "Aktiv" %>
+                    </div>
+                     <%= f.hidden_field :geo_address, class:"form-control" %>
+                     <%= f.hidden_field :longitude, class:"form-control" %>
+                     <%= f.hidden_field :latitude, class:"form-control" %>
+                    <div class="actions">
+                      <%= f.submit "Speichern", class:"btn btn-primary btn-lg"%>
+                    </div>
+                </div>
+                    <div>
+                       <%= f.check_box :calendar, :id => "calendar", class:"form-control hidden" %>
+                       <%= f.check_box :anonymous, :id => "anonymous", class:"form-control hidden"%>
+                       <%= f.check_box :active, :id => "active", class:"form-control hidden" %>
+                       <%= f.check_box :webmaster, :id => "webmaster", class:"form-control hidden"%>
+                       <%= f.number_field :time_from, :id => "from",  class:"form-control hidden" %>
+                       <%= f.number_field :time_to, :id => "to", class:"form-control hidden" %>
+                    </div>
+            </div>
+                
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <i class="glyphicon glyphicon-map-marker pull-left" onclick="return init_map(0);"></i>
+                    <div id="map">
+                      <div id="map-canvas">
+                      </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    <% end %>
+
+<script type="text/javascript">
+    var latitudes = [<%= @user.latitude %>];
+    var longitudes = [<%= @user.longitude %>];
+    function init_map(index) {
+        var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
+        var mapOptions = {
+            center: myLocation,
+            zoom: 16
+        };
+        var marker = new google.maps.Marker({
+            position: myLocation,
+            title: "Property Location"
+        });
+        var map = new google.maps.Map(document.getElementById("map"),
+        mapOptions);
+        marker.setMap(map);
+    }
+    init_map(0);
+</script>
+
+<script>
+    $("#ex2").slider({});
+    $("#ex2").on("slide", function(slideEvt) {
+    	$("#from").val(slideEvt.value[0]);
+    	$("#to").val(slideEvt.value[1]);
+    });
+    $.fn.bootstrapSwitch.defaults.onColor = 'success';
+    $("[name='my-checkbox1']").bootstrapSwitch('state',<%= @user.calendar %>);
+    $("[name='my-checkbox1']").on('switchChange.bootstrapSwitch', function () {
+    $("#calendar").prop('checked',$("[name='my-checkbox1']").bootstrapSwitch('state'));
+    if ($("[name='my-checkbox1']").bootstrapSwitch('state') == false) 
+        {$("slider").hide()}
+    else
+        {$("slider").show()}
+    });
+    $("[name='my-checkbox2']").bootstrapSwitch('state',<%= @user.anonymous %>);
+    $("[name='my-checkbox2']").on('switchChange.bootstrapSwitch', function () {
+    $("#anonymous").prop('checked',$("[name='my-checkbox2']").bootstrapSwitch('state'));
+    });    
+    $("[name='my-checkbox3']").bootstrapSwitch('state',<%= @user.active %>);
+    $("[name='my-checkbox3']").on('switchChange.bootstrapSwitch', function () {
+    $("#active").prop('checked',$("[name='my-checkbox3']").bootstrapSwitch('state'));
+    });
+    $("[name='my-checkbox4']").bootstrapSwitch('state',<%= @user.webmaster %>);
+    $("[name='my-checkbox4']").on('switchChange.bootstrapSwitch', function () {
+    $("#webmaster").prop('checked',$("[name='my-checkbox4']").bootstrapSwitch('state'));
+    });
+</script>
+
+<script>
+  $(window).load(function(){ init_map(0) })
+</script>

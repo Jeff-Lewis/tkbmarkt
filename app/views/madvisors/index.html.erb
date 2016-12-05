@@ -1,0 +1,76 @@
+
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="digg_pagination">
+            <%= link_to(mobject_path(@mobject, :topic => "Advisors")) do %>
+              <i class="btn btn-primary glyphicon glyphicon-list"></i>
+            <% end %>
+            <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <%= header("Ansprechpartner " + @mobject.name + "<span class='badge'>" + @adpanz.to_s + "</span>", true) %>
+  </div>
+  
+	<div class="row">
+    <div class="col-md-12">
+  		<table class="table table-striped">
+        <thead>
+          <tr>
+            <th colspan=2>Status</th>
+            <th colspan=3>Person</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |u| %>
+            <tr>
+              <td>
+                <%= link_to madvisors_path :senior_madvisor_id => u.id, :page => session[:page] do %>
+                  <i class="btn btn-primary glyphicon glyphicon-tags"></i>
+                <% end %>
+                <%= link_to madvisors_path :madvisor_id => u.id, :page => session[:page]  do %>
+                  <i class="btn btn-primary glyphicon glyphicon-tag"></i>
+                <% end %>
+                <%= link_to madvisors_path :delete_madvisor_id => u.id, :page => session[:page] do %>
+                  <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                <% end %>
+              </td>
+              <td>
+                <% found = false %>
+                <% grade = "" %>
+                <% for i in 0..@array.length-1 %>
+                  <% if @array[i]["key"].to_i == u.id %>
+                    <% found = true %>
+                    <% grade = @array[i]["grade"] %>
+                  <% end %>
+                <% end %>
+                <% case grade %>
+                  <% when "Senior Berater" %>
+                    <senior_berater><%= grade %></senior_berater>
+                  <% when "Berater" %>
+                    <berater><%= grade %></berater>
+                <% end %>
+              </td>
+              <td>
+                <% if u.avatar_file_name == nil %>
+                  <%= image_tag("user_a.png", :size => "50x50", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag u.avatar(:small), class:"img-rounded"  %>
+                <% end %>
+              </td>
+              <td>
+                <%= u.name + " " + u.lastname %>            
+              </td>
+              <td>
+                <%= u.email %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

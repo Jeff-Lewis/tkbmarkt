@@ -1,0 +1,1 @@
+json.partial! "msponsors/msponsor", msponsor: @msponsor

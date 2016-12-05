@@ -1,0 +1,1 @@
+json.array! @webmasters, partial: 'webmasters/webmaster', as: :webmaster

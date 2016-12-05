@@ -1,0 +1,109 @@
+
+
+    <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="digg_pagination">
+    		    <% if user_signed_in? %>
+  		        <%= link_to searches_path :search_domain => "Privatpersonen", :controller_name => controller_name do %>
+  		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
+  		        <% end %>
+    		    <% end %>
+            <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <%= header("Privatpersonen " + "<span class='badge'>" + @usanz.to_s + "</span>", true) %>
+  </div>
+
+  <%= build_medialist2(@users, "users", nil) %>
+
+  <div class="panel-body">
+    <div class="row">
+      <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
+      <div class="col-md-12">
+          <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+    var latitudes = [38.756675, 38.8507126, 38.84753];
+    var longitudes = [-77.13208299999997, -77.09903600000001, -77.06577290000001];
+    function init_map(index) {
+        var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
+        var mapOptions = {
+            center: myLocation,
+            zoom: 16
+        };
+        var marker = new google.maps.Marker({
+            position: myLocation,
+            title: "Property Location"
+        });
+        var map = new google.maps.Map(document.getElementById("map"),
+        mapOptions);
+        marker.setMap(map);
+    }
+    init_map(0);
+</script>
+
+<script>
+function initialize() {
+    var map;
+    var bounds = new google.maps.LatLngBounds();
+    var mapOptions = {
+        mapTypeId: 'roadmap'
+    };
+                    
+    // Display a map on the page
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    map.setTilt(45);
+        
+    // Multiple Markers
+    var markers = <%= raw @locs %>;
+    var infoWindowContent = <%= raw @wins %>;
+    
+    // Display multiple markers on a map
+    var infoWindow = new google.maps.InfoWindow(), marker, i;
+    
+    // Loop through our array of markers & place each one on the map  
+    for( i = 0; i < markers.length; i++ ) {
+        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        bounds.extend(position);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: markers[i][0]
+        });
+        
+        // Allow each marker to have an info window    
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infoWindow.setContent(infoWindowContent[i][0]);
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+
+        // Automatically center the map fitting all markers on the screen
+        map.fitBounds(bounds);
+    }
+
+    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+        this.setZoom(10);
+        google.maps.event.removeListener(boundsListener);
+    });
+    
+}
+</script>
+
+<script>
+$(window).load(function(){ initialize() })
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {initialize();})
+</script>

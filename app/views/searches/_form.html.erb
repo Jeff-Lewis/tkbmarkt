@@ -1,0 +1,318 @@
+
+    <%= form_for @search do |f| %>
+
+        <% if @search.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@search.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <ul>
+                  <% @search.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading header">
+                      <li_header>
+                      <%= link_to searches_path :search_domain => @search.search_domain, :controller_name => @search.controller, :ticket_id => @search.ticket_id do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                      <% end %>
+                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %><%= @search.sql_string %>
+                      <br>
+                      <% @search.sql_string %>
+                      </li_header>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-body">
+                  <div class="form-group">
+                    <%= f.label "Bezeichnung" %><br/>
+                    <%= f.text_field :name, autofocus: true, class:"form-control"%>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label "Beschreibung" %><br/>
+                    <%= f.text_area :description, class:"form-control"%>
+                  </div>
+                 
+                 <% case @search.search_domain %>
+                   <% when "Privatpersonen", "Tickets" %>
+                      <div class="form-group">
+                        <input type="checkbox" name="my-checkbox1" checked>
+                        <%= f.label "Sozialengagement" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label "Alter" %><br/>
+                        <input id="ex1" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[<%= @search.age_from %>,<%= @search.age_to %>]"/><b>von-bis</b>
+                      </div>
+                      <br>
+                      <% if @search.search_domain == "Tickets" %>
+                        <div class="form-group">
+                          <%= f.label "Kunden" %>
+                          <input type="checkbox" name="my-checkbox2" checked>
+                        </div>
+                      <% end %>
+  
+                   <% when "Institutionen" %>
+                      <div class="form-group">
+                        <%= f.label "Branche" %><br/>
+                        <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                      </div>
+                      <div class="form-group">
+                        <input type="checkbox" name="my-checkbox1" checked>
+                        <%= f.label "gemeinnützig" %>
+                      </div>
+
+                   <% when "Object" %>
+                      
+                      <% case @search.mtype %>
+                        <% when "Angebote" %>
+                          <div class="form-group">
+                            <input type="checkbox" name="my-checkbox1" checked>
+                            <%= f.label "Sozialengagement" %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Bewertung mindestens" %><br/>
+                            <% for i in 1..5 %>
+                                <%= f.radio_button :rating, i.to_i %>
+                                <% i.times do %>
+                                  <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                  <i class="glyphicon glyphicon-star"></i>
+                                <% end %><br>
+                            <% end %>
+                          </div>
+                          <% if @search.msubtype == "Aktion" %>
+                            <div class="form-group">
+                              <%= f.label "Datum von-bis:" %>
+                              <%= f.text_field :date_from, class:"form-control"%>
+                              <%= f.text_field :date_to, class:"form-control"%>
+                            </div>
+                          <% end %>
+
+                        <% when "Vermietungen" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Vermietungen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+
+                        <% when "Ausschreibungen" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Datum von-bis:" %>
+                            <%= f.text_field :date_from, class:"form-control"%>
+                            <%= f.text_field :date_to, class:"form-control"%>
+                          </div>
+
+                        <% when "Stellenanzeigen" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+                          <div class="form-group">
+                                <%= f.label "Anzeigetyp" %><br>
+                                <%= f.radio_button :msubtype, "Suchen", :value => "Suchen" %> Suchen<br>
+                                <%= f.radio_button :msubtype, "Anbieten", :value => "Anbieten" %> Anbieten
+                          </div>
+
+                        <% when "Kleinanzeigen" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Kleinanzeigen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+                          <div class="form-group">
+                                <%= f.label "Anzeigetyp" %><br>
+                                <%= f.radio_button :msubtype, "Suchen", :value => "Suchen" %> Suchen<br>
+                                <%= f.radio_button :msubtype, "Anbieten", :value => "Anbieten" %> Anbieten
+                          </div>
+
+                        <% when "Veranstaltungen" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Veranstaltungen").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Bewertung mindestens" %><br/>
+                            <% for i in 1..5 %>
+                                <%= f.radio_button :rating, i.to_i %>
+                                <% i.times do %>
+                                  <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                  <i class="glyphicon glyphicon-star"></i>
+                                <% end %><br>
+                            <% end %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Datum von-bis:" %>
+                            <%= f.text_field :date_from, class:"form-control"%>
+                            <%= f.text_field :date_to, class:"form-control"%>
+                          </div>
+
+                        <% when "Ausflugsziele" %>
+                          <div class="form-group">
+                            <%= f.label "Kategorie" %><br/>
+                            <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Ausflugsziele").order(:name), :id, :name, {:include_blank => true}, class:"form-control" %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.label "Bewertung mindestens" %><br/>
+                            <% for i in 1..5 %>
+                                <%= f.radio_button :rating, i.to_i %>
+                                <% i.times do %>
+                                  <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                                  <i class="glyphicon glyphicon-star"></i>
+                                <% end %><br>
+                            <% end %>
+                          </div>
+
+                        <% when "Crowdfunding" %>
+                          <div class="form-group">
+                            <input id="ex3" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000" data-slider-step="1000" data-slider-value="[<%= @search.amount_from_target %>,<%= @search.amount_to_target %>]"/> <b>Betrag(Ziel)</b>
+                            <br><br>
+                          </div>
+                          <div class="form-group">
+                            <input id="ex4" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000" data-slider-step="1000" data-slider-value="[<%= @search.amount_from %>,<%= @search.amount_to %>]"/> <b>Betrag(IST)</b>
+                            <br><br>
+                          </div>
+
+                      <% end %>
+                  
+                  <% end %>
+
+                  <div class="form-group">
+                     <%= f.label "Standort" %><br/>
+                      <div class="form-group">
+                        <input id="ex2" data-slider-id='ex2Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="<%= @search.distance %>"/> <b>Umkreissuche km zu Adresse</b>
+                      </div>
+                     <%= f.text_field :address1, class:"form-control" %>
+                     <%= f.text_field :address2, class:"form-control" %>
+                     <%= f.text_field :address3, class:"form-control" %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label "Stichworte" %><br/>
+                    <%= f.text_field :keywords, class:"form-control"%>
+                  </div>
+                  <div class="actions">
+                     <%= f.submit "Speichern",  class:"btn btn-primary btn-lg"%>
+                  </div>
+                  <%= f.hidden_field :user_id %>
+                  <%= f.hidden_field :search_domain %>
+                  <%= f.hidden_field :controller %>
+                  <%= f.hidden_field :ticket_id %>
+                  <%= f.hidden_field :counter %>
+                  <%= f.hidden_field :mtype %>
+                  <%= f.hidden_field :msubtype %>
+                  <%= f.number_field :age_from, :id => "from", class:"form-control hidden"%>
+                  <%= f.number_field :age_to, :id => "to", class:"form-control hidden"%>
+                  <%= f.number_field :distance, :id => "distance", class:"form-control hidden"%>
+                  <%= f.check_box :social, :id => "social", class:"form-control hidden"%>
+                  <%= f.check_box :customer, :id => "customer", class:"form-control hidden"%>
+                  <%= f.check_box :special, :id => "special", class:"form-control hidden"%>
+                  <%= f.number_field :amount_from_target, :id => "target_from", class:"form-control hidden"%>
+                  <%= f.number_field :amount_to_target, :id => "target_to", class:"form-control hidden"%>
+                  <%= f.number_field :amount_from, :id => "current_from", class:"form-control hidden"%>
+                  <%= f.number_field :amount_to, :id => "current_to", class:"form-control hidden"%>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel-body">
+                    <div id="map">
+                      <div id="map-canvas"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    <% end %>                
+
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "zoom": 5,
+          "lat": <%= @search.latitude %>,
+          "lng": <%= @search.longitude %>,
+          "infowindow": "<%= @search.geo_address %>"
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+      handler.getMap().setZoom(9);
+    });
+
+   circles = handler.addCircles(
+    [{ lat: <%= @search.latitude %>, lng: <%= @search.longitude %>, radius: <%= @search.distance * 1000 %> }],
+    { strokeColor: '#FF0000'}
+  );
+
+</script>
+
+<script>
+    $("#ex1").slider({});
+    $("#ex1").on("slide", function(slideEvt) {
+    	$("#from").val(slideEvt.value[0]);
+    	$("#to").val(slideEvt.value[1]);
+    });
+    $("#ex2").slider({});
+    $("#ex2").on("slide", function(slideEvt) {
+    	$("#distance").val(slideEvt.value);
+    });
+    $.fn.bootstrapSwitch.defaults.onColor = 'success';
+    $("[name='my-checkbox1']").bootstrapSwitch('state',<%= @search.social %>);
+    $("[name='my-checkbox1']").on('switchChange.bootstrapSwitch', function () {
+    $("#social").prop('checked',$("[name='my-checkbox1']").bootstrapSwitch('state'));
+    });
+    $("[name='my-checkbox2']").bootstrapSwitch('state',<%= @search.customer %>);
+    $("[name='my-checkbox2']").on('switchChange.bootstrapSwitch', function () {
+    $("#customer").prop('checked',$("[name='my-checkbox2']").bootstrapSwitch('state'));
+    });
+    $("[name='my-checkbox3']").bootstrapSwitch('state',<%= @search.special %>);
+    $("[name='my-checkbox3']").on('switchChange.bootstrapSwitch', function () {
+    $("#special").prop('checked',$("[name='my-checkbox3']").bootstrapSwitch('state'));
+    });
+    $("#ex3").slider({});
+    $("#ex3").on("slide", function(slideEvt) {
+    	$("#target_from").val(slideEvt.value[0]);
+    	$("#target_to").val(slideEvt.value[1]);
+    });
+    $("#ex4").slider({});
+    $("#ex4").on("slide", function(slideEvt) {
+    	$("#current_from").val(slideEvt.value[0]);
+    	$("#current_to").val(slideEvt.value[1]);
+    });
+</script>
+
+<script>
+  $("#ex5").slider({});
+  $("#ex5").on("slide", function(slideEvt) {
+  	$("#distance").val(slideEvt.value);
+  	init_map(val(slideEvt.value));
+  });
+
+    function init_map(radius) {
+        var myLocation = new google.maps.LatLng(<%= @search.latitude %>, <%= @search.longitude %>);
+        var mapOptions = {
+            center: myLocation,
+            zoom: 16
+        };
+        var marker = new google.maps.Marker({
+            position: myLocation,
+            title: "Property Location"
+        });
+        var map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
+        marker.setMap(map);
+    }
+   circles = handler.addCircles(
+    [{ lat: <%= @search.latitude %>, lng: <%= @search.longitude %>, radius: radius * 1000 }],
+    { strokeColor: '#FF0000'}
+  );
+</script>

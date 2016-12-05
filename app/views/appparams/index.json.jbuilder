@@ -1,0 +1,1 @@
+json.array! @appparams, partial: 'appparams/appparam', as: :appparam

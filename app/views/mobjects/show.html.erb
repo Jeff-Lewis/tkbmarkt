@@ -1,0 +1,626 @@
+<div class="row">
+    <action>
+    <%= action_buttons2("Object", @mobject, @topic) %>
+    </action> 
+  </div>
+
+  <div class="row">
+    <header>
+    <%= header(@mobject.mtype + " " + @mobject.msubtype.to_s + " " + @mobject.name, true) %>
+    </header>
+  </div>
+  
+  <div class="row">
+      <div class='col-xs-10'>
+
+      <% case @topic %>
+        <% when "Informationen" %>
+          <%= header("Informationen", false) %>
+          <div class="panel-body">
+            <%= carousel2(@mobject, :medium) %>
+      			</p>
+            <br><br>
+            <% case @mobject.msubtype %>
+              <% when "Spenden" %>
+                <b>Spendenziel</b><br>
+                <%= sprintf("%05.2f CHF", @mobject.amount) %>
+                <br>
+              <% when "Belohnungen" %>
+                <b>Projektziel</b><br>
+                <%= sprintf("%05.2f CHF", @mobject.amount) %>
+                <br><br>
+                <b>Stückelung</b><br>
+                <%= sprintf("%05.2f CHF", @mobject.price) %>
+                <br><br>
+                <b>Belohnung</b><br>
+                <%= @mobject.reward %>
+                <br>
+              <% when "Zinsen" %>
+                <b>Kreditsumme</b><br>
+                <%= sprintf("%05.2f CHF", @mobject.amount) %>
+                <br><br>
+                <b>Zinssatz</b><br>
+                <%= @mobject.interest_rate %>%
+                <br><br>
+                Rückzahlung am <%= @mobject.due_date.strftime("%d.%m.%Y") %>
+                <br>
+            <% end %>
+            <br>
+            <% if @mobject.homepage != nil %>
+              <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
+                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
+              <% end %>
+              <br><br>
+            <% end %>
+  				  <% if @mobject.price %>
+              <preiss><b><%= sprintf("%05.2f CHF", @mobject.price) %></b></preiss>
+  					<% else %>
+              <% if @mobject.social %>
+                <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
+              <% end %>
+  					<% end %>
+            <br><br>
+            <% if @mobject.date_to != nil %>
+                <b><ntext>noch </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
+            <% end %>
+            <br><br>
+            <b>Bewertung</b><br>
+            <% avg_rating2(@mobject.id).times do %>
+              <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+              <i class="glyphicon glyphicon-star"></i>
+            <% end %>
+            <br><br>
+            <% if @mobject.social %>
+                <i class="glyphicon glyphicon-heart"></i> soziales Engagement
+                <br>
+            <% end %>
+            <br><br>
+            <% case @mobject.mtype %>
+               <% when "Angebote", "Veranstaltungen", "Ausschreibungen" %>
+                 <% if @mobject.msubtype == "Aktion" %>
+                 <% end %>
+                <b>Datum von-bis:</b><br>
+                <% if @mobject.date_from  %>
+                  <%= @mobject.date_from.strftime("%d.%m.%Y") %>
+                <% end %>
+                <% if @mobject.date_to %>
+                - <%= @mobject.date_to.strftime("%d.%m.%Y") %>
+                <% end %>
+                <% if @mobject.date_from or @mobject.date_to %>
+                  <br><br>
+                <% end %>
+                
+               <% when "Vermietungen" %>
+                <b>Mietzeiten</b><br>
+                von:<%= @mobject.time_from %> bis: <%= @mobject.time_to %> Uhr
+                <br><br>
+                <b>Standort</b><br>
+                <%= @mobject.address1 if @mobject.address1 %><br>
+                <%= @mobject.address2 if @mobject.address2 %><br>
+                <%= @mobject.address3 if @mobject.address3 %><br>
+                <br>
+                
+              <% when "Stellenanzeigen" %>
+                  <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail" align="center">
+                      <anzeigetext>
+            						Ihre Aufgaben
+                      </anzeigetext>
+                      <p>
+                        <ntext>
+            						<%= @mobject.tasks %>
+            						</ntext>
+            					</p>
+                    </div>
+                  </div>
+                  
+                  <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail" align="center">
+                      <anzeigetext>
+            						wir erwarten
+                      </anzeigetext>
+                      <p>
+                        <ntext>
+            						<%= @mobject.skills %>
+            						</ntext>
+            					</p>
+                    </div>
+                  </div>
+          
+                  <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail" align="center">
+                      <anzeigetext>
+            						wir bieten
+                      </anzeigetext>
+                      <p>
+                        <ntext>
+            						<%= @mobject.offers %>
+            						</ntext>
+            					</p>
+                    </div>
+                  </div>
+                  <br><br>
+
+            <% end %>
+            <% if @mobject.description %>
+              <b>Beschreibung</b><br>
+        			<%= @mobject.description %>
+              <br><br>
+            <% end %>
+            <% if @mobject.mcategory_id %>
+              <b>Kategorie</b><br>
+        			<%= @mobject.mcategory.name %>
+              <br><br>
+            <% end %>
+            <% if @mobject.homepage != nil %>
+              <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
+                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
+              <% end %>
+              <br><br>
+            <% end %>
+            <b>Verantwortlich:</b><br>
+            <%= showImage2(:small, @mobject.owner, true) %><br>
+            <% if @mobject.owner_type == "User" %>
+              <%= @mobject.owner.name + " " + @mobject.owner.lastname %>
+            <% end %>
+            <% if @mobject.owner_type == "Company" %>
+              <%= @mobject.owner.name %>
+            <% end %>
+      			<br><br>
+            <%= @mobject.created_at.strftime("%d.%m.%Y") %>
+          </div>
+
+        <% when "Details" %>
+          <%= header("Details", false) %>
+          <div class="panel-body">
+        		<% @mobject.mdetails.each do |md| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= showImage2(:medium, md, true) %>
+                  <br>
+                  <anzeigetext>
+        						<%= md.name %><br>
+                  </anzeigetext>
+                  <ntext>
+      						<%= md.description %>
+                  </ntext>
+                  <br><br>
+                  <% if md.document %>
+          	        <%= link_to md.document.url, target: "_blank" do %>
+                      <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
+                    <% end %>
+                  <% end %>
+                  <% if user_signed_in? %>
+                     <% if (@mobject.owner_type == "User" and @mobject.owner_id == current_user.id) or (@mobject.owner_type == "Company" and @mobject.owner.user_id == current_user.id) %>
+              	        <%= link_to edit_mdetail_path(md) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to md, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+        			  </div>
+        			</div>
+        		<% end %>
+          </div>
+
+        <% when "Ausschreibungsangebote" %>
+          <%= header("Angebote", false) %>
+          <div class="panel-body">
+        		<% @mobject.mdetails.each do |md| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= showImage2(:medium, md, true) %>
+                  <br>
+                  <anzeigetext>
+        						<%= md.name %><br>
+                  </anzeigetext>
+                  <ntext>
+      						<%= md.description %>
+                  </ntext>
+                  <br><br>
+        	        <%= link_to md.document.url, target: "_blank" do %>
+                    <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
+                  <% end %>
+                  <br><br>
+                  <% if user_signed_in? %>
+                    <% if @mobject.user_id != nil %>
+                      <% if current_user.id == @mobject.user_id %>
+              	        <%= link_to edit_mdetail_path(md) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to md, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    <% if @mobject.company_id != nil %>
+                      <% if current_user.id == @mobject.company.user_id %>
+              	        <%= link_to edit_mdetail_path(md) do %>
+                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to md, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+        			  </div>
+        			</div>
+        		<% end %>
+          </div>
+
+        <% when "Sponsoren" %>
+          <%= header("Sponsoren", false) %>
+          <div class="panel-body">
+            <% @mobject.msponsors.each do |cs| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <%= link_to cs.company do %>
+                    <%= showImage2(:medium, cs.company, true) %>
+                  <% end %>
+                  <br>
+                  <anzeigetext>
+        						<%= cs.company.name %><br>
+                  </anzeigetext>
+                  <br>
+                  <ntext>
+                  <%= cs.company.mcategory.name %>
+                  </ntext>
+                  <br>
+          				<% case cs.slevel %>
+          				  <% when "1" %>
+                      <%= image_tag("Sponsor_gold.jpg", :size => "200x200", class:"img-rounded" ) %>
+          				  <% when "2" %>
+                      <%= image_tag("Sponsor_silver.jpg", :size => "200x200", class:"img-rounded" ) %>
+          				  <% when "3" %>
+                      <%= image_tag("Sponsor_bronze.jpg", :size => "200x200", class:"img-rounded" ) %>
+                  <% end %>
+      						<br><br>
+                  <% if user_signed_in? %>
+                    <% if cs.company.user_id != nil %>
+                      <% if current_user.id == cs.company.user_id %>
+                        <%= link_to tickets_path :msponsor_id => cs.id do %>
+                          <i class="btn btn-primary glyphicon glyphicon-credit-card"></i>
+                        <% end %>
+              	        <%= link_to edit_msponsor_path(cs) do %>
+                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div>
+      
+        <% when "Ratings" %>
+          <%= header("Bewertungen", false) %>
+          <div class="panel-body">
+             <% @mobject.mratings.each do |mr| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= showImage2(:medium, mr.user, true) %>
+                    <br>
+                    <ntext>
+                    <% mr.rating.times do %>
+                      <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
+                      <i class="glyphicon glyphicon-star"></i>
+                    <% end %>
+                    </ntext>
+                    <br>
+                    <br>
+                    <anzeigetext>
+                    <%= mr.user.name + " " + mr.user.lastname %><br>
+                    </anzeigetext>
+                    <ntext>
+                    <%= mr.comment %>
+                    <br><br>
+                    <% if user_signed_in? %>
+                      <% if (mr.user_id and current_user.id == mr.user_id) %>
+              	        <%= link_to edit_mrating_path(mr) do %>
+                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to mr, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    <br><br>
+                    <%= mr.created_at.strftime("%d.%m.%Y") %>
+                    <br><br>
+                    </ntext>
+                  </div>
+                </div>
+      				<% end %>
+          </div>
+          
+        <% when "Advisors" %>
+          <%= header("Ansprechpartner", false) %>
+          <div class="panel-body">
+              <% @mobject.madvisors.each do |ma| %>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <div class="thumbnail" align="center">
+                    <%= showImage2(:medium, ma.user, true) %>
+                    <br>
+                    <anzeigetext>
+                    <%= ma.user.name + " " + ma.user.lastname %><br>
+                    </anzeigetext>
+                    <ntext>
+                    <%= ma.grade %>
+                    <br><br>
+                    <% if ma.user.phone1 != nil %>
+                      <%= ma.user.phone1 %><br>
+                    <% end %>
+                    <% if ma.user.phone2 != nil %>
+                      <%= ma.user.phone2 %><br>
+                    <% end %>
+                    <% if ma.user.address1 != nil %>
+                      <%= ma.user.address1 %><br>
+                    <% end %>
+                    <% if ma.user.address2 != nil %>
+                      <%= ma.user.address2 %><br>
+                    <% end %>
+                    <% if ma.user.address3 != nil %>
+                      <%= ma.user.address3 %><br>
+                    <% end %>
+                    </ntext>
+                    <% if user_signed_in? %>
+                      <% if (ma.mobject.user_id and current_user.id == ma.mobject.user_id) or (ma.mobject.company_id != nil and current_user.id == ma.mobject.company.user_id) %>
+              	        <% link_to edit_madvisor_path(ma) do %>
+                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                        <% end %>
+              	        <%= link_to ma, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+          	        <%= link_to new_email_path(:m_from_id => current_user.id, :m_to_id => ma.user_id) do %>
+                      <i class="btn btn-primary glyphicon glyphicon-envelope"></i>
+                    <% end %>
+          	        <%= link_to user_path(:id => ma.user_id, :topic => "Kalendereintraege") do %>
+                      <i class="btn btn-primary glyphicon glyphicon-calendar"></i>
+                    <% end %>
+                    <br><br>
+                  </div>
+                </div>
+      				<% end %>
+            </div>
+            
+        <% when "Kalender" %>
+          <%= header("Kalender KW "+ session[:cw].to_s, false) %>
+          <div class="panel-body">
+        		<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Uhrzeit</th>
+                  <% for i in 0..6 %>
+                    <th>
+                      <%= $wochentage[i] %><br>
+                      <small_cal>
+                      <%= (@start+i).strftime("%d.%m") %>
+                      </small_cal>
+                    </th>
+                  <% end %>
+                </tr>
+              </thead>
+              
+              <tbody>
+      
+                  <% @items = CalItem2(@mobject.mcalendars,@start) %>
+                  <% for hour in 0..@anz_stunden-1 %>
+                    <tr>
+                      <td><%= (@mobject.time_from + hour).to_s + " Uhr" %></td>
+                    <% for day in 0..@anz_tage-1 %>
+                        <% if @array[hour][day] != 0 %>
+                          <td class="blocked">
+                        <% else %>
+                          <td class="free">
+                        <% end %>
+                        <% @array[hour][day] %>
+                        </td>                
+                    <% end %>
+                    </tr>
+                  <% end %>
+
+              </tbody>
+            </table>
+          </div>
+          <div class="panel-body">
+          	<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th colspan=3>gemietet von</th>
+                  <th>von</th>
+                  <th>bis</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <body>
+                <% @mobject.mcalendars.each do |ca| %>
+                  <tr>
+                    <td>
+          				    <% if user_signed_in? %>
+            				    <% if ca.user_id == current_user.id %>
+                          <%= link_to listaccount_index_path :user_id => current_user.id, :user_id_ver => ca.mobject.user_id, :company_id_ver => ca.mobject.company_id, :ref => "Vergütung an "+ ca.mobject.name + " " + ca.date_from.strftime("%d.%m.%Y") + " " + ca.time_from.to_s + "Uhr -" + ca.date_to.strftime("%d.%m.%Y") + " " + ca.time_to.to_s + " Uhr", :object_name => "Mobject", :mobject_id => ca.mobject.id, :amount => 0 do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-euro"></i>
+                          <% end %>
+          				        <%= link_to edit_mcalendar_path(ca) do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
+                          <% end %>
+          				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                          <% end %>
+              				  <% end %>
+              				<% end %>
+                    </td>
+                    <td>
+                    <%= showImage2(:small, ca.user, true) %>
+                    </td>
+                      <td>
+                        <anzeigetext>
+                        <%= ca.user.name + " " + ca.user.lastname %><br>
+                        </anzeigetext>
+                        <ntext><%= ca.user.address2 %></ntext>
+                      </td>
+                    <td><%= ca.date_from.strftime("%d.%m.%Y")+"  "+ca.time_from.to_s+" Uhr"%></td>
+                    <td><%= ca.date_to.strftime("%d.%m.%Y")+"  "+ca.time_to.to_s+" Uhr"%></td>
+                  </tr>
+                <% end %>
+              </body>
+           	</table>
+          </div>
+          
+        <% when "CF_Statistik" %>
+          <%= header("Statistik (Anzahl)", false) %>
+          <div class="panel-body">
+            <div id="curve_chart1"></div>
+          </div>
+          <%= header("Statistik (Betrag)", false) %>
+          <div class="panel-body">
+            <div id="curve_chart2"></div>
+          </div>
+          
+        <% when "CF_Transaktionen" %>
+          <%= header("Transaktionen", false) %>
+          <div class="panel-body">
+            <% @mobject.mstats.order(amount: :desc).each do |ds| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+        				  <%= showImage2(:medium, ds.owner, true) %>
+        				  <% if ds.owner_type == "Company" %>
+          				  <%= ds.owner.name %>
+          				<% end %>
+          				<% if ds.owner_type == "User" %>
+          				  <%= ds.owner.name + " " + ds.owner.lastname  %>
+          				<% end %>
+          				<br><br>
+          				<% if !ds.anonymous %>
+          	        <% if ds.mobject.msubtype == "Spenden" %>
+                      <ntext>Spendenbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                      <br><br>
+                    <% end %>
+          	        <% if ds.mobject.msubtype == "Belohnungen" %>
+                      <ntext>Unterstützungsbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                      <br><br>
+                    <% end %>
+          	        <% if ds.mobject.msubtype == "Zinsen" %>
+                      <ntext>Kreditbetrag</ntext><br><preis><%= sprintf("%05.2f CHF", ds.amount) %></preis><ntext><br> am <%= ds.created_at.strftime("%d.%m.%Y") %></ntext>
+                      <br><br>
+                    <% end %>
+                  <% else %>
+                      <betrag>*****.** CHF</betrag>
+                  <% end %>
+                  <br><br>
+                  <%= ds.created_at.strftime("%d.%m.%Y") %>
+                  <br><br>
+                  <% if user_signed_in? %>
+                    <% if (ds.owner_type == "User" and current_user.id == ds.owner_id) or (ds.owner_type == "Company" and current_user.id == ds.owner.user_id) %>
+                      <%= link_to listaccount_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => @mobject.owner.id, :ref => "Vergütung an "+ @mobject.name, :object_name => "Donation", :object_id => @mobject.id, :amount => ds.amount do %>
+                        <i class="btn btn-primary glyphicon glyphicon-euro"></i>
+                      <% end %>
+            	        <%= link_to edit_mstat_path(ds) do %>
+                        <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                      <% end %>
+            	        <%= link_to ds, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div>
+            
+        <% when "Standort" %>
+          <%= header("Standort", false) %>
+          <div class="panel-body">
+            <div id="map">
+              <div id="map-canvas"></div>
+            </div>
+          </div>
+
+      <% end %>
+    </div>
+    
+      <div class='col-xs-2'>
+        <%= navigate("Object", @mobject) %>
+      </div>
+    
+  </div>
+
+<script>
+    handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers([
+        {
+          "lat": <%= @mobject.latitude %>,
+          "lng": <%= @mobject.longitude %>,
+          "infowindow": "<%= @mobject.name %>"
+        }
+      ]);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.bxslider').bxSlider({
+      mode: 'fade',
+      auto: true,
+      speed:1000,
+      controls: false
+  });
+});
+</script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Datum', 'Anzahl'],
+      <%= raw @anz_s %>
+    ]);
+    var options = {
+      title: 'Crowdfunding Performance',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Datum', 'Betrag'],
+      <%= raw @bet_s %>
+    ]);
+    var options = {
+      title: 'Crowdfunding Performance',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+
+    chart.draw(data, options);
+  }
+</script>

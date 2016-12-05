@@ -1,0 +1,2 @@
+module AppparamsHelper
+end

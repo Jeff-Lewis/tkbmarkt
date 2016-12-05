@@ -1,0 +1,1 @@
+json.array! @favourits, partial: 'favourits/favourit', as: :favourit

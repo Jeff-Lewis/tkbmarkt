@@ -1,0 +1,2 @@
+module MsponsorsHelper
+end

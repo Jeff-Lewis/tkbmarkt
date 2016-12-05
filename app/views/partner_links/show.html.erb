@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Partner:</strong>
+  <%= @partner_link.partner_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @partner_link.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @partner_link.description %>
+</p>
+
+<p>
+  <strong>Avatar file name:</strong>
+  <%= @partner_link.avatar_file_name %>
+</p>
+
+<p>
+  <strong>Avatar content type:</strong>
+  <%= @partner_link.avatar_content_type %>
+</p>
+
+<p>
+  <strong>Avatar file size:</strong>
+  <%= @partner_link.avatar_file_size %>
+</p>
+
+<p>
+  <strong>Avatar updated at:</strong>
+  <%= @partner_link.avatar_updated_at %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @partner_link.active %>
+</p>
+
+<p>
+  <strong>Link:</strong>
+  <%= @partner_link.link %>
+</p>
+
+<%= link_to 'Edit', edit_partner_link_path(@partner_link) %> |
+<%= link_to 'Back', partner_links_path %>

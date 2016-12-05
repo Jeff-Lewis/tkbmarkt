@@ -1,0 +1,13 @@
+I"ñ(function() {
+  jQuery(function() {
+    return $('#user_dateofbirth').datepicker({
+      dateFormat: 'mm-dd-yyyy',
+      weekStart: 1,
+      language: "de",
+      daysOfWeekHighlighted: "0,6",
+      firstDay: 1
+    });
+  });
+
+}).call(this);
+:ET

@@ -1,0 +1,1 @@
+json.partial! "madvisors/madvisor", madvisor: @madvisor

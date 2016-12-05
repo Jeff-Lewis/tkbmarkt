@@ -1,0 +1,92 @@
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+          STATISTIK Betrag
+        </li_header>
+      </div>
+      <div class="panel-body">
+        <%= content_tag :div, "", id: "reports_chart_anz",  data: {reports: @test} %>
+      </div>
+    </div>  
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+          STATISTIK Betrag
+        </li_header>
+      </div>
+      <div class="panel-body">
+        <%= content_tag :div, "", id: "donut-example0", data: {reports: @array} %>
+      </div>
+    </div>  
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+          STATISTIK Betrag
+        </li_header>
+      </div>
+      <div class="panel-body">
+        <%= content_tag :div, "", id: "donut-example1", data: {reports:[{label: "Status ok", value: 12},
+                                                                        {label: "Status nok", value: 30},
+                                                                        {label: "Status in Prüfung", value: 20}]} %>
+      </div>
+    </div>  
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+          STATISTIK Betrag
+        </li_header>
+      </div>
+      <div class="panel-body">
+        <%= content_tag :div, "", id: "donut-example2" %>
+      </div>
+    </div>  
+  </div>
+
+<script>
+new Morris.Bar({
+        element: 'reports_chart_anz',
+        data: $('#reports_chart_anz').data('reports'),
+        xkey: 'datum', 
+        ykeys: ['summe'], 
+        labels: ['Anzahl']
+});
+</script>
+
+<script>
+Morris.Donut({
+  element: 'donut-example0',
+  data: $('#donut-example0').data('reports'),
+});
+</script>
+
+<script>
+Morris.Donut({
+  element: 'donut-example1',
+  data: $('#donut-example1').data('reports'),
+});
+</script>
+
+<script>
+Morris.Donut({
+  element: 'donut-example2',
+  data: [
+    {label: "Download Sales", value: 12},
+    {label: "In-Store Sales", value: 30},
+    {label: "Mail-Order Sales", value: 20}
+  ],
+  colors: ['red',
+            'blue',
+            'green'
+  ]
+});
+</script>

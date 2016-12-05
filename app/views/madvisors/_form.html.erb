@@ -1,0 +1,21 @@
+<%= form_for(@madvisor) do |f| %>
+  <% if @madvisor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@madvisor.errors.count, "error") %> prohibited this madvisor from being saved:</h2>
+
+      <ul>
+      <% @madvisor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

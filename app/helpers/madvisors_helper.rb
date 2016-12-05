@@ -1,0 +1,3 @@
+module MadvisorsHelper
+
+end

@@ -1,0 +1,63 @@
+
+    <%= form_for @webmaster do |f| %>
+
+        <% if @webmaster.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@webmaster.errors.count, "error") %> prohibited this company from being saved:</h2>
+              <ul>
+                  <% @webmaster.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="panel panel-heading header">
+                <h1>
+                <%= link_to webmasters_path :page => session[:page] do %>
+                  <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
+                <% end %>
+                Prüfung
+                </h1>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel-body">
+              <div class="form-group">
+                <%= f.label "Kommentar Benutzer" %><br/>
+                <% if @webmaster_edit %>
+                  <%= f.text_area :user_comment, rows: 5, :readonly => true, class:"form-control"%>
+                <% else %>
+                  <%= f.text_area :user_comment, rows: 5, autofocus: true, class:"form-control"%>
+                <% end %>
+              </div>
+              <% if @webmaster_edit %>
+                <div class="form-group">
+                  <%= f.label "Kommentar Webmaster" %><br/>
+                  <%= f.text_area :web_user_comment, rows: 5, autofocus: true, class:"form-control"%>
+                </div>
+              <% end %>
+              <div class="actions">
+                 <% if !@webmaster_edit %> 
+                   <%= f.submit "Speichern",  :status => "CHECK", class:"btn btn-primary btn-lg"%>
+                 <% else %>
+                   <%= f.submit "Freigeben",  :status => "OK", class:"btn btn-primary btn-lg"%>
+                   <%= f.submit "Sperren",  :status => "NOK", class:"btn btn-danger btn-lg"%>
+                 <% end %>
+              </div>
+              <%= f.hidden_field :object_id %>
+              <%= f.hidden_field :object_name %>
+              <%= f.hidden_field :user_id %>
+              <%= f.hidden_field :web_user_id %>
+              <%= f.hidden_field :user_id %>
+
+            </div>
+          </div>
+        </div>
+    <% end %>
+        

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Object name:</strong>
+  <%= @webmaster.object_name %>
+</p>
+
+<p>
+  <strong>Object:</strong>
+  <%= @webmaster.object_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @webmaster.user_id %>
+</p>
+
+<p>
+  <strong>Web user:</strong>
+  <%= @webmaster.web_user_id %>
+</p>
+
+<p>
+  <strong>User comment:</strong>
+  <%= @webmaster.user_comment %>
+</p>
+
+<p>
+  <strong>Web user comment:</strong>
+  <%= @webmaster.web_user_comment %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @webmaster.status %>
+</p>
+
+<%= link_to 'Edit', edit_webmaster_path(@webmaster) %> |
+<%= link_to 'Back', webmasters_path %>

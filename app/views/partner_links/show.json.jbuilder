@@ -1,0 +1,1 @@
+json.partial! "partner_links/partner_link", partner_link: @partner_link

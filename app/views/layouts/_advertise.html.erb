@@ -1,0 +1,67 @@
+
+	<tkb>
+	<div class="row">
+		<div class='col-xs-12'>
+			<div class="panel-body">
+				<% @p = Company.where('partner=?',true) %>
+				<% @p.each do |p| %>
+					<% if p.name == "Thurgauer Kantonalbank" %>
+							<%= showImage2(:small, p, true) %>
+							<% @id = p.id %>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	</tkb>
+
+	<advertise>
+	<div class="row">
+		<div class='col-xs-12'>
+			<div class='panel-body'>
+				<% if @id %>
+					<% @p = Company.find(@id) %>
+					<% if @p %>
+						<% if @p.partner_links %>
+							<% anz = @p.partner_links.where('active=?',true).count %>
+							<% if anz > 0 %>
+								<% random = Random.new(Time.new.to_i) %>
+								<% r = random.rand(anz) + 1 %>
+								<% counter = 0 %>
+								<% @p.partner_links.where('active=?',true).each do |pl| %>
+								  <% counter = counter + 1 %>
+								  <% if pl.link and counter == r %>
+					        	      <%= link_to url_with_protocol(pl.link), :target => '_blank' do %>
+					        	      	<% if pl.avatar %>
+											<%= image_tag pl.avatar(:medium), class:'img-rounded' %>
+										<% end %>
+									  <% end %>
+								  <% end %>
+				                <% end %>
+				            <% end %>
+			            <% end %>
+			        <% end %>
+			     <% end %>
+			</div>
+		</div>
+	</div>
+	</advertise>
+
+<script>
+	$(document).ready(function() {
+		$("tkb").hide()
+	})
+</script>
+
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("tkb").mouseenter(function() {-->
+<!--    $("advertise").show();-->
+<!--  });-->
+<!--})-->
+<!--$(document).ready(function(){-->
+<!--  $("advertise").mouseleave(function() {-->
+<!--    $("advertise").hide();-->
+<!--  });-->
+<!--})-->
+<!--</script>-->

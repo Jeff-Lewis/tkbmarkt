@@ -1,0 +1,54 @@
+<div class="container-fluid">
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel-heading header">
+        <li_header>
+        USER STAT
+        <span class="badge"><%= @usanz %></span>
+        </li_header>
+      </div>
+    </div>
+  </div>
+	<div class="row">
+    <div class="col-md-12">
+  		<table class="table table-striped">
+        <thead>
+          <tr>
+            <td colspan="3">
+              <div class="digg_pagination">
+                  <%= will_paginate @users, :container => false, previous_label: "<", next_label: ">" %>
+              </div>	  
+            </td>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <th>last location</th>
+            <th>letzte Anmeldung</th>
+            <th>Anzahl Anmeldungen</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |u| %>
+              <tr>
+    				    <td>
+    				      <anzeigetext>
+    				      <%= u.name + " " + u.lastname %>
+                  </anzeigetext><br>
+                  <%= u.email %>
+                </td>
+                <td>
+                  not implemented yet
+                </td>
+                <td>
+                  <%= u.last_sign_in_at.strftime("%d.%m.%Y-%T") if u.last_sign_in_at != nil %>
+                </td>
+                <td>
+                  <%= u.sign_in_count %>
+                </td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Partner Links</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partner</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Avatar file name</th>
+      <th>Avatar content type</th>
+      <th>Avatar file size</th>
+      <th>Avatar updated at</th>
+      <th>Active</th>
+      <th>Link</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @partner_links.each do |partner_link| %>
+      <tr>
+        <td><%= partner_link.partner_id %></td>
+        <td><%= partner_link.name %></td>
+        <td><%= partner_link.description %></td>
+        <td><%= partner_link.avatar_file_name %></td>
+        <td><%= partner_link.avatar_content_type %></td>
+        <td><%= partner_link.avatar_file_size %></td>
+        <td><%= partner_link.avatar_updated_at %></td>
+        <td><%= partner_link.active %></td>
+        <td><%= partner_link.link %></td>
+        <td><%= link_to 'Show', partner_link %></td>
+        <td><%= link_to 'Edit', edit_partner_link_path(partner_link) %></td>
+        <td><%= link_to 'Destroy', partner_link, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Partner link', new_partner_link_path %>

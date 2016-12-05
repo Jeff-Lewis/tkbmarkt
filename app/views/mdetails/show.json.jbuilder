@@ -1,0 +1,1 @@
+json.partial! "mdetails/mdetail", mdetail: @mdetail

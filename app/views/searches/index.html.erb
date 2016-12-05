@@ -1,0 +1,73 @@
+
+	<div class="row">
+    <div class="col-xs-12">
+      <div class="panel-body">
+        <% if @ticket %>
+          <%= link_to tickets_path :msponsor_id => @ticket.msponsor_id do %>
+            <i class="btn btn-primary glyphicon glyphicon-list"></i>
+          <% end %>
+          <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :generate => true, :page => session[:page] do %>
+            <i class="btn btn-primary pull-right glyphicon glyphicon-user">
+              <span class="glythicon glyphicon-filter"></span></i>
+          <% end %>
+          <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :activate => true, :page => session[:page] do %>
+            <i class="btn btn-warning pull-right glyphicon glyphicon-user">
+              <span class="glythicon glyphicon-hand-right"></span></i>
+          <% end %>
+          <%= link_to searches_path :search_domain => "Tickets", :controller_name => controller_name, :ticket_id => @ticket.id, :remove => true, :page => session[:page] do %>
+            <i class="btn btn-danger pull-right glyphicon glyphicon-user">
+              <span class="glythicon glyphicon-trash"></span></i>
+          <% end %>
+          <% @counter = UserTicket.where('ticket_id=?',@ticket.id).count %>
+          <%= link_to ticketuserview_index_path :ticket_id => @ticket.id do %>
+            <i class="btn btn-primary pull-right glyphicon glyphicon-user">
+            <span class="badge"><%= @counter %></span></i>
+          <% end %>
+        <% else %>
+          <% ticket_id = nil %>
+            <% case @search_domain %>
+              <% when "Privatpersonen" %>
+                <%= link_to users_path do %>
+                  <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                <% end %>
+              <% when "Institutionen" %>
+                <%= link_to companies_path do %>
+                  <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                <% end %>
+              <% when "Object" %>
+                <%= link_to mobjects_path(:mtype => @mtype, :msubtype => @msubtype) do %>
+                  <i class="btn btn-primary glyphicon glyphicon-list"></i>
+                <% end %>
+            <% end %>
+        <% end %>
+        <% if @ticket %>
+          <% ticket_id = @ticket.id %>
+        <% else %>
+          <% ticket_id = nil %>
+        <% end %>
+		    <%= link_to new_search_path(:user_id => current_user.id, :search_domain => @search_domain, :controller_name => @controller_name, :mtype => @mtype, :msubtype => @msubtype, :ticket_id => ticket_id) do %>
+          <i class="btn btn-primary glyphicon glyphicon-plus"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+    
+  <div class="row">
+      <% if @ticket %>
+        <%= header("Suchen " + @search_domain + " " + @ticket.msponsor.mobject.name + " " + @ticket.name + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
+      <% else %>
+        <% if @search_domain == "Object" %>
+          <%= header("Suchen " + @mtype.to_s + " " + @msubtype.to_s + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
+        <% else %>
+          <%= header("Suchen " + @search_domain + " <span class='badge'>" + @seranz.to_s + "</span>", true) %>
+        <% end %>
+      <% end %>
+  </div>
+
+  <%= build_medialist2(@searches, "searches", nil) %>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>

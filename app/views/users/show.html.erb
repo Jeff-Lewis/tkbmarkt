@@ -1,0 +1,641 @@
+
+  <div class="row">
+    <action>
+    <%= action_buttons2("User", @user, @topic) %>
+    </action>
+  </div>
+
+  <div class="row">
+    <header>
+    <%= header(@user.fullname, true) %>
+    </header>
+  </div>
+
+  <div class="row">
+
+      <div class='col-xs-10'>
+      <% case @topic %>
+        <% when "User" %>
+
+              <%= header("Kontaktdaten", false) %>
+              <!--<div class='col-xs-12'><div class="panel-body">-->
+              <div class="panel-body">
+                <% if @user.anonymous or @user.avatar_file_name == nil %>
+                  <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
+                <% else %>
+                  <%= image_tag @user.avatar(:medium), class:"img-rounded"  %>
+                  <br><br>
+                  <b><i class="glyphicon glyphicon-home"></i> Adresse</b><br>
+                  <% if !@user.anonymous and @user.address1 != nil and @user.address1 != "" %>
+                    <%= @user.address1 %><br> 
+                  <% end %>
+                  <% if !@user.anonymous and @user.address2 != nil and @user.address2 != "" %>
+                    <%= @user.address2 %><br> 
+                  <% end %>
+                  <% if !@user.anonymous and @user.address3 != nil and @user.address3 != "" %>
+                    <%= @user.address3 %><br> 
+                  <% end %>
+                  <br>
+                  <b><i class="glyphicon glyphicon-phone"></i> Telefon</b><br>
+                  <% if !@user.anonymous and @user.phone1 != nil and @user.phone1 != "" %>
+                    <%= @user.phone1 %><br> 
+                  <% end %>
+                  <% if !@user.anonymous and @user.phone2 != nil and @user.phone2 != "" %>
+                    <%= @user.phone2 %><br> 
+                  <% end %>
+                  <br>
+                  <b>Geburtsdatum</b><br>
+                  <%= @user.dateofbirth.strftime("%d.%m.%Y") if @user.dateofbirth %><br>
+                  <% if user_signed_in? %>
+          	        <%= link_to new_email_path :m_from_id => current_user.id, :m_to_id => @user.id, :back_url => request.original_url do %>
+                      <i class="btn btn-default glyphicon glyphicon-envelope"></i>
+                    <% end %>
+                  <% else %>
+                      <i class="glyphicon glyphicon-envelope"></i>
+                  <% end %>
+                  <%= @user.email %><br>
+                <% end %>
+            </div>
+            <%= header("Aktivitätsübersicht", false) %>
+            <div class="panel-body">
+              <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
+              <div id="piechart"></div>
+            </div>
+
+            <%= header("Ort (Karte)", false) %>
+            <i class="glyphicon glyphicon-map-marker pull-left" onclick="return init_map(0);"></i>
+            <div class="panel-body">
+              <div id="map">
+                <div id="map-canvas"></div>
+              </div>
+            </div>
+            <%= header("Wo war ich?", false) %>
+            <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
+            <div class="panel-body">
+              <div id="map2">
+                <div id="map-canvas2"></div>
+                </div>
+            </div>
+        
+        <% when "Institutionen" %>
+          <%= header("Institutionen", false) %>
+          <%= build_medialist2(@user.companies, "companies", nil) %>
+        <% when "Angebote" %>
+          <%= header("Angebote", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Angebote"), "mobjects", nil) %>
+        <% when "Ansprechpartner" %>
+          <%= header("Ansprechpartner", false) %>
+          <%= build_medialist2(@user.madvisors, "madvisors", nil) %>
+        <% when "Kleinanzeigen" %>
+          <%= header("Kleinanzeigen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Kleinanzeigen"), "mobjects", nil) %>
+        <% when "Stellenanzeigen" %>
+          <%= header("Stellenanzeigen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Stellenanzeigen"), "mobjects", nil) %>
+        <% when "Vermietungen" %>
+          <%= header("Vermietungen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Vermietungen"), "mobjectss", nil) %>
+        <% when "Veranstaltungen" %>
+          <%= header("Veranstaltungen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Veranstaltungen"), "mobjects", nil) %>
+        <% when "Ausflugsziele" %>
+          <%= header("Ausflugsziele", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Ausflugsziele"), "mobjects", nil) %>
+        <% when "Ausschreibungen" %>
+          <%= header("Ausschreibungen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Ausschreibungen"), "mobjects", nil) %>
+        <% when "Crowdfunding" %>
+          <%= header("Crowdfunding", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Crowdfunding"), "mobjects", nil) %>
+        <% when "Crowdfunding Beitraege" %>
+          <%= header("Crowdfunding Beitraege", false) %>
+          <%= build_medialist2(@user.mstats, "mstats", nil) %>
+      <% when "Bewertungen" %>
+          <%= header("Bewertungen", false) %>
+          <%= build_medialist2(@user.mratings, "mratings", nil) %>
+
+        <% when "Kalendereintraege" %>
+          <%= header("Kalender KW " + session[:cw].to_s, false) %>
+          <!--<div class='col-xs-12'><div class="panel-body">-->
+          <div class="panel-body">
+        		<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Uhrzeit</th>
+                  <% for i in 0..6 %>
+                    <th>
+                      <%= $wochentage[i] %><br>
+                      <small_cal>
+                      <%= (@start+i).strftime("%d.%m") %>
+                      </small_cal>
+                    </th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <%= AppItem(@user, @appointments, @start) %>
+              </tbody>
+            </table>
+            <angefragt>angefragt</angefragt><abgelehnt>leider nicht möglich</abgelehnt><bestaetigt>bestätigt</bestaetigt><geblockt>nicht verfügbar</geblockt><br><br>
+          <!--</div></div>-->
+          </div>
+          <%= header("Kalendereinträge", false) %>
+          <div class="panel-body">
+          	<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Betreff</th>
+                  <th colspan=2>Dokumente</th>
+                  <th colspan=2>gebucht von</th>
+                  <th>Datum/Uhrzeit</th>
+                </tr>
+              </thead>
+              <body>
+              	<% if user_signed_in? %>
+                  <% @appointments.each do |ca| %>
+              			<% if true or (ca.user_id1 == current_user.id or ca.user_id2 == current_user.id) %>
+                      <tr>
+                        <td>
+                          <% case ca.status %>
+                            <% when "angefragt" %>
+                               <angefragt><%= ca.status %></angefragt>
+                            <% when "geht leider nicht" %>
+                               <abgelehnt><%= ca.status %></abgelehnt>
+                            <% when "bestaetigt" %>
+                               <bestaetigt><%= ca.status %></bestaetigt>
+                            <% when "nicht verfügbar" %>
+                              <geblockt><%= ca.status %></geblockt>
+                            <% else %>
+                          <% end %>
+                          <br>
+                          <%= link_to edit_appointment_path(ca) do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-wrench"></i>
+                          <% end %>
+                				  <% if ca.user_id1 == current_user.id and ca.status == "angefragt" %>
+                              <%= link_to user_path(:id => @user.id, :confirm_id => ca.id, :subject => @subject, :topic => "Userkalender") do %>
+                                <i class="btn btn-primary btn-xs glyphicon glyphicon-ok"></i>
+                              <% end %>
+                              <%= link_to user_path(:id => @user.id, :deny_id => ca.id, :subject => @subject, :topic => "Userkalender") do %>
+                                <i class="btn btn-primary btn-xs glyphicon glyphicon-remove"></i>
+                              <% end %>
+                          <% end %>
+          				        <% link_to edit_appointment_path(ca) do %>
+                            <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                          <% end %>
+          				        <%= link_to ca, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                          <% end %>
+                        </td>
+                        <td>
+                          <%= ca.channel + " " + ca.channel_detail %><br>
+                          <%= ca.subject %>
+                        </td>
+              				  <td>
+                          <%= link_to new_appointment_document_path(:appointment_id => ca.id) do %>
+                            <i class="btn btn-primary btn-xs glyphicon glyphicon-cloud-upload"></i><br>
+                          <% end %>
+                        </td>
+                        <td>
+                          <% ca.appointment_documents.each do |ad| %>
+                  	        <%= link_to ad.document.url, target: "_blank" do %>
+                              <i class="btn btn-primary btn-xs glyphicon glyphicon-cloud-download"></i>
+                            <% end %>
+            				        <%= link_to ad, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                              <i class="btn btn-danger btn-xs glyphicon glyphicon-trash"></i>
+                            <% end %>
+                            <%= ad.name %><br>  
+                          <% end %>
+                        </td>
+                        <td>
+                          <% @user2 = User.find(ca.user_id2) %>
+                          <% if @user2.avatar_file_name %>
+                            <%= image_tag @user2.avatar(:small), class:"img-rounded" %>
+                          <% else %>
+                            <%= image_tag("user_a.png", :size => "50x50" , class:"img-rounded") %>
+                          <% end %>
+                        </td>
+                        <td>
+                          <anzeigetext>
+                          <%= @user2.name + " " + @user2.lastname %><br>
+                          </anzeigetext>
+                          <ntext><%= @user2.address2 %></ntext>
+                        </td>
+                        <td>
+                          <%= ca.app_date.strftime("%d.%m.%Y") %><br>
+                          <%= ca.time_from.to_s+"-"+ca.time_to.to_s+" Uhr"%>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                <% end %>          
+              </body>
+           	</table>
+          </div>
+
+    	 <% when "Tickets" %>
+          <%= header("Tickets", false) %>
+          <div class="panel-body">
+            <% @user.user_tickets.where('status<>? and status<>?',"zurückgegeben", "Filter Kampagne").each do |ut| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <anzeigetext>
+                    <%= ut.ticket.mcategory.name %><br>
+          					<%= ut.ticket.name %><br>
+          				</anzeigetext>
+          				<ticketstatuss><b>
+          				<%= ut.status %>
+                  </b></ticketstatuss><br><br>
+                  
+                  <%= showImage2(:small, ut.user, true) %>
+                  
+                  <%= ut.user.name + " " + ut.user.lastname %><br>
+                  <ntext><br>
+                  <b>Veranstaltung</b><br>
+                  <%= link_to ut.ticket.msponsor.mobject do %>
+                    <%= showFirstImage2(:medium, ut.ticket.msponsor.mobject, ut.ticket.msponsor.mobject.mdetails) %><br>
+                  <% end %>
+                  <%= ut.ticket.msponsor.mobject.name %><br>
+                  <%= ut.ticket.msponsor.mobject.date_from.strftime("%d.%m.%Y") + " - " + ut.ticket.msponsor.mobject.date_to.strftime("%d.%m.%Y")  %><br>
+                  <br>
+                  <b>überreicht von</b><br>
+                  
+                  <%= showImage2(:small, ut.ticket.msponsor.company, true) %>
+                  
+                  <%= ut.ticket.msponsor.company.name %>
+                  </ntext>
+                  <div class="caption">
+                      <ntext>
+            				  <%= ut.ticket.description %>
+                      </ntext>
+            			</div>
+                  <ntext>
+            		  <%= ut.ticket.created_at.strftime("%d.%b.%Y %H:%M Uhr") %>
+            		  <% if ut.ticket.created_at.to_date == Date.today %>
+            		    Heute
+            		  <% end %>
+            		  <% if (Date.today - ut.ticket.created_at.to_date) == 1 %>
+            		    Gestern
+            		  <% end %>
+            		  <% if Date.today - ut.ticket.created_at.to_date > 1 %>
+                    <% anz = (Date.today.to_date - ut.ticket.created_at.to_date).to_i %>
+                    Vor <%= anz %> Tagen
+            		  <% end %>
+                  </ntext>    		  
+                  </p>
+            			<p>
+            			<% if user_signed_in? and current_user.id == ut.user_id %>
+              			<% case ut.status %>
+              			  <% when "persönlich", "übergeben" %>
+                        <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> zurückgeben</i>
+                        <% end %><br><br>
+                        <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "aktivieren" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-up"> aktivieren</i>
+                        <% end %>
+              			  <% when "zurückgegeben" %>
+                        <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "zurückgeben" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-thumbs-down"> zurückgegeben</i>
+                        <% end %><br><br>
+              			  <% when "aktiv" %>
+                        <%= link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> einlösen</i>
+                        <% end %>
+              			  <% when "eingelöst" %>
+                        <% link_to users_ticketstatus_path :userticket_id => ut.id, :status => "einlösen" do %>
+                          <i class="btn btn-primary btn btn-lg glyphicon glyphicon-shopping-cart"> eingelöst</i>
+                        <% end %>
+                    <% end %>
+                  <% end %>
+            		</div>
+          		</div>
+            <% end %>
+          </div>
+            
+    	 <% when "Favoriten" %>
+          <%= header("Favoriten", false) %>
+          <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
+          <div class="panel-body">
+            <%= build_medialist2(@user.favourits, "favourits", nil) %>
+          </div>
+          <%= header("Wo sind meine Favoriten?", false) %>
+          <div class="panel-body">
+            <div id="map2">
+              <div id="map-canvas2"></div>
+              </div>
+          </div>
+          
+    	 <% when "Kundenstatus" %>
+          <% hash = Hash.new %>
+          <% hash = {:user_id => @user.id} %>
+          <%= header("Kundenstatus", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(@user.customers, "partners", hash) %>
+          </div>
+          <%= header("Partner", false) %>
+          <div class="panel-body">
+            <%= build_medialist2(Company.where('partner=?',true), "nopartners", hash) %>
+          </div>
+
+    	 <% when "Transaktionen" %>
+          <%= header("Transaktionen", false) %>
+          <div class="panel-body">
+            <% @trx = @user.transactions.where('ttype=?', "Payment").order(trx_date: :desc) %>
+            <% @trx.each do |t| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="thumbnail" align="center">
+                  <% ac_ver = Account.find(t.account_ver) %>
+                  <% if ac_ver %>
+                    <% if ac_ver.customer.owner_id %>
+                      <%= showImage2(:medium, ac_ver.customer.owner, true) %>
+                      <anzeigetext>
+                        <% if ac_ver.customer.owner_type == "User" %>
+                          <%= ac_ver.customer.owner.name + " " + ac_ver.customer.owner.lastname %>
+                        <% else %>
+                          <%= ac_ver.customer.owner.name %>
+                        <% end %>
+                      </anzeigetext>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                  <b>Referenz</b>
+                  <% @item = Object.const_get(t.object_name).find(t.object_id) %>
+                  <% if @item %>
+                    <%= link_to @item do %>
+                      <%= @item.name %>
+                    <% end %>
+                    <br>
+                  <% end %>
+                  <br>
+                  <b>Betrag</b>
+                  <%= sprintf("%05.2f CHF",t.amount) if t.amount != nil %>
+                  <br><br>
+                  <b>Mitteilung</b><br>
+                  <%= t.text %>
+                  <br><br>
+                  <b>Status</b>
+                  <%= t.status if t.amount != nil %>
+                  <br>
+                  <%= t.updated_at.strftime("%d.%m.%Y-%H:%M") %>
+                  <br><br>
+                  <% if t.status == "erfasst" %>
+                    <% if t.owner_type == "User" %>
+                      <%= link_to user_path(:id => t.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen") do %>
+                        <i class="btn btn-primary glyphicon glyphicon-ok"></i>
+                      <% end %>
+                    <% else %>
+                      <%= link_to company_path(:id => t.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen") do %>
+                        <i class="btn btn-primary glyphicon glyphicon-ok"></i>
+                      <% end %>
+                    <% end %>
+                    <%= link_to edit_transaction_path(t, :user_id => current_user.id) do %>
+                      <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                    <% end %>
+          	        <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                      <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  <% end %>
+                  <% if t.status == "freigegeben" %>
+                    <% if t.owner_type == "User" %>
+                      <%= link_to user_path(:id => t.owner_id, :trx_status_ausgefuehrt_id => t.id, :topic => "Transaktionen") do %>
+                        <i class="btn btn-primary glyphicon glyphicon-thumbs-up"></i>
+                      <% end %>
+                    <% else %>
+                      <%= link_to company_path(:id => t.owner_id, :trx_status_ausgefuehrt_id => t.id, :topic => "Transaktionen") do %>
+                        <i class="btn btn-primary glyphicon glyphicon-thumbs-up"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br><br>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+    	 <% when "Email" %>
+          <%= header("Kommunikation", false) %>
+          <div class="panel-body">
+            <table class="table-striped" width="100%">
+            <% emails = Email.where('m_to=? or m_from=?', @user.id, @user.id).order(created_at: :desc) %>
+            <% if emails.count > 0 %>
+              <tr>
+                <th>Wer/Wann?</th>
+                <th>Message</th>
+              </tr>
+            <% end %>
+            <% emails.each do |e| %>
+              <tr>
+              <td>
+              <% if e.m_to == @user.id %>
+                <% @u = User.find(e.m_from) %>
+                <%= showImage2(:small, @u, true) if @u %><br>
+              <% else %>
+                <% @u = User.find(e.m_to) %>
+                <%= showImage2(:small, @u, true) if @u %><br>
+              <% end %>
+              <%= e.created_at.strftime("%A, %d.%m.%Y-%H:%M:%S") %><br>
+              </td>
+              <% if e.m_from == @user.id %>
+                <td style="text-align:right">
+              <% else %>
+                <td>
+              <% end %>
+              <% if user_signed_in? and e.m_to == current_user.id %>
+      	        <%= link_to new_email_path :m_from_id => current_user.id, :m_to_id => @u.id, :back_url => user_path(:id => @user.id, :topic => "Email") do %>
+                  <i class="btn btn-default btn-xs glyphicon glyphicon-envelope"></i>
+                <% end %>
+              <% end %>
+              <% if e.m_from == @user.id %>
+                <ntext>
+              <% end %>
+              <b><%= e.header %></b><br>
+              <%= e.body %><br>
+              <% if e.m_to == @user.id %>
+                </ntext>
+              <% end %>
+              </td>
+              </tr>
+            <% end %>
+            </table>
+          </div>
+
+        <% end %>
+        
+      </div>
+      
+      <div class='col-xs-2'>
+          <%= navigate("User", @user) %>
+      </div>
+      
+  </div>
+</div>
+
+<script>
+Morris.Donut({
+  element: 'donut-example0',
+  data: $('#donut-example0').data('reports'),
+}).on('click', function(i, row){
+  switch(row.label) {
+      case "Institutionen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Institutionen") %>");
+        break
+      case "Kalendereintraege":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Kalendereintraege") %>");
+        break
+      case "Angebote":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Angebote") %>");
+        break
+      case "Ansprechpartner":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Ansprechpartner") %>");
+        break
+      case "Vermietungen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Vermietungen") %>");
+        break
+      case "Kleinanzeigen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Kleinanzeigen") %>");
+        break
+      case "Veranstaltungen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Veranstaltungen") %>");
+        break
+      case "Ausschreibungen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Ausschreibungen") %>");
+        break
+      case "Ausflugsziele":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Ausflugsziele") %>");
+        break
+      case "Crowdfunding":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Crowdfunding") %>");
+        break
+      case "Crowdfunding Beitraege":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Crowdfunding Beitraege") %>");
+        break
+     case "Tickets":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Tickets") %>");
+        break
+      case "Bewertungen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Bewertungen") %>");
+        break
+      case "Favoriten":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Favoriten") %>");
+        break
+      case "Kundenstatus":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Kundenstatus") %>");
+        break
+      case "Transaktionen":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Transaktionen") %>");
+        break
+      case "Nachrichten":
+        loadUrl("<%= user_path(:id => @user.id, :topic => "Email") %>");
+        break
+      case "Abfragen":
+        loadUrl("<%= home_index6_path(:id => @user.id) %>");
+        break
+      default:
+        loadUrl("<%= user_path(:id => @user.id, :topic => "User") %>");
+  }
+});
+</script>
+<script type="text/javascript">
+function loadUrl(newLocation)
+{
+  window.location.href = newLocation;
+}
+</script>
+
+<script type="text/javascript">
+    var latitudes = [<%= @user.latitude %>];
+    var longitudes = [<%= @user.longitude %>];
+
+    function init_map(index) {
+        var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
+        var mapOptions = {
+            center: myLocation,
+            zoom: 16
+        };
+        var marker = new google.maps.Marker({
+            position: myLocation,
+            title: "Property Location"
+        });
+        var map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
+        marker.setMap(map);
+    }
+    init_map(0);
+</script>
+
+<script>
+function initialize() {
+    var map;
+    var bounds = new google.maps.LatLngBounds();
+    var mapOptions = {
+        mapTypeId: 'roadmap'
+    };
+    // Display a map on the page
+    map = new google.maps.Map(document.getElementById("map2"), mapOptions);
+    map.setTilt(45);
+        
+    // Multiple Markers
+    var markers = <%= raw @locs %>;
+    var infoWindowContent = <%= raw @wins %>;
+    
+    // Display multiple markers on a map
+    var infoWindow = new google.maps.InfoWindow(), marker, i;
+    
+    // Loop through our array of markers & place each one on the map  
+    for( i = 0; i < markers.length; i++ ) {
+        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        bounds.extend(position);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: markers[i][0]
+        });
+        
+        // Allow each marker to have an info window    
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infoWindow.setContent(infoWindowContent[i][0]);
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+
+        // Automatically center the map fitting all markers on the screen
+        map.fitBounds(bounds);
+    }
+
+    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+        this.setZoom(10);
+        google.maps.event.removeListener(boundsListener);
+    });
+}
+</script>
+
+<script>
+$(window).load(function(){ initialize(); init_map(0) })
+</script>
+
+<script type="text/javascript" 
+  src="https://www.gstatic.com/charts/loader.js">
+</script>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+      ['Aktivität', 'Anzahl'],
+      <%= raw @array_s %>
+    ]);
+
+    var options = {
+      title: 'Aktivitätenübersicht',
+      pieHole: 0.4
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+  }
+</script>

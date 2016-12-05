@@ -1,0 +1,1 @@
+json.partial! "mobjects/mobject", mobject: @mobject

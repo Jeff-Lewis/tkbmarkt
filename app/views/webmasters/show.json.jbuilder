@@ -1,0 +1,1 @@
+json.partial! "webmasters/webmaster", webmaster: @webmaster
