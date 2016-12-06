@@ -145,3 +145,6 @@ function initialize() {
 $(window).load(function(){ initialize() })
 </script>
 
+<script>
+  document.addEventListener("turbolinks:load", function() {initialize();})
+</script>
