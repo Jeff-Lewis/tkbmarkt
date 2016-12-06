@@ -20,7 +20,7 @@
               <%= header("Kontaktdaten", false) %>
               <!--<div class='col-xs-12'><div class="panel-body">-->
               <div class="panel-body">
-                <% if @user.anonymous or @user.avatar_file_name == nil %>
+                <% if @user.anonymous %>
                   <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
                   <%= showImage2(:medium, @user) %>
