@@ -32,7 +32,7 @@ class PartnerLinksController < ApplicationController
   end
 
   # PUT /partner_links/1
-  def update(partner
+  def update
     if @partner_link.update(partner_link_params)
       redirect_to company_path(:id => @partner_link.company, :topic => "Link"), notice: 'Partner link was successfully updated.'
     else
