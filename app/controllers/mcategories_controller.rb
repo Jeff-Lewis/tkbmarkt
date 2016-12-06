@@ -1,6 +1,5 @@
 class McategoriesController < ApplicationController
   before_action :set_mcategory, only: [:show, :edit, :update, :destroy]
-  permits :status
 
   # GET /mcategories
   def index
@@ -21,8 +20,8 @@ class McategoriesController < ApplicationController
   end
 
   # POST /mcategories
-  def create(mcategory)
-    @mcategory = Mcategory.new(mcategory)
+  def create
+    @mcategory = Mcategory.new(mcategory_params)
 
     if @mcategory.save
       redirect_to @mcategory, notice: 'Mcategory was successfully created.'
@@ -32,8 +31,8 @@ class McategoriesController < ApplicationController
   end
 
   # PUT /mcategories/1
-  def update(mcategory)
-    if @mcategory.update(mcategory)
+  def update
+    if @mcategory.update(mcategory_params)
       redirect_to @mcategory, notice: 'Mcategory was successfully updated.'
     else
       render :edit
@@ -49,7 +48,11 @@ class McategoriesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_mcategory(id)
-      @mcategory = Mcategory.find(id)
+    def set_mcategory
+      @mcategory = Mcategory.find(params[:id])
     end
+    def mcategory_params
+      params.require(:mcategory).permit(:name, :ctype)
+    end
+
 end
