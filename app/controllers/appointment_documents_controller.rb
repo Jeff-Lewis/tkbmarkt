@@ -1,6 +1,5 @@
 class AppointmentDocumentsController < ApplicationController
   before_action :set_appointment_document, only: [:show, :edit, :update, :destroy]
-  permits :appointment_id, :name, :description, :document
 
   # GET /appointment_documents
   def index
@@ -22,8 +21,8 @@ class AppointmentDocumentsController < ApplicationController
   end
 
   # POST /appointment_documents
-  def create(appointment_document)
-    @appointment_document = AppointmentDocument.new(appointment_document)
+  def create
+    @appointment_document = AppointmentDocument.new(appointment_document_params)
 
     if @appointment_document.save
       redirect_to appointments_path :user_id1 => @appointment_document.appointment.user_id1, notice: 'Appointment document was successfully created.'
@@ -33,8 +32,8 @@ class AppointmentDocumentsController < ApplicationController
   end
 
   # PUT /appointment_documents/1
-  def update(appointment_document)
-    if @appointment_document.update(appointment_document)
+  def update
+    if @appointment_document.update(appointment_document_params)
       redirect_to appointments_path :user_id1 => @appointment_document.appointment.user_id1, notice: 'Appointment document was successfully updated.'
     else
       render :edit
@@ -51,7 +50,13 @@ class AppointmentDocumentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_appointment_document(id)
-      @appointment_document = AppointmentDocument.find(id)
+    def set_appointment_document
+      @appointment_document = AppointmentDocument.find(params[:id])
     end
+    
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def appointment_document_params
+      params.require(:appointment_document).permit(:appointment_id, :name, :description, :document )
+    end
+
 end
