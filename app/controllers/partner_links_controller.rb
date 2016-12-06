@@ -1,6 +1,5 @@
 class PartnerLinksController < ApplicationController
   before_action :set_partner_link, only: [:show, :edit, :update, :destroy]
-  permits :company_id, :name, :description, :avatar, :active, :link
 
   # GET /partner_links
   def index
@@ -23,8 +22,8 @@ class PartnerLinksController < ApplicationController
   end
 
   # POST /partner_links
-  def create(partner_link)
-    @partner_link = PartnerLink.new(partner_link)
+  def create
+    @partner_link = PartnerLink.new(partner_link_params)
     if @partner_link.save
       redirect_to company_path(:id => @partner_link.company, :topic => "Link"), notice: 'Partner link was successfully created.'
     else
@@ -33,8 +32,8 @@ class PartnerLinksController < ApplicationController
   end
 
   # PUT /partner_links/1
-  def update(partner_link)
-    if @partner_link.update(partner_link)
+  def update(partner
+    if @partner_link.update(partner_link_params)
       redirect_to company_path(:id => @partner_link.company, :topic => "Link"), notice: 'Partner link was successfully updated.'
     else
       render :edit
@@ -50,7 +49,12 @@ class PartnerLinksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_partner_link(id)
-      @partner_link = PartnerLink.find(id)
+    def set_partner_link
+      @partner_link = PartnerLink.find(params[:id])
     end
+    
+    def partner_link_params
+      params.require(:partner_link).permit(:company_id, :name, :description, :avatar, :active, :link)
+    end
+
 end
