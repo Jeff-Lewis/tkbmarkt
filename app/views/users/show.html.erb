@@ -23,7 +23,7 @@
                 <% if @user.anonymous %>
                   <%= image_tag("user_a.png", :size => "200x200", class:"img-rounded" ) %>
                 <% else %>
-                  <%= showImage2(:medium, @user) %>
+                  <%= showImage2(:medium, @user, true) %>
                   <br><br>
                   <b><i class="glyphicon glyphicon-home"></i> Adresse</b><br>
                   <% if !@user.anonymous and @user.address1 != nil and @user.address1 != "" %>
