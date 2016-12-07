@@ -25,7 +25,7 @@ class PartnerLinksController < ApplicationController
   def create
     @partner_link = PartnerLink.new(partner_link_params)
     if @partner_link.save
-      redirect_to company_path(:id => @partner_link.company, :topic => "Link"), notice: 'Partner link was successfully created.'
+      redirect_to company_path(:id => @partner_link.company, :topic => "Links"), notice: 'Partner link was successfully created.'
     else
       render :new
     end
@@ -34,7 +34,7 @@ class PartnerLinksController < ApplicationController
   # PUT /partner_links/1
   def update
     if @partner_link.update(partner_link_params)
-      redirect_to company_path(:id => @partner_link.company, :topic => "Link"), notice: 'Partner link was successfully updated.'
+      redirect_to company_path(:id => @partner_link.company, :topic => "Links"), notice: 'Partner link was successfully updated.'
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class PartnerLinksController < ApplicationController
   def destroy
     @comp = @partner_link.company_id
     @partner_link.destroy
-      redirect_to company_path(:id => @comp, :topic => "Link"), notice: 'Partner link was successfully destroyed.'
+      redirect_to company_path(:id => @comp, :topic => "Links"), notice: 'Partner link was successfully destroyed.'
   end
 
   private
