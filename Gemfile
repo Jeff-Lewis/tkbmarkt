@@ -38,7 +38,7 @@ gem "bootstrap-switch-rails"
 gem "bxslider-rails"
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-turbolinks'
-gem 'aws-sdk', '~>1.60.2'
+gem 'aws-sdk', '~>2.3'
 
 group :development, :test do
 
