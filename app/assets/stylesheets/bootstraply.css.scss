@@ -21,6 +21,11 @@ $color1: $tkb_light_green;
 $color1: $blaugruen;
 $color1: $tkb_light_green;
 
+.container {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
 list-h1 {
     color: $color5!important;
     font-size: 120%!important;
