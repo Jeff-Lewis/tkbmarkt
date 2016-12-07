@@ -114,9 +114,13 @@ listh3 {
         color: #197BB5;
     }
 
-.nav-panel {
+.nav-panel-black {
    background-color: black!important;
    border-color: black!important;
+   border-radius: 0px!important; 
+}
+
+.nav-panel-white {
    border-radius: 0px!important; 
 }
 

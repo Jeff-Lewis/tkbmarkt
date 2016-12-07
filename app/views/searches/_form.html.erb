@@ -20,7 +20,7 @@
                       <%= link_to searches_path :search_domain => @search.search_domain, :controller_name => @search.controller, :ticket_id => @search.ticket_id do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                       <% end %>
-                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %><%= @search.sql_string %>
+                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %><% @search.sql_string %>
                       <br>
                       <% @search.sql_string %>
                       </li_header>
@@ -234,7 +234,7 @@
 
 <script>
     handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    handler.buildMap({ provider: {}, internal: {id: 'map2'}}, function(){
       markers = handler.addMarkers([
         {
           "zoom": 5,
@@ -296,9 +296,13 @@
   	$("#distance").val(slideEvt.value);
   	init_map(val(slideEvt.value));
   });
+</script>
 
-    function init_map(radius) {
-        var myLocation = new google.maps.LatLng(<%= @search.latitude %>, <%= @search.longitude %>);
+<script type="text/javascript">
+    var latitudes = [<%= @search.latitude %>];
+    var longitudes = [<%= @search.longitude %>];
+    function init_map(index) {
+        var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
         var mapOptions = {
             center: myLocation,
             zoom: 16
@@ -308,11 +312,13 @@
             title: "Property Location"
         });
         var map = new google.maps.Map(document.getElementById("map"),
-            mapOptions);
+        mapOptions);
         marker.setMap(map);
+        
     }
-   circles = handler.addCircles(
-    [{ lat: <%= @search.latitude %>, lng: <%= @search.longitude %>, radius: radius * 1000 }],
-    { strokeColor: '#FF0000'}
-  );
+    init_map(0);
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {init_map(0);})
 </script>
