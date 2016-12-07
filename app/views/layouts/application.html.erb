@@ -23,7 +23,7 @@
     <% $switch_color = "#ACC550" %>
     <%= render 'layouts/header' %>
     
-    <div class="example1">
+    <!--<div class="example1">-->
       <div class='container-fluid'>
         <% flash.each do |name, msg| %>
           <% content_tag(:div, msg, class:"alert alert-warning") %>
@@ -34,7 +34,7 @@
         <%= yield %>
 
       </div>
-    </div>
+    <!--</div>-->
 
     <%= render 'layouts/footer' %>
 

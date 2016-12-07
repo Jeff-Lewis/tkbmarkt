@@ -284,7 +284,7 @@ def build_medialist2(items, cname, par)
     end
     
     if item and show
-    html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">'
+    html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
         html_string = html_string + '<div class="row">'
             html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">'
                 html_string = html_string + '<div class="panel panel-default" onclick="return init_map(0);">'

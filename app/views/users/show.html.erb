@@ -639,3 +639,8 @@ $(window).load(function(){ initialize(); init_map(0) })
     chart.draw(data, options);
   }
 </script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {init_map(0);initialize();drawChart()})
+</script>
+
