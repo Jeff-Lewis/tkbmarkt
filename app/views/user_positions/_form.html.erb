@@ -2,9 +2,7 @@
 <div class="container">
     <div class="jumbotron" align="center">
 
-      <div style='width: 200px;'>
-        <div id="map" style='width: 200px; height: 200px;'></div>
-      </div>
+      <div id="map"></div>
       <br>
 
       <%= form_for(@user_position) do |f| %>
@@ -74,5 +72,5 @@
 </script>
 
 <script>
-$(window).load(function(){ init_map(0) })
+  document.addEventListener("turbolinks:load", function() {initMap();})
 </script>

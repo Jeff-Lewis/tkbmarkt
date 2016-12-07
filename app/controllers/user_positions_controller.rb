@@ -21,7 +21,7 @@ class UserPositionsController < ApplicationController
   end
 
   # POST /user_positions
-  def create()
+  def create
     @user_position = UserPosition.new(user_position_params)
     if @user_position.save
       redirect_to user_path(:id => @user_position.user_id, :topic => "User"), notice: 'User position was successfully created.'
@@ -31,7 +31,7 @@ class UserPositionsController < ApplicationController
   end
 
   # PUT /user_positions/1
-  def update()
+  def update
     if @user_position.update(user_position_params)
       redirect_to user_path(:id => @user_position.user_id, :topic => "User"), notice: 'User position was successfully updated.'
     else
@@ -48,8 +48,8 @@ class UserPositionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user_position(id)
-      @user_position = UserPosition.find(id)
+    def set_user_position
+      @user_position = UserPosition.find(params[:id])
     end
     def user_position_params
       params.require(:user_position).permit(:user_id, :latitude, :longitude, :geo_address)
