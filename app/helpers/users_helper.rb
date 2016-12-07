@@ -287,7 +287,7 @@ def build_medialist2(items, cname, par)
     html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
         html_string = html_string + '<div class="row">'
             html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">'
-                html_string = html_string + '<div class="panel panel-default" onclick="return init_map(0);">'
+                html_string = html_string + '<div class="panel panel-default">'
                     html_string = html_string + '<div class="row padall">'
                       html_string = html_string + '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">'
                           html_string = html_string + '<span></span>'
@@ -335,56 +335,56 @@ def build_medialist2(items, cname, par)
                                   when "users"
                                     html_string = html_string + '<list-h1>' + item.name + " " + item.lastname + '<br></list-h1><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
-                                    html_string = html_string + " " + item.geo_address + '<br>'
+                                    html_string = html_string + "<list>" + item.geo_address + '</list><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
-                                    html_string = html_string + " " + item.email + '<br>'
+                                    html_string = html_string + "<list>" + item.email + '</list><br>'
                                   when "companies"
                                     html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
-                                    html_string = html_string + " " + item.mcategory.name + '<br>'
+                                    html_string = html_string + "<list>" + item.mcategory.name + '</list><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
-                                    html_string = html_string + " " + item.geo_address + '<br>'
+                                    html_string = html_string + "<list>" + item.geo_address + '</list><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
-                                    html_string = html_string + " " + item.user.email + '<br>'
+                                    html_string = html_string + "<list>" + item.user.email + '</list><br>'
                                   when "customers"
                                     html_string = html_string + '<list-h1>' + @comp.name + '<br></list-h1><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
-                                    html_string = html_string + " " + @comp.mcategory.name + '<br>'
+                                    html_string = html_string + "<list>" + @comp.mcategory.name + '</list><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
-                                    html_string = html_string + " " + @comp.geo_address + '<br>'
+                                    html_string = html_string + "<list>" + @comp.geo_address + '</list><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
-                                    html_string = html_string + " " + @comp.user.email + '<br>'
+                                    html_string = html_string + "<list>" + @comp.user.email + '</list><br>'
                                   when "mobjects"
                                     html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
-                                    html_string = html_string + " " + item.mcategory.name + '<br>'
+                                    html_string = html_string + "<list>" + item.mcategory.name + '</list><br>'
                                     if item.owner_type == "Company"
                                         html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
-                                        html_string = html_string + " " + item.owner.name + "<br>"
+                                        html_string = html_string + "<list>" + item.owner.name + "</list><br>"
                                     end
                                     if item.owner_type == "User"
                                         html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                        html_string = html_string + " " + item.owner.name + " "+ item.owner.lastname + "<br>"
+                                        html_string = html_string + "<list>" + item.owner.name + " "+ item.owner.lastname + "</list><br>"
                                     end
                                   when "madvisors", "msponsors", "mstats"
                                     html_string = html_string + '<list-h1>' + item.mobject.name + '<br></list-h1><br>'
                                     if items.table_name == "mstats"
                                       if item.owner_type == "Company"
                                           html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
-                                          html_string = html_string + " " + item.owner.name + "<br>"
+                                          html_string = html_string + "<list>" + item.owner.name + "</list><br>"
                                       end
                                       if item.owner_type == "User"
                                           html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                          html_string = html_string + " " + item.owner.name + " "+ item.owner.lastname + "<br>"
+                                          html_string = html_string + "<list>" + item.owner.name + " "+ item.owner.lastname + "</list><br>"
                                       end
                                     else
                                       if item.mobject.company_id
                                           html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
-                                          html_string = html_string + " " + item.mobject.company.name + "<br>"
+                                          html_string = html_string + "<list>" + item.mobject.company.name + "</list><br>"
                                       end
                                       if item.mobject.user_id
                                           html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                                          html_string = html_string + " " + item.mobject.user.name + " "+ item.mobject.user.lastname + "<br>"
+                                          html_string = html_string + "<list>" + item.mobject.user.name + " "+ item.mobject.user.lastname + "</list><br>"
                                       end
                                     end
                                   when "favourits"
@@ -394,17 +394,17 @@ def build_medialist2(items, cname, par)
                                     if Object.const_get(item.object_name).to_s == "Company"
                                         html_string = html_string + '<list-h1>' + @item.name + '</list-h1><br>'
                                     end
-                                    html_string = html_string + " " + @item.geo_address + '<br>'
+                                    html_string = html_string + "<list>" + @item.geo_address + '</list><br>'
 
                                   when "searches"
                                     html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
                                     if item.search_domain == "Object"
                                       html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
-                                      html_string = html_string +  item.mtype + " " 
-                                      html_string = html_string +  item.msubtype.to_s + '<br>'
+                                      html_string = html_string + "<list>" + item.mtype + "</list><br>" 
+                                      html_string = html_string + "<list>" + item.msubtype.to_s + '</list><br>'
                                     end
                                     html_string = html_string + '<i class="glyphicon glyphicon-question-sign"></i> '
-                                    html_string = html_string + 'Anzahl ' + item.counter.to_s + '<br>'
+                                    html_string = html_string + "<list>"+'Anzahl ' + item.counter.to_s + '</list><br>'
 
                               end
                             html_string = html_string + "</div>"
