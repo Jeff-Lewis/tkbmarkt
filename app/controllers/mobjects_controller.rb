@@ -51,13 +51,13 @@ class MobjectsController < ApplicationController
 
     @anz_s = ""
     @mobjects_anz.each do |i|
-      @anz_s = @anz_s + "['" + i.datum + "', " + i.summe.to_s + "],"
+      @anz_s = @anz_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
     end
     @anz_s = @anz_s[0, @anz_s.length - 1]    
 
     @bet_s = ""
     @mobjects_bet.each do |i|
-      @bet_s = @bet_s + "['" + i.datum + "', " + i.summe.to_s + "],"
+      @bet_s = @bet_s + "['" + i.datum.to_s + "', " + i.summe.to_s + "],"
     end
     @bet_s = @bet_s[0, @bet_s.length - 1]    
   end
