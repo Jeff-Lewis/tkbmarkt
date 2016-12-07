@@ -533,7 +533,7 @@ def showImage2(size, item, linkit)
             when "Company"
               image_tag(image_def("Institutionen", nil, nil), :size => si, class:"card-img-top img-responsive" )
             else
-              image_tag(image_def("no_pic.jpg"), :size => si, class:"card-img-top img-responsive" )
+              image_tag("no_pic.jpg", :size => si, class:"card-img-top img-responsive" )
           end
         end
       end
@@ -547,7 +547,7 @@ def showImage2(size, item, linkit)
           when "Company"
             image_tag(image_def("Institutionen", nil, nil), :size => si, class:"card-img-top img-responsive" )
           else
-            image_tag(image_def("no_pic.jpg"), :size => si, class:"card-img-top img-responsive" )
+            image_tag("no_pic.jpg", :size => si, class:"card-img-top img-responsive" )
         end
       end
     end

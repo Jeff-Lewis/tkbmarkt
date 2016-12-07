@@ -588,7 +588,7 @@ $(document).ready(function(){
 <script type="text/javascript">
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
+  function drawChart1() {
     var data = google.visualization.arrayToDataTable([
       ['Datum', 'Anzahl'],
       <%= raw @anz_s %>
@@ -608,7 +608,7 @@ $(document).ready(function(){
 <script type="text/javascript">
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
+  function drawChart2() {
     var data = google.visualization.arrayToDataTable([
       ['Datum', 'Betrag'],
       <%= raw @bet_s %>
@@ -624,3 +624,8 @@ $(document).ready(function(){
     chart.draw(data, options);
   }
 </script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {drawChart1(), drawChart2})
+</script>
+
