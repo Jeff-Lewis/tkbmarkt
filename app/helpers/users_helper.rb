@@ -969,7 +969,7 @@ def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
       path = path_param
     end
     html_string = ""
-    html_string = html_string + link_to(path)
+    html_string = html_string + link_to(path) do
       content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
         content_tag(:div, nil, class:"thumbnail kachel_min_height kachel_text", align:"center") do
           content_tag(:span, nil) do
