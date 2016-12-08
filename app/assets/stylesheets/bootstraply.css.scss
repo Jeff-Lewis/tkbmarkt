@@ -21,6 +21,14 @@ $color1: $tkb_light_green;
 $color1: $blaugruen;
 $color1: $tkb_light_green;
 
+body {
+   padding-left: 0 !important;
+   margin-left: 0 !important;
+   padding-right: 0 !important;
+   margin-right: 0 !important;
+}
+
+
 list-h1 {
     color: $color5!important;
     font-size: 80%!important;
