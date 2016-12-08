@@ -328,13 +328,10 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">'
                         html_string = html_string + '<div class="clearfix">'
                             html_string = html_string + '<div class="pull-left">'
-                              if (Date.today - item.created_at.to_date).to_i < 5
-                                  html_string = html_string + (image_tag 'neu.png', :size => '30x30', class:'img-rounded')
-                              end 
                               case items.table_name
                                   when "users"
                                     html_string = html_string + '<list-h1>' + item.name + " " + item.lastname + '<br></list-h1><br>'
-                                    html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
                                     html_string = html_string + "<list>" + item.geo_address + '</list><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
                                     html_string = html_string + "<list>" + item.email + '</list><br>'
@@ -342,7 +339,7 @@ def build_medialist2(items, cname, par)
                                     html_string = html_string + '<list-h1>' + item.name + '<br></list-h1><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
                                     html_string = html_string + "<list>" + item.mcategory.name + '</list><br>'
-                                    html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
                                     html_string = html_string + "<list>" + item.geo_address + '</list><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
                                     html_string = html_string + "<list>" + item.user.email + '</list><br>'
@@ -350,7 +347,7 @@ def build_medialist2(items, cname, par)
                                     html_string = html_string + '<list-h1>' + @comp.name + '<br></list-h1><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
                                     html_string = html_string + "<list>" + @comp.mcategory.name + '</list><br>'
-                                    html_string = html_string + '<i class="glyphicon glyphicon-map-marker"></i>'
+                                    html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
                                     html_string = html_string + "<list>" + @comp.geo_address + '</list><br>'
                                     html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
                                     html_string = html_string + "<list>" + @comp.user.email + '</list><br>'
@@ -413,11 +410,14 @@ def build_medialist2(items, cname, par)
                     html_string = html_string + "</div>"
                 html_string = html_string + '<div class="panel panel-list nopadding" onclick="return init_map(0);">'
                   html_string = html_string + '<div class="list-banner">'
+                    if (Date.today - item.created_at.to_date).to_i < 5
+                        html_string = html_string + (image_tag 'neu.png', :size => '30x30', class:'img-rounded')
+                    end 
                     html_string = html_string + item.created_at.strftime("%d.%m.%Y")
                     case cname 
                       when "favourits"
           	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                          content_tag(:i, nil, class:"btn btn-xs btn-danger glyphicon glyphicon-trash")
+                          content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash")
                         end
                         if Object.const_get(item.object_name).to_s == "User"
                           html_string = html_string + "<a href=/users/"+@item.id.to_s + ">"
@@ -427,53 +427,53 @@ def build_medialist2(items, cname, par)
                         end
                       when "partners"
           	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                          content_tag(:i, nil, class:"btn btn-xs btn-danger glyphicon glyphicon-trash")
+                          content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash")
                         end
           	            html_string = html_string + link_to(edit_customer_path(:id => item)) do 
-                          content_tag(:i, nil, class:"btn btn-xs btn-primary glyphicon glyphicon-wrench")
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                         end
           	            html_string = html_string + link_to(accounts_path(:customer_id => item)) do 
-                          content_tag(:i, nil, class:"btn btn-xs btn-primary glyphicon glyphicon-list")
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
                         end
                         html_string = html_string + "<a href=/companies/"+item.partner_id.to_s + ">"
                       when "nopartners"
                         if par[:user_id]
             	            html_string = html_string + link_to(new_customer_path(:user_id => par[:user_id], :partner_id => item)) do 
-                            content_tag(:i, nil, class:"btn btn-xs btn-primary glyphicon glyphicon-pencil")
+                            content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
                           end
                         end
                         if par[:company_id]
             	            html_string = html_string + link_to(new_customer_path(:company_id => par[:company_id], :partner_id => item)) do 
-                            content_tag(:i, nil, class:"btn btn-xs btn-primary glyphicon glyphicon-pencil")
+                            content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
                           end
                         end
                         html_string = html_string + "<a href=/companies/"+item.id.to_s + ">"
                       when "searches"
           	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                          content_tag(:i, nil, class:"btn btn-xs btn-danger glyphicon glyphicon-trash")
+                          content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash")
                         end
           	            html_string = html_string + link_to(edit_search_path(:id => item)) do 
-                          content_tag(:i, nil, class:"btn btn-xs btn-primary glyphicon glyphicon-wrench")
+                          content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                         end
                         case item.search_domain
                           when "Privatpersonen"
               	            html_string = html_string + link_to(users_path(:filter_id => item.id)) do 
-                              content_tag(:i, nil, class:"btn btn-xs btn-primary glyphicon glyphicon-filter")
+                              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-filter")
                             end
                           when "Institutionen"
               	            html_string = html_string + link_to(companies_path(:filter_id => item.id)) do 
-                              content_tag(:i, nil, class:"btn btn-xs btn-primary glyphicon glyphicon-filter")
+                              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-filter")
                             end
                           when "Object"
               	            html_string = html_string + link_to(mobjects_path(:filter_id => item.id)) do 
-                              content_tag(:i, nil, class:"btn btn-xs btn-primary glyphicon glyphicon-filter")
+                              content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-filter")
                             end
                         end 
                         html_string = html_string + "<a href=/searches/"+item.id.to_s + "/edit>"
                       else
                           html_string = html_string + "<a href=/"+items.table_name+"/"+item.id.to_s + ">"
                     end
-                    html_string = html_string + '<i class="glyphicon glyphicon-circle-arrow-right pull-right"></i>'
+                    html_string = html_string + '<i class="btn btn-primary glyphicon glyphicon-circle-arrow-right pull-right"></i>'
                     html_string = html_string + "</a>"
                   html_string = html_string + "</div>"
                 html_string = html_string + "</div>"
@@ -975,7 +975,11 @@ def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
           content_tag(:span, nil) do
             #content_tag(:i, nil, class:"glyphicon glyphicon-" + glyphicon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+object)
             #content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(glyphicon+".png", :size => "45x45") + "<br><br>".html_safe + content_tag(:listh3, object)
-            content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(pic, :size => "100x100") + "<br><br>".html_safe + content_tag(:listh3, name)
+            if name and name.length > 0
+              content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(pic, :size => "100x100") + "<br><br>".html_safe + content_tag(:listh3, name)
+            else
+              content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(pic, :size => "100x100")
+            end
           end
         end
       end

@@ -231,28 +231,32 @@
         </div>
     <% end %>                
 
+<script type="text/javascript">
+    function init_map(distance) {
+        var myLocation = new google.maps.LatLng(<%= @search.latitude %>, <%= @search.longitude %>);
+        var mapOptions = {
+            center: myLocation,
+            zoom: 10
+        };
+        var marker = new google.maps.Marker({
+            position: myLocation,
+            title: "Property Location"
+        });
+        var map = new google.maps.Map(document.getElementById("map"),
+        mapOptions);
+        marker.setMap(map);
 
-<script>
-    handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map2'}}, function(){
-      markers = handler.addMarkers([
-        {
-          "zoom": 5,
-          "lat": <%= @search.latitude %>,
-          "lng": <%= @search.longitude %>,
-          "infowindow": "<%= @search.geo_address %>"
-        }
-      ]);
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
-      handler.getMap().setZoom(9);
-    });
-
-   circles = handler.addCircles(
-    [{ lat: <%= @search.latitude %>, lng: <%= @search.longitude %>, radius: <%= @search.distance * 1000 %> }],
-    { strokeColor: '#FF0000'}
-  );
-
+        var cityCircle = new google.maps.Circle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35,
+          map: map,
+          center: {lat: <%= @search.latitude %>, lng: <%= @search.longitude %>},
+          radius: distance * 1000
+        });
+    }
 </script>
 
 <script>
@@ -264,6 +268,7 @@
     $("#ex2").slider({});
     $("#ex2").on("slide", function(slideEvt) {
     	$("#distance").val(slideEvt.value);
+    	init_map(slideEvt.value)
     });
     $.fn.bootstrapSwitch.defaults.onColor = 'success';
     $("[name='my-checkbox1']").bootstrapSwitch('state',<%= @search.social %>);
@@ -290,22 +295,12 @@
     });
 </script>
 
-<script>
-  $("#ex5").slider({});
-  $("#ex5").on("slide", function(slideEvt) {
-  	$("#distance").val(slideEvt.value);
-  	init_map(val(slideEvt.value));
-  });
-</script>
-
 <script type="text/javascript">
-    var latitudes = [<%= @search.latitude %>];
-    var longitudes = [<%= @search.longitude %>];
-    function init_map(index) {
-        var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
+    function init_map(distance) {
+        var myLocation = new google.maps.LatLng(<%= @search.latitude %>, <%= @search.longitude %>);
         var mapOptions = {
             center: myLocation,
-            zoom: 16
+            zoom: 10
         };
         var marker = new google.maps.Marker({
             position: myLocation,
@@ -314,11 +309,20 @@
         var map = new google.maps.Map(document.getElementById("map"),
         mapOptions);
         marker.setMap(map);
-        
+
+        var cityCircle = new google.maps.Circle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35,
+          map: map,
+          center: {lat: <%= @search.latitude %>, lng: <%= @search.longitude %>},
+          radius: distance * 1000
+        });
     }
-    init_map(0);
 </script>
 
 <script>
-  document.addEventListener("turbolinks:load", function() {init_map(0);})
+  document.addEventListener("turbolinks:load", function() {init_map(<%= @search.distance %>)})
 </script>
