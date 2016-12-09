@@ -162,11 +162,21 @@
     });
 </script>
 
-<script>
-  $(window).load(function(){ init_map(0) })
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#user_dateofbirth').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        language: "en",
+        daysOfWeekHighlighted: "0,6",
+        todayBtn: true,
+        todayHighlight: true,
+        firstDay: 1}
+    );
+  });
 </script>
 
 <script>
-  document.addEventListener("turbolinks:load", function() {init_map(0);})
+  document.addEventListener("turbolinks:load", function() {init_map(0);datepicker()})
 </script>
 

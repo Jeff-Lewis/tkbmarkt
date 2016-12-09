@@ -39,32 +39,34 @@ class ShowcalController < ApplicationController
      @locs = "["
      @wins = "["
      @mobjects.each do |m|
-        @locs = @locs + "["
-        if m.owner_type == "User"
-          @locs = @locs + "'" + m.owner.fullname + "', "
-        else
-          @locs = @locs + "'" + m.owner.name + "', "
+       if m.latitude and m.longitude 
+          @locs = @locs + "["
+          if m.owner_type == "User"
+            @locs = @locs + "'" + m.owner.fullname + "', "
+          else
+            @locs = @locs + "'" + m.owner.name + "', "
+          end
+          @locs = @locs + m.latitude.to_s + ", "
+          @locs = @locs + m.longitude.to_s
+          if counter+1 == @mobjects.count
+            @locs = @locs + "]"
+          else
+            @locs = @locs + "],"
+          end
+    
+          @wins = @wins + "["
+          if m.mdetails.count > 0
+            @wins = @wins + "'<img src=" + m.mdetails.first.avatar(:small) + "<br><h3>" + m.name + "</h3><p>" + m.geo_address + "<br>"+ m.date_from.strftime("%d.%m.%Y") + " - " + m.date_from.strftime("%d.%m.%Y") +"</p>'"
+          else
+            @wins = @wins + "'<img src=" + m.owner.avatar(:small) + "<br><h3>" + m.name + "</h3><p>" + m.geo_address + "<br>"+ m.date_from.strftime("%d.%m.%Y") + " - " + m.date_from.strftime("%d.%m.%Y") +"</p>'"
+          end
+          if counter+1 == @mobjects.count
+            @wins = @wins + "]"
+          else
+            @wins = @wins + "],"
+          end
+          counter = counter + 1
         end
-        @locs = @locs + m.latitude.to_s + ", "
-        @locs = @locs + m.longitude.to_s
-        if counter+1 == @mobjects.count
-          @locs = @locs + "]"
-        else
-          @locs = @locs + "],"
-        end
-  
-        @wins = @wins + "["
-        if m.mdetails.count > 0
-          @wins = @wins + "'<img src=" + m.mdetails.first.avatar(:small) + "<br><h3>" + m.name + "</h3><p>" + m.geo_address + "<br>"+ m.date_from.strftime("%d.%m.%Y") + " - " + m.date_from.strftime("%d.%m.%Y") +"</p>'"
-        else
-          @wins = @wins + "'<img src=" + m.owner.avatar(:small) + "<br><h3>" + m.name + "</h3><p>" + m.geo_address + "<br>"+ m.date_from.strftime("%d.%m.%Y") + " - " + m.date_from.strftime("%d.%m.%Y") +"</p>'"
-        end
-        if counter+1 == @mobjects.count
-          @wins = @wins + "]"
-        else
-          @wins = @wins + "],"
-        end
-        counter = counter + 1
       end
       @locs = @locs + "]"
       @wins = @wins + "]"

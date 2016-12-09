@@ -875,106 +875,135 @@ def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
     case domain
       when "mein xConnect"
         path = home_index6_path
-        pic = image_def(domain, domain, nil)  
+        pic = image_def(domain, domain, nil)
+        icon = "question-sign"
 
       when "Privatpersonen"
         path = users_path(:mtype => nil, :msubtype => nil)
         pic = image_def(domain, domain, nil)
+        icon = "user"
       when "Institutionen"
         path = companies_path(:mtype => nil, :msubtype => nil)
         pic = image_def(domain, domain, nil)
+        icon = "copyright-mark"
 
       when "Angebote"
         path = mobjects_path(:mtype => "Angebote", :msubtype => "Standard")
         pic = image_def("Object", "Angebote", "Standard")
+        icon = "shopping-cart"
       when "Aktionen"
         path = mobjects_path(:mtype => "Angebote", :msubtype => "Aktion")
         pic = image_def("Object", "Angebote", "Aktion")
+        icon = "shopping-cart"
       when "Vermietungen"
         path = mobjects_path(:mtype => "Vermietungen", :msubtype => nil)
         pic = image_def("Object", "Vermietungen", nil)
+        icon = "retweet"
       when "Ausschreibungen"
         path = mobjects_path(:mtype => "Ausschreibungen", :msubtype => nil)
         pic = image_def("Object", "Ausschreibungen", nil)
+        icon = "pencil"
       when "Stellenanzeigen (Suchen)"
         path = mobjects_path(:mtype => "Stellenanzeigen", :msubtype => "Suchen")
         pic = image_def("Object", "Stellenanzeigen", "Suchen")
+        icon = "briefcase"
       when "Stellenanzeigen (Anbieten)"
         path = mobjects_path(:mtype => "Stellenanzeigen", :msubtype => "Anbieten")
         pic = image_def("Object", "Stellenanzeigen", "Anbieten")
+        icon = "briefcase"
       when "Veranstaltungen"
         path = mobjects_path(:mtype => "Veranstaltungen", :msubtype => nil)
         pic = image_def("Object", "Veranstaltungen", nil)
+        icon = "glass"
       when "Ausflugsziele"
         path = mobjects_path(:mtype => "Ausflugsziele", :msubtype => nil)
         pic = image_def("Object", "Ausflugsziele", nil)
+        icon = "map-marker"
       when "Kleinanzeigen (Suchen)"
         path = mobjects_path(:mtype => "Kleinanzeigen", :msubtype => "Suchen")
         pic = image_def("Object", "Kleinanzeigen", "Suchen")
+        icon = "align-justify"
       when "Kleinanzeigen (Anbieten)"
         path = mobjects_path(:mtype => "Kleinanzeigen", :msubtype => "Anbieten")
         pic = image_def("Object", "Kleinanzeigen", "Anbieten")
+        icon = "align-justify"
       when "Crowdfunding (Spenden)"
         path = mobjects_path(:mtype => "Crowdfunding", :msubtype => "Spenden")
         pic = image_def("Object", "Crowdfunding", "Spenden")
+        icon = "grain"
       when "Crowdfunding (Belohnungen)"
         path = mobjects_path(:mtype => "Crowdfunding", :msubtype => "Belohnungen")
         pic = image_def("Object", "Crowdfunding", "Belohnungen")
+        icon = "grain"
       when "Crowdfunding (Zinsen)"
         path = mobjects_path(:mtype => "Crowdfunding", :msubtype => "Zinsen")
         pic = image_def("Object", "Crowdfunding", "Zinsen")
+        icon = "grain"
       when "Kalender (Aktionen)"
         path = showcal_index_path(:mtype => "Angebote", :msubtype => "Aktion")
         pic = "calendar.jpg"
+        icon = "calendar"
       when "Kalender (Veranstaltungen)"
         path = showcal_index_path(:mtype => "Veranstaltungen", :msubtype => nil)
         pic = "calendar.jpg"
+        icon = "calendar"
       when "Kalender (Ausschreibungen)"
         path = showcal_index_path(:mtype => "Ausschreibungen", :msubtype => nil)
         pic = "calendar.jpg"
+        icon = "calendar"
 
       when "Neues Angebot"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Angebote", :msubtype => "Standard")
         pic = "angebot.jpg"
+        icon = "shopping-cart"
       when "Neue Aktion"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Angebote", :msubtype => "Aktion")
         pic = "aktion.jpg"
+        icon = "shopping-cart"
 
       when "Neue Kleinanzeige (Anbieten)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Kleinanzeigen", :msubtype => "Anbieten")
         pic = "kleinanzeige.jpg"
+        icon = "align-justify"
       when "Neue Kleinanzeige (Suchen)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Kleinanzeigen", :msubtype => "Suchen")
         pic = "kleinanzeige.jpg"
+        icon = "align-justify"
 
       when "Neue Stellenanzeige (Anbieten)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Stellenanzeigen", :msubtype => "Anbieten")
         pic = "stellenanzeige.jpg"
+        icon = "briefcase"
       when "Neue Stellenanzeige (Suchen)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Stellenanzeigen", :msubtype => "Suchen")
         pic = "stellenanzeige.jpg"
+        icon = "briefcase"
 
       when "Neue Crowdfunding-Initiative (Spenden)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id,  :mtype => "Crowdfunding", :msubtype => "Spenden")
         pic = "spende.jpg"
+        icon = "grain"
       when "Neue Crowdfunding-Initiative (Belohnungen)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Crowdfunding", :msubtype => "Belohnungen")
         pic = "belohnung.jpg"
+        icon = "grain"
       when "Neue Crowdfunding-Initiative (Zinsen)"
         path = new_mobject_path(:user_id => user_id, :company_id => company_id, :mtype => "Crowdfunding", :msubtype => "Zinsen")
         pic = "kredit.jpg"
+        icon = "grain"
 
     end
     if path_param
       path = path_param
     end
     html_string = ""
+    if false
     html_string = html_string + link_to(path) do
       content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
         content_tag(:div, nil, class:"thumbnail kachel_min_height kachel_text", align:"center") do
           content_tag(:span, nil) do
             #content_tag(:i, nil, class:"glyphicon glyphicon-" + glyphicon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+object)
-            #content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(glyphicon+".png", :size => "45x45") + "<br><br>".html_safe + content_tag(:listh3, object)
+            #content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(glyphicon+"-question-mark.png", :size => "45x45") + "<br><br>".html_safe + content_tag(:listh3, object)
             if name and name.length > 0
               content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(pic, :size => "100x100") + "<br><br>".html_safe + content_tag(:listh3, name)
             else
@@ -984,7 +1013,19 @@ def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
         end
       end
     end
-
+    end
+    html_string = html_string + link_to(path) do
+      content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
+        content_tag(:div, nil, class:"thumbnail", align:"center") do
+          content_tag(:span, nil) do
+            icon_size = "4"
+            content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+domain)
+            #content_tag(:listh1, domain) + "<br><br>".html_safe + image_tag(glyphicon+".png", :size => "45x45") + "<br><br>".html_safe + content_tag(:listh3, name)
+          end
+        end
+      end
+    end
+    
     return html_string.html_safe
     
   end
