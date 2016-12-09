@@ -1016,7 +1016,7 @@ def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
     end
     html_string = html_string + link_to(path) do
       content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
-        content_tag(:div, nil, class:"thumbnail", align:"center") do
+        content_tag(:div, nil, class:"thumbnail kachel_min_height", align:"center") do
           content_tag(:span, nil) do
             icon_size = "4"
             content_tag(:i, nil, class:"glyphicon glyphicon-" + icon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+domain)
