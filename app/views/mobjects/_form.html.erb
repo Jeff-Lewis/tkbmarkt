@@ -169,21 +169,24 @@
     </div>
 <% end %>                
 
-
-<script>
-    handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-      markers = handler.addMarkers([
-        {
-          "lat": <%= @mobject.latitude %>,
-          "lng": <%= @mobject.longitude %>,
-          "infowindow": "text"
-        }
-      ]);
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
-      handler.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-});
+<script type="text/javascript">
+    var latitudes = [<%= @mobject.latitude %>];
+    var longitudes = [<%= @mobject.longitude %>];
+    function init_map(index) {
+        var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
+        var mapOptions = {
+            center: myLocation,
+            zoom: 16
+        };
+        var marker = new google.maps.Marker({
+            position: myLocation,
+            title: "Property Location"
+        });
+        var map = new google.maps.Map(document.getElementById("map"),
+        mapOptions);
+        marker.setMap(map);
+    }
+    init_map(0);
 </script>
 
 <script>
@@ -202,3 +205,40 @@
      $("#social").prop('checked',$("[name='my-checkbox2']").bootstrapSwitch('state'));
      });
 </script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#mobject_date_from').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        language: "en",
+        daysOfWeekHighlighted: "0,6",
+        todayBtn: true,
+        todayHighlight: true,
+        firstDay: 1}
+    );
+    $('#mobject_date_to').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        language: "en",
+        daysOfWeekHighlighted: "0,6",
+        todayBtn: true,
+        todayHighlight: true,
+        firstDay: 1}
+    );
+    $('#mobject_due_date').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        language: "en",
+        daysOfWeekHighlighted: "0,6",
+        todayBtn: true,
+        todayHighlight: true,
+        firstDay: 1}
+    );
+  });
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {init_map(0); datepicker()})
+</script>
+

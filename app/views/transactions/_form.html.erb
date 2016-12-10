@@ -41,9 +41,7 @@
                     <div class="form-group">
                       <%= f.label "Bankverbindung" %><br>
                       <% if @account_ver.customer.owner_id %>
-                        <% if @account_ver.customer.owner.avatar_file_name != nil %>
-                          <%= showImage2(:small, @account_ver.customer.owner, true) %>
-                        <% end %>
+                        <%= showImage2(:small, @account_ver.customer.owner, true) %>
                         <br>
                         <% if @account_ver.customer.owner_type == "User" %>
                           <%= @account_ver.customer.owner.name + " " + @account_ver.customer.owner.lastname %><br>
@@ -59,9 +57,7 @@
                     <div class="form-group">
                       <%= f.label "Belastungskonto" %><br>
                       <% if @account_bel.customer.owner_id %>
-                        <% if @account_bel.customer.owner.avatar_file_name != nil %>
-                          <%= showImage2(:small, @account_ver.customer.owner, true) %>
-                        <% end %>
+                        <%= showImage2(:small, @account_bel.customer.owner, true) %>
                         <br>
                         <% if @account_bel.customer.owner_type == "User" %>
                           <%= @account_bel.customer.owner.name + " " + @account_bel.customer.owner.lastname %><br>
@@ -109,4 +105,31 @@
             </div>
         </div>
     <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#transaction_trx_date').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        language: "en",
+        daysOfWeekHighlighted: "0,6",
+        todayBtn: true,
+        todayHighlight: true,
+        firstDay: 1}
+    );
+    $('#transaction_valuta').datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        language: "en",
+        daysOfWeekHighlighted: "0,6",
+        todayBtn: true,
+        todayHighlight: true,
+        firstDay: 1}
+    );
+  });
+</script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {init_map(0);datepicker()})
+</script>
 

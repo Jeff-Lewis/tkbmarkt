@@ -581,7 +581,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("User",item,"Tickets","barcode",item.user_tickets.count > 0)
         html_string = html_string + build_nav("User",item,"Ausflugsziele","camera",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
         html_string = html_string + build_nav("User",item,"Ausschreibungen","pencil",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
-        html_string = html_string + build_nav("User",item,"Crowdfunding","globe", item.mobjects.where('mtype=?',"Crowdfunding").count > 0)
+        html_string = html_string + build_nav("User",item,"Crowdfunding","grain", item.mobjects.where('mtype=?',"Crowdfunding").count > 0)
         html_string = html_string + build_nav("User",item,"Crowdfunding Beitraege","gift", item.mstats.count > 0)
         html_string = html_string + build_nav("User",item,"Bewertungen","star", item.mratings.count > 0)
         html_string = html_string + build_nav("User",item,"Favoriten","heart", item.favourits.count > 0)
@@ -599,7 +599,7 @@ def navigate(object,item)
         html_string = html_string + build_nav("Company",item,"Sponsorenengagements","barcode",item.msponsors.count > 0)
         html_string = html_string + build_nav("Company",item,"Ausflugsziele","camera",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
         html_string = html_string + build_nav("Company",item,"Ausschreibungen","pencil",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
-        html_string = html_string + build_nav("Company",item,"Crowdfunding","globe", item.mobjects.where('mtype=?',"Crowdfunding").count > 0)
+        html_string = html_string + build_nav("Company",item,"Crowdfunding","grain", item.mobjects.where('mtype=?',"Crowdfunding").count > 0)
         html_string = html_string + build_nav("Company",item,"Crowdfunding Beitraege","gift", item.mstats.count > 0)
         html_string = html_string + build_nav("Company",item,"Kundenstatus","check", item.customers.count > 0)
         html_string = html_string + build_nav("Company",item,"Transaktionen","list", item.transactions.where('ttype=?', "Payment").count > 0)
@@ -1117,7 +1117,6 @@ def image_def (domain, mtype, msubtype)
             pic = "no_pic.jpg"
         end
     end
-
 end
 
 def url_with_protocol(url)
