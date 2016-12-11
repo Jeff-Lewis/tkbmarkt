@@ -46,40 +46,37 @@
                 <br>
             <% end %>
             <br>
-            <% if @mobject.homepage != nil %>
-              <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
-                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
+            <% if @mobject.mtype == "Crowdfunding" %>
+              <% soll = @mobject.amount %>
+              <% if @mobject.mstats != nil %>
+                <% ist  = @mobject.mstats.sum(:amount) %>
+              <% else %>
+                <% ist = 0 %>
               <% end %>
+              <b>Betrag</b><br>
+              <%= sprintf("%05.2f CHF", ist) %>
+              <br><br>
+              <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist/soll*100) %>%">
+                  <span class="sr-only">40% Complete (success)</span>
+                </div>
+              </div>
+  
+    				  <% if @mobject.price %>
+                <preiss><b><%= sprintf("%05.2f CHF", @mobject.price) %></b></preiss>
+    					<% else %>
+                <% if @mobject.social %>
+                  <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
+                <% end %>
+    					<% end %>
               <br><br>
             <% end %>
-  				  <% if @mobject.price %>
-              <preiss><b><%= sprintf("%05.2f CHF", @mobject.price) %></b></preiss>
-  					<% else %>
-              <% if @mobject.social %>
-                <preiss><b><i class='glyphicon glyphicon-heart'></i></b></preiss>
-              <% end %>
-  					<% end %>
-            <br><br>
-            <% if @mobject.date_to != nil %>
-                <b><ntext>noch </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
-            <% end %>
-            <br><br>
-            <b>Bewertung</b><br>
-            <% avg_rating2(@mobject.id).times do %>
-              <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-              <i class="glyphicon glyphicon-star"></i>
-            <% end %>
-            <br><br>
-            <% if @mobject.social %>
-                <i class="glyphicon glyphicon-heart"></i> soziales Engagement
-                <br>
-            <% end %>
-            <br><br>
+            
             <% case @mobject.mtype %>
-               <% when "Angebote", "Veranstaltungen", "Ausschreibungen" %>
+               <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding" %>
                  <% if @mobject.msubtype == "Aktion" %>
                  <% end %>
-                <b>Datum von-bis:</b><br>
+                <b>Datum von-bis</b><br>
                 <% if @mobject.date_from  %>
                   <%= @mobject.date_from.strftime("%d.%m.%Y") %>
                 <% end %>
@@ -89,7 +86,19 @@
                 <% if @mobject.date_from or @mobject.date_to %>
                   <br><br>
                 <% end %>
-                
+                <% if @mobject.date_to != nil %>
+                  <b>Laufzeit</b><br>
+                  <b><ntext>noch </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
+                  <br>
+                  <% soll = (@mobject.date_to.to_date - @mobject.date_from.to_date).to_i %>
+                  <% ist = (DateTime.now.to_date - @mobject.date_from.to_date).to_i %>
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar2" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist*100/soll) %>%">
+                      <span class="sr-only">40% Complete (success)</span>
+                    </div>
+                  </div>
+                <% end %>
+
                <% when "Vermietungen" %>
                 <b>Mietzeiten</b><br>
                 von:<%= @mobject.time_from %> bis: <%= @mobject.time_to %> Uhr
@@ -142,6 +151,27 @@
                   <br><br>
 
             <% end %>
+            
+
+            <b>Bewertung</b><br>
+            <% avg_rating2(@mobject.id).times do %>
+              <i class="glyphicon glyphicon-star"></i>
+            <% end %>
+            <br><br>
+            
+            <% if @mobject.social %>
+                <i class="glyphicon glyphicon-heart"></i> soziales Engagement
+            <% end %>
+            <br><br>
+
+            <% if @mobject.homepage != nil %>
+              <b>Homepage</b><br>
+              <%= link_to url_with_protocol(@mobject.homepage), :target => '_blank' do %>
+                <i class="glyphicon glyphicon-home"></i> <%= url_with_protocol(@mobject.homepage) %>
+              <% end %>
+              <br><br>
+            <% end %>
+            
             <% if @mobject.description %>
               <b>Beschreibung</b><br>
         			<%= @mobject.description %>
@@ -574,11 +604,16 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-  $('.bxslider').bxSlider({
-      mode: 'fade',
-      auto: true,
-      speed:1000,
-      controls: false
+  $('.owl-show').owlCarousel({  
+    
+    itemsCustom : false,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,1],
+    autoPlay: true
+    
   });
 });
 </script>

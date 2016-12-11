@@ -1,6 +1,7 @@
 module UsersHelper
   
 def carousel2(mobject, size)
+
       case size
         when :small
             si = "50x50"
@@ -18,15 +19,15 @@ def carousel2(mobject, size)
       if mobject.mdetails.count == 0
         html = html + image_tag(image_def("Object", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
       else
-        html = html +  "<ul class='bxslider'>"
+        html = html +  '<div class="owl-show">'
         mobject.mdetails.each do |p|
           if p.avatar_file_name == nil
-            html = html + image_tag(image_def("Object", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
+            html = html + "<div>" + image_tag(image_def("Object", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" ) + "</div>"
           else
-            html = html + (image_tag p.avatar(size), class:"img-rounded")
+            html = html + "<div>"+ (image_tag p.avatar(size), class:"img-rounded") + "</div>"
           end
         end
-        html = html +  "</ul>"
+        html = html +  "</div>"
       end
     end
     return html.html_safe

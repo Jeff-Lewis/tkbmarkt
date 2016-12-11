@@ -73,7 +73,7 @@ class MobjectsController < ApplicationController
     @mobject.social = false
     @mobject.name = @mobject.mtype
     @mobject.description = "Beschreibung..."
-    @mobject.homepage = "www.xxx.ch"
+    @mobject.homepage = "www.xyz.ch"
     @mobject.price_reg = 0
     @mobject.price_new = 0
     @mobject.date_from = Date.today

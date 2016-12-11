@@ -12,7 +12,8 @@
  *
  *= require bootstrap-slider
  *= require bootstrap3-switch
- *= require bxslider
+ *= require owl.carousel
+ *= require owl.theme
  *= require bootstrap-datepicker
  *= require_tree .
  *= require_self

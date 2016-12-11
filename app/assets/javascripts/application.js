@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require bootstrap-switch  
 //= require bootstrap-slider
-//= require bxslider
+//= require owl.carousel
 //= require bootstrap-datepicker
 //= require turbolinks
 //= require bootstrap-sprockets

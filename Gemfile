@@ -35,7 +35,7 @@ gem 'paperclip'
 gem 'will_paginate'
 gem 'bootstrap-slider-rails'
 gem "bootstrap-switch-rails"
-gem "bxslider-rails"
+gem 'owlcarousel-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-turbolinks'
 gem 'aws-sdk', '~>2.3'
