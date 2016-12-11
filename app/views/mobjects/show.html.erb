@@ -74,29 +74,30 @@
             
             <% case @mobject.mtype %>
                <% when "Angebote", "Veranstaltungen", "Ausschreibungen", "Crowdfunding" %>
-                 <% if @mobject.msubtype == "Aktion" %>
-                 <% end %>
-                <b>Datum von-bis</b><br>
-                <% if @mobject.date_from  %>
-                  <%= @mobject.date_from.strftime("%d.%m.%Y") %>
-                <% end %>
-                <% if @mobject.date_to %>
-                - <%= @mobject.date_to.strftime("%d.%m.%Y") %>
-                <% end %>
-                <% if @mobject.date_from or @mobject.date_to %>
-                  <br><br>
-                <% end %>
-                <% if @mobject.date_to != nil %>
-                  <b>Laufzeit</b><br>
-                  <b><ntext>noch </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
-                  <br>
-                  <% soll = (@mobject.date_to.to_date - @mobject.date_from.to_date).to_i %>
-                  <% ist = (DateTime.now.to_date - @mobject.date_from.to_date).to_i %>
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar2" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist*100/soll) %>%">
-                      <span class="sr-only">40% Complete (success)</span>
+                 <% if @mobject.msubtype == "Standard" %>
+                 <% else %>
+                  <b>Datum von-bis</b><br>
+                  <% if @mobject.date_from  %>
+                    <%= @mobject.date_from.strftime("%d.%m.%Y") %>
+                  <% end %>
+                  <% if @mobject.date_to %>
+                  - <%= @mobject.date_to.strftime("%d.%m.%Y") %>
+                  <% end %>
+                  <% if @mobject.date_from or @mobject.date_to %>
+                    <br><br>
+                  <% end %>
+                  <% if @mobject.date_to != nil %>
+                    <b>Laufzeit</b><br>
+                    <b><ntext>noch </ntext></b><restlaufzeits><%= (@mobject.date_to.to_date - DateTime.now.to_date).to_i.to_s %></restlaufzeits> <b><ntext> Tage</ntext></b>
+                    <br>
+                    <% soll = (@mobject.date_to.to_date - @mobject.date_from.to_date).to_i %>
+                    <% ist = (DateTime.now.to_date - @mobject.date_from.to_date).to_i %>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar2" aria-valuenow="<%= ist %>" aria-valuemin="0" aria-valuemax="<%= soll %>" style="width:<%= (ist*100/soll) %>%">
+                        <span class="sr-only">40% Complete (success)</span>
+                      </div>
                     </div>
-                  </div>
+                  <% end %>
                 <% end %>
 
                <% when "Vermietungen" %>
@@ -152,7 +153,6 @@
 
             <% end %>
             
-
             <b>Bewertung</b><br>
             <% avg_rating2(@mobject.id).times do %>
               <i class="glyphicon glyphicon-star"></i>
@@ -203,7 +203,7 @@
         <% when "Details" %>
           <%= header("Details", false) %>
           <div class="panel-body">
-        		<% @mobject.mdetails.each do |md| %>
+        		<% @mobject.mdetails.where('type=?', "Details").each do |md| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <%= showImage2(:medium, md, true) %>
@@ -239,7 +239,7 @@
         <% when "Ausschreibungsangebote" %>
           <%= header("Angebote", false) %>
           <div class="panel-body">
-        		<% @mobject.mdetails.each do |md| %>
+        		<% @mobject.mdetails.where('type=?', "Angebote").each do |md| %>
               <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="thumbnail" align="center">
                   <%= showImage2(:medium, md, true) %>
@@ -254,7 +254,6 @@
         	        <%= link_to md.document.url, target: "_blank" do %>
                     <i class="btn btn-primary btn-lg glyphicon glyphicon-cloud-download"></i>
                   <% end %>
-                  <br><br>
                   <% if user_signed_in? %>
                     <% if (@mobject.owner_type == "User" and @mobject.owner_id == current_user.id) or (@mobject.owner_type == "Company" and @mobject.owner_id == current_user.id) %>
             	        <%= link_to edit_mdetail_path(md) do %>
@@ -467,7 +466,7 @@
                     <td>
           				    <% if user_signed_in? %>
             				    <% if ca.user_id == current_user.id %>
-                          <%= link_to listaccount_index_path :user_id => current_user.id, :user_id_ver => ca.mobject.user_id, :company_id_ver => ca.mobject.company_id, :ref => "Vergütung an "+ ca.mobject.name + " " + ca.date_from.strftime("%d.%m.%Y") + " " + ca.time_from.to_s + "Uhr -" + ca.date_to.strftime("%d.%m.%Y") + " " + ca.time_to.to_s + " Uhr", :object_name => "Mobject", :mobject_id => ca.mobject.id, :amount => 0 do %>
+                          <%= link_to listaccount_index_path :user_id => current_user.id, :user_id_ver => ca.mobject.owner_id, :company_id_ver => ca.mobject.owner_id, :ref => "Vergütung an "+ ca.mobject.name + " " + ca.date_from.strftime("%d.%m.%Y") + " " + ca.time_from.to_s + "Uhr -" + ca.date_to.strftime("%d.%m.%Y") + " " + ca.time_to.to_s + " Uhr", :object_name => "Mobject", :mobject_id => ca.mobject.id, :amount => 0 do %>
                             <i class="btn btn-primary btn-xs glyphicon glyphicon-euro"></i>
                           <% end %>
           				        <%= link_to edit_mcalendar_path(ca) do %>

@@ -14,6 +14,7 @@ class MdetailsController < ApplicationController
   def new
     @mdetail = Mdetail.new
     @mdetail.mobject_id = params[:mobject_id]
+    @mdetails.type = params[:type]
   end
 
   # GET /mdetails/1/edit

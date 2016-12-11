@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       session[:page] = params[:page]
     end
     @filter = params[:filter_id]
-    @users = User.search(params[:filter_id],params[:search]).order(created_at: :desc).page(params[:page]).per_page(16)
+    @users = User.search(params[:filter_id],params[:search]).order(created_at: :desc).page(params[:page]).per_page(10)
     @usanz = @users.count
      counter = 0 
      @locs = "["
@@ -171,22 +171,24 @@ class UsersController < ApplicationController
      @up = @user.user_positions.limit(20).order(created_at: :desc)
      @count = @up.count
      @up.each do |u|
-        @locs = @locs + "["
-        @locs = @locs + "'" + u.user.fullname + "', "
-        @locs = @locs + u.latitude.to_s + ", "
-        @locs = @locs + u.longitude.to_s
-        if counter+1 == @up.count
-          @locs = @locs + "]"
-        else
-          @locs = @locs + "],"
-        end
-
-        @wins = @wins + "["
-        @wins = @wins + "'<h3>" + u.created_at.strftime("%d.%m.%Y") + "</h3><p>" + u.geo_address + "</p>'"
-        if counter+1 == @up.count
-          @wins = @wins + "]"
-        else
-          @wins = @wins + "],"
+        if u.longitude and u.latitude
+          @locs = @locs + "["
+          @locs = @locs + "'" + u.user.fullname + "', "
+          @locs = @locs + u.latitude.to_s + ", "
+          @locs = @locs + u.longitude.to_s
+          if counter+1 == @up.count
+            @locs = @locs + "]"
+          else
+            @locs = @locs + "],"
+          end
+  
+          @wins = @wins + "["
+          @wins = @wins + "'<h3>" + u.created_at.strftime("%d.%m.%Y") + "</h3><p>" + u.geo_address + "</p>'"
+          if counter+1 == @up.count
+            @wins = @wins + "]"
+          else
+            @wins = @wins + "],"
+          end
         end
         counter = counter + 1
       end

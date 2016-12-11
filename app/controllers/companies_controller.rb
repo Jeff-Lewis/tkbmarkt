@@ -10,30 +10,31 @@ class CompaniesController < ApplicationController
       session[:page] = params[:page]
     end
     
-    @companies = Company.search(params[:filter_id], params[:search]).page(params[:page]).per_page(16)
+    @companies = Company.search(params[:filter_id], params[:search]).page(params[:page]).per_page(10)
     @companz = @companies.count
    counter = 0 
    @locs = "["
    @wins = "["
    @companies.each do |c|
-      @locs = @locs + "["
-      @locs = @locs + "'" + c.name + "', "
-      @locs = @locs + c.latitude.to_s + ", "
-      @locs = @locs + c.longitude.to_s
-      if counter+1 == @companz
-        @locs = @locs + "]"
-      else
-        @locs = @locs + "],"
+      if c.longitude and c.latitude
+        @locs = @locs + "["
+        @locs = @locs + "'" + c.name + "', "
+        @locs = @locs + c.latitude.to_s + ", "
+        @locs = @locs + c.longitude.to_s
+        if counter+1 == @companz
+          @locs = @locs + "]"
+        else
+          @locs = @locs + "],"
+        end
+  
+        @wins = @wins + "["
+        @wins = @wins + "'<img src=" + c.avatar(:small) + "<br><h3>" + c.name + "</h3><p>" + c.geo_address + "</p>'"
+        if counter+1 == @campanz
+          @wins = @wins + "]"
+        else
+          @wins = @wins + "],"
+        end
       end
-
-      @wins = @wins + "["
-      @wins = @wins + "'<img src=" + c.avatar(:small) + "<br><h3>" + c.name + "</h3><p>" + c.geo_address + "</p>'"
-      if counter+1 == @campanz
-        @wins = @wins + "]"
-      else
-        @wins = @wins + "],"
-      end
-
       counter = counter + 1
     end
     @locs = @locs + "]"

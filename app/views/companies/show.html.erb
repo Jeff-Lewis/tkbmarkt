@@ -18,18 +18,26 @@
           <div class="panel-body">
             <%= showImage2(:medium, @company, true) %>
             <br>
-            <b>Branche</b>
+            <b><i class="glyphicon glyphicon-folder-open"></i> Branche</b><br>
             <%= @company.mcategory.name %>
+            <br><br>
+            <b><i class="glyphicon glyphicon-home"></i> Adresse</b><br>
+            <% if @company.address1 and @company.address1 != "" %>
+              <%= @company.address1 %><br> 
+            <% end %>
+            <% if @company.address2 and @company.address2 != "" %>
+              <%= @company.address2 %><br> 
+            <% end %>
+            <% if @company.address3 and @company.address3 != "" %>
+              <%= @company.address3 %><br> 
+            <% end %>
+            <br>
+            <b>Verantwortlich</b><br>
+            <%= showImage2(:small, @company.user, true) %>
+            <br>
+            <%= @company.user.name + " " + @company.user.lastname %>
             <br>
             <cite><%= @company.created_at.strftime("%d.%m.%Y") %></cite><br>
-            <% if user_signed_in? %>
-    	        <%= link_to new_email_path :m_from_id => current_user.id, :m_to_id => @company.user.id, :header => @company.name, :back_url => request.original_url do %>
-                <i class="btn btn-default glyphicon glyphicon-envelope"></i>
-              <% end %>
-            <% else %>
-                <i class="glyphicon glyphicon-envelope"></i>
-            <% end %>
-            <%= @company.user.email %><br><br>
           </div>
           <%= header("Aktivitätsübersicht", false) %>
           <div class="panel-body">
@@ -277,68 +285,67 @@
   </div>
 </div>
 
-<script>
-Morris.Donut({
-  element: 'donut-example0',
-  data: $('#donut-example0').data('reports'),
-}).on('click', function(i, row){
-  switch(row.label) {
-      case "Angebote":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Angebote") %>");
-        break
-      case "Stellenanzeigen":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Stellenanzeigen") %>");
-        break
-      case "Kleinanzeigen":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Kleinanzeigen") %>");
-        break
-      case "Vermietungen":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Vermietungen") %>");
-        break
-      case "Ausschreibungen":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Ausschreibungen") %>");
-        break
-      case "Veranstaltungen":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Veranstaltungen") %>");
-        break
-      case "Sponsorenengagements":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Sponsorenengagements") %>");
-        break
-      case "Crowdfunding":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Crowdfunding") %>");
-        break
-      case "Crowdfunding Beitraege":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Crowdfunding Beitraege") %>");
-        break
-      case "Kundenstatus":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Kundenstatus") %>");
-        break
-      case "Transaktionen":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Transaktionen") %>");
-        break
-      case "Email":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Email") %>");
-        break
-      case "Links":
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Links") %>");
-        break
-      default:
-        loadUrl("<%= company_path(:id => @company.id, :topic => "Company") %>");
-  }
-});
-</script>
+<!--<script>-->
+<!--Morris.Donut({-->
+<!--  element: 'donut-example0',-->
+<!--  data: $('#donut-example0').data('reports'),-->
+<!--}).on('click', function(i, row){-->
+<!--  switch(row.label) {-->
+<!--      case "Angebote":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Angebote") %>");-->
+<!--        break-->
+<!--      case "Stellenanzeigen":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Stellenanzeigen") %>");-->
+<!--        break-->
+<!--      case "Kleinanzeigen":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Kleinanzeigen") %>");-->
+<!--        break-->
+<!--      case "Vermietungen":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Vermietungen") %>");-->
+<!--        break-->
+<!--      case "Ausschreibungen":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Ausschreibungen") %>");-->
+<!--        break-->
+<!--      case "Veranstaltungen":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Veranstaltungen") %>");-->
+<!--        break-->
+<!--      case "Sponsorenengagements":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Sponsorenengagements") %>");-->
+<!--        break-->
+<!--      case "Crowdfunding":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Crowdfunding") %>");-->
+<!--        break-->
+<!--      case "Crowdfunding Beitraege":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Crowdfunding Beitraege") %>");-->
+<!--        break-->
+<!--      case "Kundenstatus":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Kundenstatus") %>");-->
+<!--        break-->
+<!--      case "Transaktionen":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Transaktionen") %>");-->
+<!--        break-->
+<!--      case "Email":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Email") %>");-->
+<!--        break-->
+<!--      case "Links":-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Links") %>");-->
+<!--        break-->
+<!--      default:-->
+<!--        loadUrl("<%= company_path(:id => @company.id, :topic => "Company") %>");-->
+<!--  }-->
+<!--});-->
+<!--</script>-->
 
-<script type="text/javascript">
-function loadUrl(newLocation)
-{
-  window.location.href = newLocation;
-}
-</script>
+<!--<script type="text/javascript">-->
+<!--function loadUrl(newLocation)-->
+<!--{-->
+<!--  window.location.href = newLocation;-->
+<!--}-->
+<!--</script>-->
 
 <script type="text/javascript">
     var latitudes = [<%= @company.latitude %>];
     var longitudes = [<%= @company.longitude %>];
-
     function init_map(index) {
         var myLocation = new google.maps.LatLng(latitudes[index], longitudes[index]);
         var mapOptions = {
@@ -353,59 +360,7 @@ function loadUrl(newLocation)
             mapOptions);
         marker.setMap(map);
     }
-    init_map(0);
-</script>
-
-<script>
-function initialize() {
-    var map;
-    var bounds = new google.maps.LatLngBounds();
-    var mapOptions = {
-        mapTypeId: 'roadmap'
-    };
-    // Display a map on the page
-    map = new google.maps.Map(document.getElementById("map2"), mapOptions);
-    map.setTilt(45);
-        
-    // Multiple Markers
-    var markers = <%= raw @locs %>;
-    var infoWindowContent = <%= raw @wins %>;
-    
-    // Display multiple markers on a map
-    var infoWindow = new google.maps.InfoWindow(), marker, i;
-    
-    // Loop through our array of markers & place each one on the map  
-    for( i = 0; i < markers.length; i++ ) {
-        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-        bounds.extend(position);
-        marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            title: markers[i][0]
-        });
-        
-        // Allow each marker to have an info window    
-        google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            return function() {
-                infoWindow.setContent(infoWindowContent[i][0]);
-                infoWindow.open(map, marker);
-            }
-        })(marker, i));
-
-        // Automatically center the map fitting all markers on the screen
-        map.fitBounds(bounds);
-    }
-
-    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-        this.setZoom(10);
-        google.maps.event.removeListener(boundsListener);
-    });
-}
-</script>
-
-<script>
-$(window).load(function(){ initialize(); init_map(0) })
+    <!--init_map(0);-->
 </script>
 
 <script type="text/javascript" 
@@ -432,3 +387,8 @@ $(window).load(function(){ initialize(); init_map(0) })
     chart.draw(data, options);
   }
 </script>
+
+<script>
+  document.addEventListener("turbolinks:load", function() {init_map(0); drawChart()})
+</script>
+

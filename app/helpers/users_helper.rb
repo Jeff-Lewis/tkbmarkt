@@ -793,7 +793,7 @@ def action_buttons2(object, item, topic)
                 if user_signed_in?
                   #html_string = html_string + item.owner_id.to_s + item.owner_type 
                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-                    html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id)) do
+                    html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id, :type => "Details")) do
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                     end
                  end
@@ -801,7 +801,7 @@ def action_buttons2(object, item, topic)
             when "Ausschreibungsangebote"
                 if user_signed_in?
                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-                    html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id)) do
+                    html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id, :type => "Angebote")) do
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                     end
                  end
@@ -820,7 +820,7 @@ def action_buttons2(object, item, topic)
               end
             when "Advisors"
               if user_signed_in?
-                if (item.user_id and current_user.id == item.user_id or current_user.superuser)
+                if (item.owner_type == "User" and item.owner_id == current_user.id)
                   html_string = html_string + link_to(madvisors_path :mobject_id => item.id) do
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                   end
