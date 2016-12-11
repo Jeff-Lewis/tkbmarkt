@@ -800,7 +800,7 @@ def action_buttons2(object, item, topic)
                 end
             when "Ausschreibungsangebote"
                 if user_signed_in?
-                 if (item.user_id and current_user.id == item.user.id) or (item.company_id and current_user.id == item.company.user_id)
+                 if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
                     html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id)) do
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                     end

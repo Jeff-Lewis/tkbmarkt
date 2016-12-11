@@ -256,24 +256,12 @@
                   <% end %>
                   <br><br>
                   <% if user_signed_in? %>
-                    <% if @mobject.user_id != nil %>
-                      <% if current_user.id == @mobject.user_id %>
-              	        <%= link_to edit_mdetail_path(md) do %>
-                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                        <% end %>
-              	        <%= link_to md, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                        <% end %>
+                    <% if (@mobject.owner_type == "User" and @mobject.owner_id == current_user.id) or (@mobject.owner_type == "Company" and @mobject.owner_id == current_user.id) %>
+            	        <%= link_to edit_mdetail_path(md) do %>
+                        <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
                       <% end %>
-                    <% end %>
-                    <% if @mobject.company_id != nil %>
-                      <% if current_user.id == @mobject.company.user_id %>
-              	        <%= link_to edit_mdetail_path(md) do %>
-                          <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                        <% end %>
-              	        <%= link_to md, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                        <% end %>
+            	        <%= link_to md, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                        <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
                       <% end %>
                     <% end %>
                   <% end %>
@@ -661,6 +649,6 @@ $(document).ready(function(){
 </script>
 
 <script>
-  document.addEventListener("turbolinks:load", function() {drawChart1(), drawChart2})
+  document.addEventListener("turbolinks:load", function() {drawChart1(); drawChart2(); owlCarousel()})
 </script>
 
