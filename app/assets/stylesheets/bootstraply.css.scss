@@ -1,26 +1,48 @@
 /* render html5 elements as block */
 
- $mandant: "TKB";
+/*******************************************************************************************************/
+/* COLORS */
+/*******************************************************************************************************/
+ $blocked: #EF8B8B;
+ $blaugruen: #61A6A7;
+ $orange: #E0633B;
+ $gelb: #F2B857;
  $tkb_light_green: #ACC550;         /* hellgruen */
+
+ $color1: $tkb_light_green;
  $color2: #2E6B33;         /* dunkelgruen */
  $color3: white;
  $color4: #F5F5F5;         /* hellgrau */
  $color5: grey;
- $blocked: #EF8B8B;
- 
- $blaugruen: #61A6A7;
- $orange: #E0633B;
- $gelb: #F2B857;
- 
-/* $color1: #58A5EF;
-# $color2: #14296C; */
 
-$valiant_lila: #624E94;
-$color1: $tkb_light_green;
-/*$color1: $valiant_lila; */
-$color1: $blaugruen;
-$color1: $tkb_light_green;
+/*******************************************************************************************************/
+/* GENERIC */
+/*******************************************************************************************************/
+.body {
+   padding: 0px!important;
+   margin: 0px!important;
+   background-color: white!important;
+}
 
+.container-fluid {
+   padding: 0 !important;
+   margin: 0 !important;
+   background: $color4!important;
+   background: transparent!important;
+}
+
+h1 {
+   color: dunkelgruen!important;
+   border-color: dunkelgruen!important;
+}
+
+h2 {
+   color: $color3!important;
+}
+
+/*******************************************************************************************************/
+/* INDEX & LIST */
+/*******************************************************************************************************/
 list-h1 {
     color: $color5!important;
     font-size: 120%!important;
@@ -37,6 +59,9 @@ listh3 {
     font-size: 80%!important;
 }
 
+/*******************************************************************************************************/
+/* ICON Kachel */
+/*******************************************************************************************************/
 .kachel_min_height {
     min-height: 50px;
 }
@@ -45,17 +70,237 @@ listh3 {
     line-height: 90%;
 }
 
-.list-banner {
-    padding: 15px;
-    color: white!important;
-    font-size: 100%!important;
+/*******************************************************************************************************/
+/* Navigation */
+/*******************************************************************************************************/
+.nav-panel-black {
+   background-color: black!important;
+   border-color: black!important;
+   border-radius: 0px!important;
+   padding: 0px!important;
+   margin: 0px!important;
+   :hover {
+   border-color: black!important;
+   }
 }
 
-.nopadding {
-   padding: 0 !important;
-   margin: 0 !important;
+main_navigation {
+    background: black!important;
+    border-color: black!important;
+    color: $color5!important;
 }
 
+/*******************************************************************************************************/
+/* Footer */
+/*******************************************************************************************************/
+footer {
+    font-size:100%!important;
+    background: black!important;
+    color: $color5!important;
+    .panel-body {
+        background: black!important;
+        border-color: black!important;
+        box-shadow: 0px 0px 0px black!important;
+    }
+ }
+ 
+ footer_header {
+    font-size:150%!important;
+    background: black!important;
+    color: $color5!important;
+    font-weight: bold;
+}
+ 
+footer_text {
+    background: black!important;
+    color: $color5!important;
+}
+
+footer_text:hover {
+    background: black!important;
+    color: $color1!important;
+}
+
+/*******************************************************************************************************/
+/* Links */
+/*******************************************************************************************************/
+a:link {
+    color: $color5!important;
+}
+a:visitied {
+    color: $color5!important;
+}
+a:hover {
+    color: $color1!important;
+}
+a:active {
+    color: $color1!important;
+}
+
+/*******************************************************************************************************/
+/* Button */
+/*******************************************************************************************************/
+.btn-primary {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: $color5!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.btn-warning {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: orange!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.btn-danger {
+   background-color: $color3!important;
+   border-color: $color4!important;
+   color: red!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.btn-primary:hover,.btn-warning:hover,.btn-danger:hover {
+    border-color: $color1!important;
+    color: $color1!important;
+    box-shadow: 2px 2px 10px $color1;
+}
+
+.btn-active {
+   background-color: white!important;
+   border-color: white!important;
+   color: $color1!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.btn-inactive {
+   background-color: white!important;
+   border-color: white!important;
+   color: grey!important;
+   box-shadow: 2px 2px 10px #B1B1B1;
+}
+.btn-inactive:hover,.btn-active:hover {
+    border-color: $color1!important;
+    color: $color1!important;
+    box-shadow: 2px 2px 10px $color1;
+}
+
+/*******************************************************************************************************/
+/* Text Elements */
+/*******************************************************************************************************/
+message {
+    background: black!important;
+    color: $color1!important;
+ }
+
+li_header {
+    background: $color1;
+    color: $color2;
+    font-size: 120%;
+}
+
+small_cal {
+    font-size: 50%;
+}
+
+marquee {
+    background: black;
+    color: $color1;
+    font-size:100%;
+    height:100%;
+}
+
+.form-control {
+    border-color: $color1!important;
+}
+.form-control :focus {
+    border-color:$color1!important;
+    box-shadow: 2px 2px 10px $color1!important;
+}
+
+input#email {
+    background-color: white!important;
+    color: $color1!important;
+    border-color: $color1!important;
+}
+input#email:focus {
+    border-color: $color1!important;
+}
+
+.badge {
+    background: $color4!important;
+    color: $color5!important;
+}
+
+restlaufzeit, preis {
+  font-size: 200%;
+  color: red;
+}
+restlaufzeits, preiss, ticketstatuss, betrag {
+  color: red;
+}
+
+anzeigetext {
+  font-size: 150%;
+  color: $color5;
+}
+ntext {
+  color: $color5;
+}
+
+senior_berater {
+  color: white;
+  background: $color2;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+berater {
+  color: white;
+  background: $tkb_light_green;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+angefragt {
+  color: white;
+  background: #F7E388;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+abgelehnt {
+  color: white;
+  background: red;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+bestaetigt {
+  color: white;
+  background: $color1;
+  padding-left:1em;
+  padding-right:1em;
+}
+geblockt {
+  color: white;
+  background: #D0D7DB;;
+  padding-left:1em;
+  padding-right:1em;
+}
+.blocked {
+  background: $blocked!important;
+}
+.Spendenbetrag_IST {
+  font-size: 200%;
+  color: $color2;
+}
+.Spendenbetrag_SOLL {
+  color: $color1;
+}
+
+/*******************************************************************************************************/
+/* PANELS */
+/*******************************************************************************************************/
 .panel-list {
     background: $color1!important;
     color: white!important;
@@ -110,155 +355,6 @@ listh3 {
         color: #197BB5;
     }
 
-.nav-panel-black {
-   background-color: black!important;
-   border-color: black!important;
-   border-radius: 0px!important; 
-}
-
-.btn-active {
-   background-color: white!important;
-   border-color: white!important;
-   color: $color1!important;
-   box-shadow: 2px 2px 10px #B1B1B1;
-}
-
-.btn-inactive {
-   background-color: white!important;
-   border-color: white!important;
-   color: grey!important;
-   box-shadow: 2px 2px 10px #B1B1B1;
-}
-.btn-inactive:hover,.btn-active:hover {
-    border-color: $color1!important;
-    color: $color1!important;
-    box-shadow: 2px 2px 10px $color1;
-}
-
-li_header {
-    background: $color1;
-    color: $color2;
-    font-size: 120%;
-}
-
-small_cal {
-    font-size: 50%;
-}
-
-.container-fluid {
-    background: $color4!important;
-    background: transparent!important;
-}
-
-#picture{
-  background: url(asset-path('bluestreaks.jpg')) no-repeat;
-  width: auto;
-  background-size: 100% 100%;
-}
-
- .dropdown {
-     font-size:150%!important;
- }
- .dropdown-menu {
-     font-size:100%!important;
- } 
-marquee {
-    background: black;
-    color: $color1;
-    font-size:100%;
-    height:100%;
-}
-
-/* DB Fields */
-.form-control {
-    border-color: $color1!important;
-}
-.form-control :focus {
-    border-color:$color1!important;
-    box-shadow: 2px 2px 10px $color1!important;
-}
-
-.badge {
-    background: $color4!important;
-    color: $color5!important;
-}
-
-restlaufzeit, preis {
-  font-size: 200%;
-  color: red;
-}
-restlaufzeits, preiss, ticketstatuss, betrag {
-  color: red;
-}
-
-anzeigetext {
-  font-size: 150%;
-  color: $color5;
-}
-ntext {
-  color: $color5;
-}
-
-footer {
-    font-size:100%!important;
-    background: black!important;
-    color: $color5!important;
-    padding: 1.2em 0.5em;
-    .panel-body {
-        background: black!important;
-        border-color: black!important;
-        box-shadow: 0px 0px 0px black!important;
-    }
- }
- 
-main_navigation {
-    background: black!important;
-    border-color: black!important;
-    color: $color5!important;
-}
-
-footer_header {
-    font-size:150%!important;
-    background: black!important;
-    color: white!important;
- }
- 
-footer_text {
-    background: black!important;
-    color: $color5!important;
-}
-
-footer_text:hover {
-    background: black!important;
-    color: $color1!important;
-}
-
-a:link {
-    color: $color5!important;
-}
-a:visitied {
-    color: $color5!important;
-}
-a:hover {
-    color: $color1!important;
-}
-a:active {
-    color: $color1!important;
-}
-
-message {
-    background: black!important;
-    color: $color1!important;
- }
-
-body{
-  background-color: white!important;
-}
-
-.row-black {
-  background: black!important;
-  border-color: black!important;
-}
 .panel-black {
   background: black!important;
   border-color: black!important;
@@ -282,10 +378,8 @@ body{
   background: $color3!important;
   border-color: $color1!important;
   box-shadow: 2px 2px 10px #B1B1B1;
-}
-
-media-body{
-  color: white!important;
+   padding: 0 !important;
+   margin: 0 !important;
 }
 
 .panel-info {
@@ -305,13 +399,6 @@ media-body{
   box-shadow: 2px 2px 10px #B1B1B1;
 }
 
-.header {
-  background: $color1!important;
-  color: $color3;
-  border-color: $color3!important;
-  box-shadow: 2px 2px 10px #B1B1B1;
-}
-
 .panel-title {
   color: $color5!important;
 }
@@ -321,42 +408,11 @@ media-body{
   background: $color1!important;
 }
 
+/*******************************************************************************************************/
+/* TABLES */
+/*******************************************************************************************************/
 table {
   box-shadow: 2px 2px 10px #B1B1B1;
-}
-
-.btn-primary {
-   background-color: $color3!important;
-   border-color: $color4!important;
-   color: $color5!important;
-   box-shadow: 2px 2px 10px #B1B1B1;
-}
-.btn-warning {
-   background-color: $color3!important;
-   border-color: $color4!important;
-   color: orange!important;
-   box-shadow: 2px 2px 10px #B1B1B1;
-}
-.btn-danger {
-   background-color: $color3!important;
-   border-color: $color4!important;
-   color: red!important;
-   box-shadow: 2px 2px 10px #B1B1B1;
-}
-
-.btn-primary:hover,.btn-warning:hover,.btn-danger:hover {
-    border-color: $color1!important;
-    color: $color1!important;
-    box-shadow: 2px 2px 10px $color1;
-}
-
-h1 {
-   color: dunkelgruen!important;
-   border-color: dunkelgruen!important;
-}
-
-h2 {
-   color: $color3!important;
 }
 
 th {
@@ -370,73 +426,9 @@ thead {
    border-color: $color2!important;
 }
 
-.blocked {
-  background: $blocked!important;
-}
-
-senior_berater {
-  color: white;
-  background: $color2;
-  padding-left:1em;
-  padding-right:1em;
-}
-
-berater {
-  color: white;
-  background: $tkb_light_green;
-  padding-left:1em;
-  padding-right:1em;
-}
-
-angefragt {
-  color: white;
-  background: #F7E388;
-  padding-left:1em;
-  padding-right:1em;
-}
-
-abgelehnt {
-  color: white;
-  background: red;
-  padding-left:1em;
-  padding-right:1em;
-}
-
-bestaetigt {
-  color: white;
-  background: $color1;
-  padding-left:1em;
-  padding-right:1em;
-}
-geblockt {
-  color: white;
-  background: #D0D7DB;;
-  padding-left:1em;
-  padding-right:1em;
-}
-.Spendenbetrag_IST {
-  font-size: 200%;
-  color: $color2;
-}
-.Spendenbetrag_SOLL {
-  color: $color1;
-}
-
-input#email {
-    background-color: white!important;
-    color: $color1!important;
-    border-color: $color1!important;
-}
-input#email:focus {
-    border-color: $color1!important;
-}
-
-.jumbotron {
-   box-shadow: 2px 2px 10px #B1B1B1;
-   background: transparent!important;
-   background: $color1!important;
-}
-
+/*******************************************************************************************************/
+/* THUMBNAILS*/
+/*******************************************************************************************************/
 .thumbnail {
    box-shadow: 2px 2px 10px #B1B1B1;
 }
@@ -449,10 +441,18 @@ input#email:focus {
    background: transparent!important;
 }
 
-.media-body:hover {
-    color: $color1!important;
+/*******************************************************************************************************/
+/* JUMBOTRONS */
+/*******************************************************************************************************/
+.jumbotron {
+   box-shadow: 2px 2px 10px #B1B1B1;
+   background: transparent!important;
+   background: $color1!important;
 }
 
+/*******************************************************************************************************/
+/* CAROUSEL */
+/*******************************************************************************************************/
 .carousel-caption {
     background-color: transparent!important;
     position: relative!important;
@@ -461,6 +461,43 @@ input#email:focus {
     right: auto;
 }
 
+/*******************************************************************************************************/
+/* Rest?? */
+/*******************************************************************************************************/
+media-body{
+  color: white!important;
+}
+
+.list-banner {
+    padding: 15px;
+    color: white!important;
+    font-size: 100%!important;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.row-black {
+  background: black!important;
+  border-color: black!important;
+}
+
+.header {
+  background: $color1!important;
+  color: $color3;
+  border-color: $color3!important;
+  box-shadow: 2px 2px 10px #B1B1B1;
+}
+
+.media-body:hover {
+    color: $color1!important;
+}
+
+/*******************************************************************************************************/
+/* GOOGLE MAPs */
+/*******************************************************************************************************/
 #map, #map2, #map3 {
    height: 750px;
    border-radius: 16px 16px;
@@ -483,7 +520,10 @@ input#email:focus {
 #map-container #map-canvas label {
   width: auto; display:inline;
 }
- 
+
+/*******************************************************************************************************/
+/* PAGINATION */
+/*******************************************************************************************************/
 .digg_pagination {
   background: white;
   cursor: default;
