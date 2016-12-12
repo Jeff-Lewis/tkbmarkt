@@ -82,7 +82,7 @@
           <%= build_medialist2(@company.mobjects.where('mtype=?',"Crowdfunding"), "mobjects", nil) %>
         <% when "Crowdfunding Beitraege" %>
           <%= header("Crowdfunding Beitraege", false) %>
-          <%= build_medialist2(@company.mstats, "mobjects", nil) %>
+          <%= build_medialist2(@company.mstats, "mstats", nil) %>
 
         <% when "Favoriten" %>
           <%= header("Favoriten", false) %>

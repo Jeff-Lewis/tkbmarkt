@@ -20,6 +20,8 @@
 					  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Search'  %>
 					  <% submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
 					<% end %>
+				<% else %>
+        			<%= render 'layouts/advertise' %>
 				<% end %>
 			</div>
 

@@ -243,8 +243,8 @@ end
 #create Links for TKB
 @comp = Company.where('name=?',"Thurgauer Kantonalbank").first
 if @comp
-    for i in 2..5
-        partnerlinks = PartnerLink.create({active:true, company_id: @comp.id, name:"eBanking", link:"www.tkb.ch/ebanking"})
+    for i in 1..6
+        partnerlinks = PartnerLink.create({active:true, company_id: @comp.id, name:"eBanking", link:"www.tkb.ch/ebanking", avatar: File.open(path+'tkb0'+i.to_s+'.jpg', 'rb')})
     end
 end
 

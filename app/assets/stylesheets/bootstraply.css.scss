@@ -408,6 +408,26 @@ geblockt {
   background: $color1!important;
 }
 
+.panel-listhead {
+  background: $color5!important;
+  border-color: $color5!important;
+  color: white!important;
+  padding: 5px!important;
+  margin: 0px!important;
+  font-size: 120%!important;
+  font-weight: bold;
+}
+
+.panel-listfoot {
+  background: $color4!important;
+  border-color: $color4!important;
+  color: $color2!important;
+  padding: 5px!important;
+  margin: 0px!important;
+  font-size: 100%!important;
+  font-weight: bold;
+}
+
 /*******************************************************************************************************/
 /* TABLES */
 /*******************************************************************************************************/
@@ -439,6 +459,11 @@ thead {
 
 .thumbnail-navnav {
    background: transparent!important;
+}
+
+.thumbnail-list {
+    margin: 5px!important;
+    padding: 0px!important;
 }
 
 /*******************************************************************************************************/

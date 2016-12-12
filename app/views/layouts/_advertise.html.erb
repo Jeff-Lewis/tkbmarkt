@@ -6,7 +6,7 @@
 				<% @p = Company.where('partner=?',true) %>
 				<% @p.each do |p| %>
 					<% if p.name == "Thurgauer Kantonalbank" %>
-							<%= showImage2(:small, p, true) %>
+							<!--<%= showImage2(:small, p, true) %>-->
 							<% @id = p.id %>
 					<% end %>
 				<% end %>
@@ -47,22 +47,3 @@
 	</div>
 	</advertise>
 	<br>
-
-<script>
-	$(document).ready(function() {
-		$("tkb").hide()
-	})
-</script>
-
-<!--<script>-->
-<!--$(document).ready(function(){-->
-<!--  $("tkb").mouseenter(function() {-->
-<!--    $("advertise").show();-->
-<!--  });-->
-<!--})-->
-<!--$(document).ready(function(){-->
-<!--  $("advertise").mouseleave(function() {-->
-<!--    $("advertise").hide();-->
-<!--  });-->
-<!--})-->
-<!--</script>-->
