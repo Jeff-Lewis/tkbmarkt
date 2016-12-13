@@ -238,7 +238,7 @@
                     <%= align_text(pl.description) %>
                     </ntext>
                     <br>
-                    <%= showImage2(:medium, pl, true) %>
+                    <%= showImage2(:medium, pl, false) %>
                     <br>
                     <% if user_signed_in? %>
                       <% if current_user.id == @company.user_id %>

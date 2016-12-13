@@ -288,7 +288,7 @@ def build_medialist2(items, cname, par)
     
     if item and show
       
-      html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">'
+      html_string = html_string + '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">'
         html_string = html_string + '<div class="thumbnail thumbnail-list">'
         
           html_string = html_string + '<div class="panel-body panel-listhead">'
@@ -299,10 +299,12 @@ def build_medialist2(items, cname, par)
                 when "companies", "mobjects", "searches"
                   html_string = html_string + item.name
                 when "customers"
+                  @comp = Company.find(item.partner_id)
                   html_string = html_string + @comp.name
                 when "madvisors", "msponsors", "mstats"
                   html_string = html_string + item.mobject.name
                 when "favourits"
+                  @item = Object.const_get(item.object_name).find(item.object_id)
                   if Object.const_get(item.object_name).to_s == "User"
                       html_string = html_string + @item.name + " " + @item.lastname 
                   end
@@ -314,7 +316,7 @@ def build_medialist2(items, cname, par)
           html_string = html_string + '</div>'
 
           html_string = html_string + '<div class="row">'
-            html_string = html_string + '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">'
+            html_string = html_string + '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">'
               html_string = html_string + '<div class="panel-header pull-left">'
 
                 case items.table_name
@@ -330,7 +332,6 @@ def build_medialist2(items, cname, par)
                       html_string = html_string + showImage2(:medium, @item, true)
                     end
                   when "customers"
-                      @comp = Company.find(item.partner_id)
                       if @comp
                         html_string = html_string + showImage2(:medium, @comp, true)
                       end
@@ -354,73 +355,73 @@ def build_medialist2(items, cname, par)
               html_string = html_string + '</div>'
             html_string = html_string + '</div>'
 
-            html_string = html_string + '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">'
-              html_string = html_string + '<div class="panel-header">'
+            html_string = html_string + '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">'
+              html_string = html_string + '<div class="panel-header pull-left"><list>'
                 case items.table_name
                     when "users"
-                      html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
-                      html_string = html_string + "<list>" + item.geo_address + '</list><br>'
-                      html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
-                      html_string = html_string + "<list>" + item.email + '</list><br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
+                      html_string = html_string + item.geo_address + '<br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i> '
+                      html_string = html_string +  item.email
                     when "companies"
-                      html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
-                      html_string = html_string + "<list>" + item.mcategory.name + '</list><br>'
-                      html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
-                      html_string = html_string + "<list>" + item.geo_address + '</list><br>'
-                      html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
-                      html_string = html_string + "<list>" + item.user.email + '</list><br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
+                      html_string = html_string + item.mcategory.name + '<br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
+                      html_string = html_string + item.geo_address + '<br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i> '
+                      html_string = html_string + item.user.email
                     when "customers"
-                      html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
-                      html_string = html_string + "<list>" + @comp.mcategory.name + '</list><br>'
-                      html_string = html_string + '<i class="glyphicon glyphicon-home"></i>'
-                      html_string = html_string + "<list>" + @comp.geo_address + '</list><br>'
-                      html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i>'
-                      html_string = html_string + "<list>" + @comp.user.email + '</list><br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
+                      html_string = html_string + @comp.mcategory.name + '<br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
+                      html_string = html_string + @comp.geo_address + '<br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-envelope"></i> '
+                      html_string = html_string + @comp.user.email + '<br>'
                     when "mobjects"
-                      html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i>'
-                      html_string = html_string + "<list>" + item.mcategory.name + '</list><br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
+                      html_string = html_string + item.mcategory.name + '<br>'
                       if item.owner_type == "Company"
-                          html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
-                          html_string = html_string + "<list>" + item.owner.name + "</list><br>"
+                          html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
+                          html_string = html_string + item.owner.name + "<br>"
                       end
                       if item.owner_type == "User"
-                          html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                          html_string = html_string + "<list>" + item.owner.name + " "+ item.owner.lastname + "</list><br>"
+                          html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
+                          html_string = html_string + item.owner.name + " "+ item.owner.lastname + "<br>"
                       end
                     when "madvisors", "msponsors", "mstats"
                       if items.table_name == "mstats"
-                        if item.owner_type == "Company"
-                            html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
-                            html_string = html_string + "<list>" + item.owner.name + "</list><br>"
+                        if item.mobject.owner_type == "Company"
+                            html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
+                            html_string = html_string + item.mobject.owner.name + "<br>"
                         end
-                        if item.owner_type == "User"
-                            html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                            html_string = html_string + "<list>" + item.owner.name + " "+ item.owner.lastname + "</list><br>"
+                        if item.mobject.owner_type == "User"
+                            html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
+                            html_string = html_string + item.mobject.owner.name + " "+ item.mobject.owner.lastname + "<br>"
                         end
                       else
                         if item.mobject.company_id
-                            html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i>'
-                            html_string = html_string + "<list>" + item.mobject.company.name + "</list><br>"
+                            html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
+                            html_string = html_string + item.mobject.company.name + "<br>"
                         end
                         if item.mobject.user_id
-                            html_string = html_string + '<i class="glyphicon glyphicon-user"></i>'
-                            html_string = html_string + "<list>" + item.mobject.user.name + " "+ item.mobject.user.lastname + "</list><br>"
+                            html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
+                            html_string = html_string + item.mobject.user.name + " "+ item.mobject.user.lastname + "<br>"
                         end
                       end
                     when "favourits"
-                      html_string = html_string + "<list>" + @item.geo_address + '</list><br>'
+                      html_string = html_string + @item.geo_address + '<br>'
     
                     when "searches"
                       if item.search_domain == "Object"
                         html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
-                        html_string = html_string + "<list>" + item.mtype + "</list><br>" 
-                        html_string = html_string + "<list>" + item.msubtype.to_s + '</list><br>'
+                        html_string = html_string + item.mtype + "<br>" 
+                        html_string = html_string + item.msubtype.to_s + '<br>'
                       end
                       html_string = html_string + '<i class="glyphicon glyphicon-question-sign"></i> '
-                      html_string = html_string + "<list>"+'Anzahl ' + item.counter.to_s + '</list><br>'
+                      html_string = html_string + 'Anzahl ' + item.counter.to_s + '<br>'
     
                 end
-              html_string = html_string + '</div>'
+              html_string = html_string + '</list></div>'
             html_string = html_string + '</div>'
           html_string = html_string + '</div>'
 
@@ -429,21 +430,15 @@ def build_medialist2(items, cname, par)
             if (Date.today - item.created_at.to_date).to_i < 5
                 html_string = html_string + (image_tag 'neu.png', :size => '30x30', class:'img-rounded')
             end 
-            html_string = html_string + item.created_at.strftime("%d.%m.%Y")
+            #html_string = html_string + item.created_at.strftime("%d.%m.%Y")
             case cname 
               when "favourits"
   	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash")
-                end
-                if Object.const_get(item.object_name).to_s == "User"
-                  html_string = html_string + "<a href=/users/"+@item.id.to_s + ">"
-                end
-                if Object.const_get(item.object_name).to_s == "Company"
-                  html_string = html_string + "<a href=/companies/"+@item.id.to_s + ">"
+                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
                 end
               when "partners"
   	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash")
+                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
                 end
   	            html_string = html_string + link_to(edit_customer_path(:id => item)) do 
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
@@ -451,7 +446,6 @@ def build_medialist2(items, cname, par)
   	            html_string = html_string + link_to(accounts_path(:customer_id => item)) do 
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
                 end
-                html_string = html_string + "<a href=/companies/"+item.partner_id.to_s + ">"
               when "nopartners"
                 if par[:user_id]
     	            html_string = html_string + link_to(new_customer_path(:user_id => par[:user_id], :partner_id => item)) do 
@@ -463,34 +457,14 @@ def build_medialist2(items, cname, par)
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
                   end
                 end
-                html_string = html_string + "<a href=/companies/"+item.id.to_s + ">"
               when "searches"
   	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash")
+                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
                 end
   	            html_string = html_string + link_to(edit_search_path(:id => item)) do 
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                 end
-                case item.search_domain
-                  when "Privatpersonen"
-      	            html_string = html_string + link_to(users_path(:filter_id => item.id)) do 
-                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-filter")
-                    end
-                  when "Institutionen"
-      	            html_string = html_string + link_to(companies_path(:filter_id => item.id)) do 
-                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-filter")
-                    end
-                  when "Object"
-      	            html_string = html_string + link_to(mobjects_path(:filter_id => item.id)) do 
-                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-filter")
-                    end
-                end 
-                html_string = html_string + "<a href=/searches/"+item.id.to_s + "/edit>"
-              else
-                  html_string = html_string + "<a href=/"+items.table_name+"/"+item.id.to_s + ">"
             end
-            html_string = html_string + '<i class="btn btn-primary glyphicon glyphicon-circle-arrow-right pull-right"></i>'
-            html_string = html_string + "</a>"
 
           html_string = html_string + '</div>'
 

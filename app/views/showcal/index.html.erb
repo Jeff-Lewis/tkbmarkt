@@ -50,6 +50,7 @@
             <% @mobjects.each do |e| %>
               <tr>
                 <td>
+                  <list>
           		    <% if avg_rating2(e.id) == 0 %>
                     <% image_tag("no_rating.jpg", :size => "50x50" , class:"img-rounded") %>
           		    <% else %>
@@ -59,10 +60,8 @@
                     <% end %>
                   <% end %><br>
                   <%= showFirstImage2(:small, e, e.mdetails) %>
-                  <%= link_to e do %>
-                    <i class="glyphicon glyphicon-circle-arrow-right"></i>'
-                  <% end %>
                   <%= e.name %>
+                  </list>  
                 </td>
                 <% for i in 0..6 %>
                     <% if AktionDatum2(@start+i,e) %>
