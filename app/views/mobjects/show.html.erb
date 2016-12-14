@@ -275,92 +275,15 @@
         <% when "Sponsoren" %>
           <%= header("Sponsoren", false) %>
           <div class="panel-body">
-            <% @mobject.msponsors.each do |cs| %>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="thumbnail" align="center">
-                  <%= link_to cs.company do %>
-                    <%= showImage2(:medium, cs.company, true) %>
-                  <% end %>
-                  <br>
-                  <anzeigetext>
-        						<%= cs.company.name %><br>
-                  </anzeigetext>
-                  <br>
-                  <ntext>
-                  <%= cs.company.mcategory.name %>
-                  </ntext>
-                  <br>
-          				<% case cs.slevel %>
-          				  <% when "1" %>
-                      <%= image_tag("Sponsor_gold.jpg", :size => "200x200", class:"img-rounded" ) %>
-          				  <% when "2" %>
-                      <%= image_tag("Sponsor_silver.jpg", :size => "200x200", class:"img-rounded" ) %>
-          				  <% when "3" %>
-                      <%= image_tag("Sponsor_bronze.jpg", :size => "200x200", class:"img-rounded" ) %>
-                  <% end %>
-      						<br><br>
-                  <% if user_signed_in? %>
-                    <% if cs.company.user_id != nil %>
-                      <% if current_user.id == cs.company.user_id %>
-                        <%= link_to tickets_path :msponsor_id => cs.id do %>
-                          <i class="btn btn-primary glyphicon glyphicon-credit-card"></i>
-                        <% end %>
-              	        <%= link_to edit_msponsor_path(cs) do %>
-                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
-                        <% end %>
-              	        <%= link_to cs, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                  <% end %>
-                  <br><br>
-                </div>
-              </div>
-            <% end %>
+            <%= build_medialist2(@mobject.msponsors, "msponsors", hash) %>
           </div>
-      
+          
         <% when "Ratings" %>
           <%= header("Bewertungen", false) %>
           <div class="panel-body">
-             <% @mobject.mratings.each do |mr| %>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <div class="thumbnail" align="center">
-                    <%= showImage2(:medium, mr.user, true) %>
-                    <br>
-                    <ntext>
-                    <% mr.rating.times do %>
-                      <% image_tag("rating_star.jpg", :size => "50x50" , class:"img-rounded") %>
-                      <i class="glyphicon glyphicon-star"></i>
-                    <% end %>
-                    </ntext>
-                    <br>
-                    <br>
-                    <anzeigetext>
-                    <%= mr.user.name + " " + mr.user.lastname %><br>
-                    </anzeigetext>
-                    <ntext>
-                    <%= mr.comment %>
-                    <br><br>
-                    <% if user_signed_in? %>
-                      <% if (mr.user_id and current_user.id == mr.user_id) %>
-              	        <%= link_to edit_mrating_path(mr) do %>
-                          <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
-                        <% end %>
-              	        <%= link_to mr, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                          <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                        <% end %>
-                      <% end %>
-                    <% end %>
-                    <br><br>
-                    <%= mr.created_at.strftime("%d.%m.%Y") %>
-                    <br><br>
-                    </ntext>
-                  </div>
-                </div>
-      				<% end %>
+            <%= build_medialist2(@mobject.mratings, "mratings", hash) %>
           </div>
-          
+
         <% when "Advisors" %>
           <%= header("Ansprechpartner", false) %>
           <div class="panel-body">

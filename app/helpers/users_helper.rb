@@ -80,8 +80,12 @@ def build_medialist2(items, cname, par)
                 when "customers"
                   @comp = Company.find(item.partner_id)
                   html_string = html_string + @comp.name
-                when "madvisors", "msponsors", "mstats"
+                when "madvisors", "mstats"
                   html_string = html_string + item.mobject.name
+                when "msponsors"
+                  html_string = html_string + item.company.name
+                when "mratings"
+                  html_string = html_string + item.user.name + " " + item.user.lastname
                 when "favourits"
                   @item = Object.const_get(item.object_name).find(item.object_id)
                   if Object.const_get(item.object_name).to_s == "User"
@@ -110,9 +114,13 @@ def build_medialist2(items, cname, par)
                 case items.table_name
                   when "users", "companies"
                     html_string = html_string + showImage2(:medium, item, true)
+                  when "msponsors"
+                    html_string = html_string + showImage2(:medium, item.company, true)
+                  when "mratings"
+                    html_string = html_string + showImage2(:medium, item.user, true)
                   when "mobjects"
                     html_string = html_string + showFirstImage2(:medium, item, item.mdetails)
-                  when "madvisors", "mratings", "msponsors", "mstats"
+                  when "madvisors", "mratings", "mstats"
                     html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
                   when "favourits"
                     @item = Object.const_get(item.object_name).find(item.object_id)
@@ -178,7 +186,7 @@ def build_medialist2(items, cname, par)
                           html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
                           html_string = html_string + item.owner.name + " "+ item.owner.lastname + "<br>"
                       end
-                    when "madvisors", "msponsors", "mstats"
+                    when "madvisors", "mstats"
                       if items.table_name == "mstats"
                         if item.mobject.owner_type == "Company"
                             html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
@@ -189,15 +197,27 @@ def build_medialist2(items, cname, par)
                             html_string = html_string + item.mobject.owner.name + " "+ item.mobject.owner.lastname + "<br>"
                         end
                       else
-                        if item.mobject.company_id
+                        if item.mobject.owner_type == "Company"
                             html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
-                            html_string = html_string + item.mobject.company.name + "<br>"
+                            html_string = html_string + item.mobject.owner.name + "<br>"
                         end
-                        if item.mobject.user_id
+                        if item.mobject.owner_type == "User"
                             html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
-                            html_string = html_string + item.mobject.user.name + " "+ item.mobject.user.lastname + "<br>"
+                            html_string = html_string + item.mobject.owner.name + " "+ item.mobject.owner.lastname + "<br>"
                         end
                       end
+                    when "msponsors"
+                        if items.table_name == "msponsors"
+                          case item.slevel
+                            when "1"
+                              html_string = html_string + image_tag("Sponsor_gold.jpg", :size => "100x100", class:"img-rounded")
+              				      when "2"
+                              html_string = html_string + image_tag("Sponsor_silver.jpg", :size => "100x100", class:"img-rounded")
+              				      when "3"
+                              html_string = html_string + image_tag("Sponsor_bronze.jpg", :size => "100x100", class:"img-rounded")
+                          end
+                        end
+                        
                     when "favourits"
                       html_string = html_string + @item.geo_address + '<br>'
     
@@ -219,7 +239,17 @@ def build_medialist2(items, cname, par)
                       html_string = html_string +  item.trx_date.strftime("%d.%m.%Y") + '<br>'
                       html_string = html_string + '<i class="glyphicon glyphicon-inbox"></i> '
                       html_string = html_string +  item.status + '<br>'
-    
+
+                    when "mratings"
+                      item.rating.times do
+                        html_string = html_string + '<i class="glyphicon glyphicon-star"></i>'
+                      end
+                      html_string = html_string + "<br>"
+                      html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
+                      html_string = html_string +  item.comment + '<br>'
+                      html_string = html_string + '<i class="glyphicon glyphicon-time"></i> '
+                      html_string = html_string + item.created_at.strftime("%d.%m.%Y") 
+
                 end
               html_string = html_string + '</list></div>'
             html_string = html_string + '</div>'
@@ -264,7 +294,24 @@ def build_medialist2(items, cname, par)
   	            html_string = html_string + link_to(edit_search_path(:id => item)) do 
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                 end
-              when "transactions"
+              when "msponsors"
+  	            html_string = html_string + link_to(tickets_path :msponsor_id => item.id) do 
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-barcode")
+                end
+  	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                end
+  	            html_string = html_string + link_to(edit_msponsor_path(:id => item)) do 
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                end
+              when "mratings"
+  	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                end
+  	            html_string = html_string + link_to(edit_mrating_path(:id => item)) do 
+                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                end
+               when "transactions"
                 if item.status == "erfasst"
                   #if @customer.owner_type == "User"
                   #  html_string = html_string + link_to(user_path(:id => @customer.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen")) do
