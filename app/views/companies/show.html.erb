@@ -154,74 +154,9 @@
         <% when "Transaktionen" %>
           <%= header("Transaktionen", false) %>
           <div class="panel-body">
-            <% @trx = @company.transactions.where('ttype=?', "Payment").order(trx_date: :desc) %>
-            <% @trx.each do |t| %>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="thumbnail" align="center">
-                  <% ac_ver = Account.find(t.account_ver) %>
-                  <% if ac_ver %>
-                      <%= showImage2(:medium, ac_ver.customer.owner, true) %>
-                      <anzeigetext>
-                      <% if ac_ver.customer.owner_type == "User" %>
-                        <%= ac_ver.customer.owner.name + " " + ac_ver.customer.owner.lastname %>
-                      <% else %>
-                        <%= ac_ver.customer.owner.name %>
-                      <% end %>
-                      </anzeigetext>
-                  <% end %>
-                  <br><br>
-                  <b>Referenz</b>
-                  <% @item = Object.const_get(t.object_name).find(t.object_id) %>
-                  <% if @item %>
-                    <%= link_to @item do %>
-                      <%= @item.name %>
-                    <% end %>
-                    <br>
-                  <% end %>
-                  <br>
-                  <b>Betrag</b>
-                  <%= sprintf("%05.2f CHF",t.amount) if t.amount != nil %>
-                  <br><br>
-                  <b>Mitteilung</b><br>
-                  <%= t.text %>
-                  <br><br>
-                  <b>Status</b>
-                  <%= t.status if t.amount != nil %>
-                  <br><br>
-                  <% if t.status == "erfasst" %>
-                    <% if t.owner_type == "User" %>
-                      <%= link_to user_path(:id => t.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen") do %>
-                        <i class="btn btn-primary glyphicon glyphicon-ok"></i>
-                      <% end %>
-                    <% else %>
-                      <%= link_to company_path(:id => t.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen") do %>
-                        <i class="btn btn-primary glyphicon glyphicon-ok"></i>
-                      <% end %>
-                    <% end %>
-                    <%= link_to edit_transaction_path(t, :user_id => current_user.id) do %>
-                      <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
-                    <% end %>
-          	        <%= link_to t, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                      <i class="btn btn-danger glyphicon glyphicon-trash"></i>
-                    <% end %>
-                  <% end %>
-                  <% if t.status == "freigegeben" %>
-                    <% if t.owner_type == "User" %>
-                      <%= link_to user_path(:id => t.owner_id, :trx_status_ausgefuehrt_id => t.id, :topic => "Transaktionen") do %>
-                        <i class="btn btn-primary glyphicon glyphicon-thumbs-up"></i>
-                      <% end %>
-                    <% else %>
-                      <%= link_to company_path(:id => t.owner_id, :trx_status_ausgefuehrt_id => t.id, :topic => "Transaktionen") do %>
-                        <i class="btn btn-primary glyphicon glyphicon-thumbs-up"></i>
-                      <% end %>
-                    <% end %>
-                  <% end %>
-                  <br><br>
-                </div>
-              </div>
-            <% end %>
+            <%= build_medialist2(@company.transactions, "transactions", hash) %>
           </div>
-
+          
         <% when "Links" %>
           <%= header("Partner Links", false) %>
           <div class="panel-body">
