@@ -115,6 +115,7 @@ class SearchesController < ApplicationController
   def create
     @search = Search.new(search_params)
     if @search.save
+        @search.build_sql
         redirect_to searches_path(:user_id => current_user.id, :search_domain => @search.search_domain, :mtype => @search.mtype, :msubtype => @search.msubtype, :controller_name => @search.controller, :ticket_id => @search.ticket_id), notice: 'Search was successfully updated.'
     else
       render :new
@@ -150,7 +151,7 @@ class SearchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_search
       @search = Search.find(params[:id])
-      @search.build_sql
+      #@search.build_sql
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

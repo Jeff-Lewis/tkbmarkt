@@ -1,0 +1,33 @@
+
+  <div class="row">
+    <header>
+    <%= header("Tabellenübersicht", true) %>
+    </header>
+  </div>
+
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+    		<!--<table class="table table-striped table-hover-->
+    		<table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Kategorie</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% for i in 0..@array.length-1 %>
+              <tr><td>
+              <%= link_to mcategories_path :ctype => @array[i] do %>
+                <i class="glyphicon glyphicon-folder-open"></i>
+              <% end %>
+              <%= @array[i] %>
+              </td></tr>
+            <% end %>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>

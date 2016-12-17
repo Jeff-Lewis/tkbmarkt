@@ -64,7 +64,7 @@ class CompaniesController < ApplicationController
     @array_s = @company.build_stats(@array_s, @company.customers, "Kundenstatus" )
     @array_s = @company.build_stats(@array_s, @company.transactions.where('ttype=?', "Payment"), "Transaktionen" )
     @array_s = @company.build_stats(@array_s, Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id), "Nachrichten" )
-    @array_s = @company.build_stats(@array_s, @company.user.searches, "Abfragen" )
+    #@array_s = @company.build_stats(@array_s, @company.user.searches, "Abfragen" )
     @array_s = @array_s[0, @array_s.length - 1]
 
   end

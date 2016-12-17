@@ -41,8 +41,8 @@
                   <%= f.radio_button :slevel, "3" %><%= image_tag("Sponsor_bronze.jpg", :size => "50x50" , class:"img-rounded") %>
               </div>  
               <div class="form-group">
-                <input type="checkbox" name="my-checkbox" checked>
-                <%= f.label "Aktiv" %>
+                <input type="checkbox" name="my-checkbox" checked> <b>aktiv</b>
+                <% f.label "Aktiv" %>
               </div>
              <%= f.hidden_field :mobject_id %>
               <div class="actions">

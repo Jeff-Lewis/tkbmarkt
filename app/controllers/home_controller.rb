@@ -68,4 +68,16 @@ def index8
   @company_id = params[:company_id]
 end
 
+def index9
+  @array = []
+  @array << "Branche"
+  @array << "Angebote"
+  @array << "Vermietungen"
+  @array << "Veranstaltungen"
+  @array << "Ausflugsziele"
+  @array << "Kleinanzeigen"
+  @array << "Crowdfunding"
+  @array << "Ticket"
+end
+
 end

@@ -85,7 +85,7 @@
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Angebote"), "mobjects", nil) %>
         <% when "Ansprechpartner" %>
           <%= header("Ansprechpartner", false) %>
-          <%= build_medialist2(@user.madvisors, "madvisors", nil) %>
+          <%= build_medialist2(@user.madvisors, "madvisors", "Object") %>
         <% when "Kleinanzeigen" %>
           <%= header("Kleinanzeigen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Kleinanzeigen"), "mobjects", nil) %>
@@ -109,7 +109,7 @@
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Crowdfunding"), "mobjects", nil) %>
         <% when "Crowdfunding Beitraege" %>
           <%= header("Crowdfunding Beitraege", false) %>
-          <%= build_medialist2(@user.mstats, "mstats", nil) %>
+          <%= build_medialist2(@user.mstats, "mstats", "CF") %>
       <% when "Bewertungen" %>
           <%= header("Bewertungen", false) %>
           <%= build_medialist2(@user.mratings, "mratings", nil) %>

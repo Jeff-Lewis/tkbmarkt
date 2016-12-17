@@ -1,27 +1,46 @@
-<p id="notice"><%= notice %></p>
+  <div class="row">
+    <action>
+    <%= action_buttons2("Mcategory", nil, nil) %>
+    </action>
+  </div>
 
-<h1>Listing Mcategories</h1>
+  <div class="row">
+    <header>
+    <%= header("Tabelle " + @cat, true) %>
+    </header>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Status</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+	<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+    		<!--<table class="table table-striped table-hover-->
+    		<table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Kategorie</th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @mcategories.each do |c| %>
+              <tr>
+                <td>
+                  <%= link_to(edit_mcategory_path(:id => c.id)) do %>
+                    <i class="btn btn-primary glyphicon glyphicon-wrench"></i>
+                  <% end %>
+                  <%= link_to c, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="btn btn-danger glyphicon glyphicon-trash"></i>
+                  <% end %>
+                </td>
+                <td>
+                  <%= c.name %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
 
-  <tbody>
-    <% @mcategories.each do |mcategory| %>
-      <tr>
-        <td><%= mcategory.status %></td>
-        <td><%= link_to 'Show', mcategory %></td>
-        <td><%= link_to 'Edit', edit_mcategory_path(mcategory) %></td>
-        <td><%= link_to 'Destroy', mcategory, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Mcategory', new_mcategory_path %>
+        </table>
+      </div>
+    </div>
+  </div>

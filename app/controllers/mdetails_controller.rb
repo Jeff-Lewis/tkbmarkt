@@ -14,7 +14,11 @@ class MdetailsController < ApplicationController
   def new
     @mdetail = Mdetail.new
     @mdetail.mobject_id = params[:mobject_id]
-    @mdetails.type = params[:type]
+    if params[:mtype]
+      @mdetail.mtype = params[:mtype]
+    else
+      @mdetail.mtype = "Details"
+    end
   end
 
   # GET /mdetails/1/edit
@@ -26,7 +30,7 @@ class MdetailsController < ApplicationController
   def create
     @mdetail = Mdetail.new(mdetail_params)
     if @mdetail.save
-      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => "Details"), notice: 'Details was successfully created.'
+      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => @mdetail.mtype), notice: 'Details was successfully created.'
     else
       render :new
     end
@@ -35,7 +39,7 @@ class MdetailsController < ApplicationController
   # PUT /mdetails/1
   def update
     if @mdetail.update(mdetail_params)
-      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => "Details"), notice: 'Details was successfully updated.'
+      redirect_to mobject_path(:id => @mdetail.mobject_id, :topic => @mdetail.mtype), notice: 'Details was successfully updated.'
     else
       render :edit
     end
@@ -44,8 +48,9 @@ class MdetailsController < ApplicationController
   # DELETE /mdetails/1
   def destroy
     @id = @mdetail.mobject_id
+    @type = @mdetail.mtype
     @mdetail.destroy
-    redirect_to mobject_path(:id => @id, :topic => "Details"), notice: 'Details was successfully destroyed.'
+    redirect_to mobject_path(:id => @id, :topic => @type), notice: 'Details was successfully destroyed.'
   end
 
   private
@@ -55,7 +60,7 @@ class MdetailsController < ApplicationController
     end
 
     def mdetail_params
-      params.require(:mdetail).permit(:status, :mobject_id, :name, :description, :avatar, :document)
+      params.require(:mdetail).permit(:status, :mobject_id, :name, :description, :avatar, :document, :mtype)
     end
 
 end

@@ -18,12 +18,11 @@
                     <% else %>
 					   <% if current_user.webmaster %>
 							<%= link_to "Webmaster", webmasters_path  %><br>
-							<%= link_to "Test", home_index7_path  %><br>
 					   <% end %>
 					   <% if current_user.superuser %>
-							<%= link_to "App Parameter", appparams_path  %><br>
+							<%= link_to "Parameter Zugriffe", appparams_path  %><br>
+							<%= link_to "Parameter Tabellen", home_index9_path  %><br>
 							<%= link_to "User Statistik", home_index2_path %><br>
-							<%= link_to "Test", home_index6_path %><br>
 					   <% end %>
                         <%= link_to "Abmelden", destroy_user_session_path, method: :delete %><br>
     		            <%= link_to "Passwort ändern", edit_user_registration_path %><br><br>

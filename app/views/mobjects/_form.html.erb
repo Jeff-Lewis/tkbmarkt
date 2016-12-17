@@ -39,7 +39,7 @@
                 <div class="form-group">
                   <%= f.label "Kategorie" %><br/>
                   <% case @mobject.mtype %>
-                    <% when "Ausschreibungen" %>
+                    <% when "Ausschreibungen", "Stellenanzeigen" %>
                       <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',"Branche").order(:name), :id, :name, {}, :readonly => true, class:"form-control" %>
                   <% else %>
                     <%= f.collection_select :mcategory_id, Mcategory.where('ctype=?',@mobject.mtype).order(:name), :id, :name, {}, :readonly => true, class:"form-control" %>
@@ -66,7 +66,7 @@
                     <% end %>
                     <% if @mobject.mtype == "Kleinanzeigen" and @mobject.msubtype == "Anbieten" %>
                         <div class="form-group">
-                          <%= f.label "Pries:" %>
+                          <%= f.label "Preis:" %>
                           <%= f.number_field :price, class:"form-control"%>
                         </div>
                     <% end %>

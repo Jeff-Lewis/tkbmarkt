@@ -20,7 +20,7 @@
                       <%= link_to searches_path :search_domain => @search.search_domain, :controller_name => @search.controller, :ticket_id => @search.ticket_id do %>
                         <i class="btn btn-primary btn-lg glyphicon glyphicon-list"></i>
                       <% end %>
-                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %><% @search.sql_string %>
+                      ABFRAGEN Einträge gefunden: <%= @search.counter.to_s %><%= @search.sql_string %>
                       <br>
                       <% @search.sql_string %>
                       </li_header>

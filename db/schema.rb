@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(version: 20161116095533) do
 
   create_table "mdetails", force: :cascade do |t|
     t.integer  "mobject_id"
-    t.string   "type"
+    t.string   "mtype"
     t.string   "name"
     t.string   "status"
     t.text     "description"

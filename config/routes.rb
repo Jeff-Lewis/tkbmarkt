@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'home/index6'
   get 'home/index7'
   get 'home/index8'
+  get 'home/index9'
   
   resources :searches
   resources :partner_links

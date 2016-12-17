@@ -75,13 +75,18 @@ def build_medialist2(items, cname, par)
             case items.table_name
                 when "users"
                   html_string = html_string + item.name + " " + item.lastname
-                when "companies", "mobjects", "searches"
+                when "companies", "mobjects", "searches", "mdetails"
                   html_string = html_string + item.name
                 when "customers"
                   @comp = Company.find(item.partner_id)
                   html_string = html_string + @comp.name
-                when "madvisors", "mstats"
-                  html_string = html_string + item.mobject.name
+                when "madvisors"
+                  if par == "User"
+                    html_string = html_string + item.user.name + " " + item.user.lastname
+                  end
+                  if par == "Object"
+                    html_string = html_string + item.mobject.name
+                  end
                 when "msponsors"
                   html_string = html_string + item.company.name
                 when "mratings"
@@ -103,6 +108,18 @@ def build_medialist2(items, cname, par)
                   if @ac_ver.customer.owner_type == "Company"
                       html_string = html_string + @customer.owner.name 
                   end
+                when "mstats"
+                  if par == "CF"
+                        html_string = html_string + item.mobject.name 
+                  end
+                  if par == "Owner"
+                    if item.owner_type == "User"
+                        html_string = html_string + item.owner.name + " " + item.owner.lastname 
+                    end
+                    if item.owner_type == "Company"
+                        html_string = html_string + item.owner.name 
+                    end
+                  end
             end
 
           html_string = html_string + '</div>'
@@ -114,14 +131,30 @@ def build_medialist2(items, cname, par)
                 case items.table_name
                   when "users", "companies"
                     html_string = html_string + showImage2(:medium, item, true)
+                  when "mdetails"
+                    html_string = html_string + showImage2(:medium, item, false)
                   when "msponsors"
                     html_string = html_string + showImage2(:medium, item.company, true)
                   when "mratings"
                     html_string = html_string + showImage2(:medium, item.user, true)
                   when "mobjects"
                     html_string = html_string + showFirstImage2(:medium, item, item.mdetails)
-                  when "madvisors", "mratings", "mstats"
+                  when "mratings"
                     html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
+                  when "mstats"
+                    if par == "CF"
+                      html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
+                    end
+                    if par == "Owner"
+                      html_string = html_string + showImage2(:medium, item.owner, true)
+                    end
+                  when "madvisors"
+                    if par == "Object"
+                      html_string = html_string + showFirstImage2(:medium, item.mobject, item.mobject.mdetails)
+                    end
+                    if par == "User"
+                      html_string = html_string + showImage2(:medium, item.user, true)
+                    end
                   when "favourits"
                     @item = Object.const_get(item.object_name).find(item.object_id)
                     if @item
@@ -137,6 +170,8 @@ def build_medialist2(items, cname, par)
                           html_string = html_string + link_to(users_path(:filter_id => item.id)) do
                             image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                           end
+                        when "Tickets"
+                            html_string = html_string + image_tag(image_def("Privatpersonen", item.mtype, item.msubtype))
                         when "Institutionen"
                           html_string = html_string + link_to(companies_path(:filter_id => item.id)) do
                             image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
@@ -156,6 +191,9 @@ def build_medialist2(items, cname, par)
             html_string = html_string + '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">'
               html_string = html_string + '<div class="panel-header pull-left"><list>'
                 case items.table_name
+                    when "mdetails"
+                      html_string = html_string + '<i class="glyphicon glyphicon-pencil"></i> '
+                      html_string = html_string + item.description + '<br>'
                     when "users"
                       html_string = html_string + '<i class="glyphicon glyphicon-home"></i> '
                       html_string = html_string + item.geo_address + '<br>'
@@ -186,26 +224,23 @@ def build_medialist2(items, cname, par)
                           html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
                           html_string = html_string + item.owner.name + " "+ item.owner.lastname + "<br>"
                       end
-                    when "madvisors", "mstats"
-                      if items.table_name == "mstats"
-                        if item.mobject.owner_type == "Company"
+                    when "madvisors"
+                          html_string = html_string + '<i class="glyphicon glyphicon-folder-open"></i> '
+                          html_string = html_string + item.grade + "<br>"
+                    when "mstats"
+                        if item.owner_type == "Company"
                             html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
-                            html_string = html_string + item.mobject.owner.name + "<br>"
+                            html_string = html_string + item.owner.name + "<br>"
                         end
-                        if item.mobject.owner_type == "User"
+                        if item.owner_type == "User"
                             html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
-                            html_string = html_string + item.mobject.owner.name + " "+ item.mobject.owner.lastname + "<br>"
+                            html_string = html_string + item.owner.name + " "+ item.owner.lastname + "<br>"
                         end
-                      else
-                        if item.mobject.owner_type == "Company"
-                            html_string = html_string + '<i class="glyphicon glyphicon-copyright-mark"></i> '
-                            html_string = html_string + item.mobject.owner.name + "<br>"
-                        end
-                        if item.mobject.owner_type == "User"
-                            html_string = html_string + '<i class="glyphicon glyphicon-user"></i> '
-                            html_string = html_string + item.mobject.owner.name + " "+ item.mobject.owner.lastname + "<br>"
-                        end
-                      end
+                        html_string = html_string + '<i class="glyphicon glyphicon-euro"></i> '
+                        html_string = html_string + sprintf("%05.2f CHF",item.amount) + '<br>'
+                        html_string = html_string + '<i class="glyphicon glyphicon-calendar"></i> '
+                        html_string = html_string +  item.created_at.strftime("%d.%m.%Y") + '<br>'
+
                     when "msponsors"
                         if items.table_name == "msponsors"
                           case item.slevel
@@ -261,88 +296,154 @@ def build_medialist2(items, cname, par)
                 html_string = html_string + (image_tag 'neu.png', :size => '30x30', class:'img-rounded')
             end 
             #html_string = html_string + item.created_at.strftime("%d.%m.%Y")
-            case cname 
-              when "favourits"
-  	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
-                end
-              when "partners"
-  	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
-                end
-  	            html_string = html_string + link_to(edit_customer_path(:id => item)) do 
-                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
-                end
-  	            html_string = html_string + link_to(accounts_path(:customer_id => item)) do 
-                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
-                end
-              when "nopartners"
-                if par[:user_id]
-    	            html_string = html_string + link_to(new_customer_path(:user_id => par[:user_id], :partner_id => item)) do 
-                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+
+            #check credentials
+            access = false
+            if user_signed_in?
+              case cname
+                when "users"
+                  if item.id == current_user.id or current_user.superuser
+                    access=true
+                  end 
+                when "favourits", "searches", "mratings"
+                  if item.user_id == current_user.id
+                    access=true
+                  end 
+                when "mobjects", "partners", "mstats", "transactions"
+                  if (item.owner_type == "User"and item.owner_id == current_user.id) or (item.owner_type == "Company"and item.owner.user_id == current_user.id)
+                    access = true
                   end
-                end
-                if par[:company_id]
-    	            html_string = html_string + link_to(new_customer_path(:company_id => par[:company_id], :partner_id => item)) do 
-                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                when "nopartners"
+                  access = true
+                when "madvisors"
+                  if item.user_id == current_user.id or current_user.superuser
+                    access = true
                   end
-                end
-              when "searches"
-  	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
-                end
-  	            html_string = html_string + link_to(edit_search_path(:id => item)) do 
-                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
-                end
-              when "msponsors"
-  	            html_string = html_string + link_to(tickets_path :msponsor_id => item.id) do 
-                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-barcode")
-                end
-  	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
-                end
-  	            html_string = html_string + link_to(edit_msponsor_path(:id => item)) do 
-                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
-                end
-              when "mratings"
-  	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
-                  content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
-                end
-  	            html_string = html_string + link_to(edit_mrating_path(:id => item)) do 
-                  content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
-                end
-               when "transactions"
-                if item.status == "erfasst"
-                  #if @customer.owner_type == "User"
-                  #  html_string = html_string + link_to(user_path(:id => @customer.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen")) do
-                  #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-ok")
-                  #  end
-                  #end
-                  #if @customer.owner_type == "Company"
-                  #  html_string = html_string + link_to(company_path(:id => @customer.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen")) do
-                  #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-ok")
-                  #  end
-                  #end
+                when "msponsors", "mdetails"
+                  if (item.mobject.owner_type == "User"and item.mobject.owner_id == current_user.id) or (item.mobject.owner_type == "Company"and item.mobject.owner.user_id == current_user.id)
+                    access = true
+                  end
+              end
+            end
+
+            if access
+              case cname 
+                when "favourits"
     	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
                     content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
                   end
-    	            html_string = html_string + link_to(edit_transaction_path(:id => item)) do 
+                when "madvisors"
+                  if par == "User"
+      	            html_string = html_string + link_to(user_path(:id => item.user_id, :topic => "Kalendereintraege")) do 
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-calendar")
+                    end
+      	            html_string = html_string + link_to(new_email_path(:m_from_id => current_user.id, :m_to_id => item.user_id)) do 
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-envelope")
+                    end
+                  end
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+                when "partners"
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_customer_path(:id => item)) do 
                     content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
                   end
-                end
-                if item.status == "freigegeben"
-                  #if @customer.owner_type == "User"
-                  #  html_string = html_string + link_to(user_path(:id => @customer.owner_id, :trx_status_ausgefuehrt_id => t.id, :topic => "Transaktionen")) do
-                  #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-ok")
-                  #  end
-                  #end
-                  #if @customer.owner_type == "Company"
-                  #  html_string = html_string + link_to(company_path(:id => @customer.owner_id, :trx_status_ausgefuehrt_id => t.id, :topic => "Transaktionen")) do
-                  #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-ok")
-                  #  end
-                  #end
-                end
-            end
+    	            html_string = html_string + link_to(accounts_path(:customer_id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
+                  end
+                when "mstats"
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_mstat_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                  end
+    	            html_string = html_string + link_to(accounts_path(:customer_id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-euro")
+                  end
+                when "nopartners"
+                  if par[:user_id]
+      	            html_string = html_string + link_to(new_customer_path(:user_id => par[:user_id], :partner_id => item)) do 
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                    end
+                  end
+                  if par[:company_id]
+      	            html_string = html_string + link_to(new_customer_path(:company_id => par[:company_id], :partner_id => item)) do 
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-pencil")
+                    end
+                  end
+                when "searches"
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_search_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                  end
+                when "msponsors"
+    	            html_string = html_string + link_to(tickets_path :msponsor_id => item.id) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-barcode")
+                  end
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_msponsor_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                  end
+                when "mdetails"
+                  if item.document_file_name
+      	            html_string = html_string + link_to(item.document.url, target: "_blank") do 
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-cloud-download")
+                    end
+                  end
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_mdetail_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                  end
+                when "mratings"
+    	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                    content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                  end
+    	            html_string = html_string + link_to(edit_mrating_path(:id => item)) do 
+                    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                  end
+                 when "transactions"
+                  if item.status == "erfasst"
+                    #if @customer.owner_type == "User"
+                    #  html_string = html_string + link_to(user_path(:id => @customer.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen")) do
+                    #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-ok")
+                    #  end
+                    #end
+                    #if @customer.owner_type == "Company"
+                    #  html_string = html_string + link_to(company_path(:id => @customer.owner_id, :trx_status_ok_id => t.id, :topic => "Transaktionen")) do
+                    #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-ok")
+                    #  end
+                    #end
+      	            html_string = html_string + link_to(item, method: :delete, data: { confirm: 'Are you sure?' }) do 
+                      content_tag(:i, nil, class:"btn btn-danger glyphicon glyphicon-trash pull-right")
+                    end
+      	            html_string = html_string + link_to(edit_transaction_path(:id => item)) do 
+                      content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-wrench")
+                    end
+                  end
+                  if item.status == "freigegeben"
+                    #if @customer.owner_type == "User"
+                    #  html_string = html_string + link_to(user_path(:id => @customer.owner_id, :trx_status_ausgefuehrt_id => t.id, :topic => "Transaktionen")) do
+                    #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-ok")
+                    #  end
+                    #end
+                    #if @customer.owner_type == "Company"
+                    #  html_string = html_string + link_to(company_path(:id => @customer.owner_id, :trx_status_ausgefuehrt_id => t.id, :topic => "Transaktionen")) do
+                    #    content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-ok")
+                    #  end
+                    #end
+                  end
+              end
+          end
 
           html_string = html_string + '</div>'
 
@@ -478,7 +579,7 @@ def navigate(object,item)
 
       when "Object"
         html_string = html_string + build_nav("Object",item,"Informationen","info-sign",item)
-        html_string = html_string + build_nav("Object",item,"Details","book",item.mdetails.count > 0)
+        html_string = html_string + build_nav("Object",item,"Details","book",item.mdetails.where('mtype=?',"Details").count > 0)
         if item.mtype == "Veranstaltungen"
           html_string = html_string + build_nav("Object",item,"Sponsoren","heart",item.msponsors.count > 0)
         end
@@ -489,7 +590,7 @@ def navigate(object,item)
           html_string = html_string + build_nav("Object",item,"Kalender","calendar",item.mcalendars.count > 0)
         end
         if item.mtype == "Ausschreibungen"
-          html_string = html_string + build_nav("Object",item,"Ausschreibungsangebote","inbox",item.mdetails.count > 0)
+          html_string = html_string + build_nav("Object",item,"Ausschreibungsangebote","inbox",item.mdetails.where('mtype=?',"Ausschreibungsangebote").count > 0)
         end
         if item.mtype == "Crowdfunding"
           html_string = html_string + build_nav("Object",item,"CF_Statistik","stats",item.mstats.count > 0)
@@ -533,6 +634,13 @@ def action_buttons2(object, item, topic)
     html_string = "<div class='col-xs-12'><div class='panel-body'>"
     
     case object 
+      when "Mcategory"
+        html_string = html_string + link_to(home_index9_path) do
+          content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
+        end
+        html_string = html_string + link_to(new_mcategory_path(:ctype => item)) do
+          content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+        end
       when "User"
         html_string = html_string + link_to(users_path :page => session[:page]) do
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
@@ -660,7 +768,7 @@ def action_buttons2(object, item, topic)
                 if user_signed_in?
                   #html_string = html_string + item.owner_id.to_s + item.owner_type 
                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-                    html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id, :type => "Details")) do
+                    html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id, :mtype => "Details")) do
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                     end
                  end
@@ -668,7 +776,7 @@ def action_buttons2(object, item, topic)
             when "Ausschreibungsangebote"
                 if user_signed_in?
                  if (item.owner_type == "User" and item.owner_id == current_user.id) or (item.owner_type == "Company" and item.owner.user_id == current_user.id)
-                    html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id, :type => "Angebote")) do
+                    html_string = html_string + link_to(new_mdetail_path(:mobject_id => item.id, :mtype => "Ausschreibungsangebote")) do
                       content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-plus")
                     end
                  end
@@ -707,14 +815,14 @@ def action_buttons2(object, item, topic)
               end
             when "CF_Statistik"
             when "CF_Transaktionen"
-              if item.mstats.sum(:amount) < item.amount
+              #if item.mstats.sum(:amount) < item.amount
                 html_string = html_string + link_to(new_mstat_path(:mobject_id => item.id, :dontype => "User")) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-user")
                 end
                 html_string = html_string + link_to(new_mstat_path(:mobject_id => item.id, :dontype => "Company")) do
                   content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-copyright-mark")
                 end
-              end
+              #end
             when "Standort"
          end
         
