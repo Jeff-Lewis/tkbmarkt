@@ -13,7 +13,7 @@
 			</div>
 
 			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-				<% if user_signed_in? %>
+				<% if user_signed_in? and $controller_list.include?(controller_name) %>
 					<div class="thumbnail thumbnail-navnav" align="center">
 						<% controller_name %>
 						<% case controller_name %>
