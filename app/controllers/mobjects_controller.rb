@@ -9,6 +9,10 @@ class MobjectsController < ApplicationController
     @msubtype = params[:msubtype]
     @param = params[:filter_id]
     @search = params[:search]
+
+    session[:mtype] = params[:mtype]
+    session[:msubtype] = params[:msubtype]
+
   end
 
   # GET /mobjects/1

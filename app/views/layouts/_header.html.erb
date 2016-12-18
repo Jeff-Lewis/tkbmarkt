@@ -1,20 +1,80 @@
 <div class="nav-panel-black navbar-fixed-top">
 	<br>
-
-	<div class="container-fluid">
+	<!--<div class="container-fluid">-->
 		<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>	
 		<div class="row">
-			<div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
 				<%= link_to home_index3_path do %>
 					<div class="thumbnail thumbnail-navnav" align="center">
-			            <i class="glyphicon glyphicon-home" style="font-size:3em"></i><br>
+			            <i class="glyphicon glyphicon-home" style="font-size:2em"></i><br>
 			            <small_cal>Home</small_cal>
 			        </div>
 				<% end %>
 			</div>
 
-			<div class="col-xs-6 col-sm-3 col-md-2 col-lg-1">
-				<% if $controller_list.include?(controller_name) and (action_name == "index") or (controller_name == "showcal" and (action_name == "action" or action_name == "bid" or action_name == "event")) %>
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+				<% if user_signed_in? %>
+					<div class="thumbnail thumbnail-navnav" align="center">
+						<% controller_name %>
+						<% case controller_name %>
+							<% when "users" %>
+				  		        <%= link_to searches_path :search_domain => "Privatpersonen", :controller_name => controller_name do %>
+				  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i><br>
+			            		  <small_cal>Filter</small_cal>
+			            		<% end %>
+							<% when "companies" %>
+				  		        <%= link_to searches_path :search_domain => "Institutionen", :controller_name => controller_name do %>
+				  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i><br>
+			            		  <small_cal>Filter</small_cal>
+				  		        <% end %>
+							<% when "mobjects", "showcal" %>
+				  		        <%= link_to searches_path :search_domain => "Object", :mtype => session[:mtype], :msubtype => session[:msubtype], :controller_name => controller_name do %>
+				  		          <i class="glyphicon glyphicon-filter" style="font-size:2em"></i><br>
+			            		  <small_cal>Filter</small_cal>
+				  		        <% end %>
+						<% end %>
+					</div>
+				<% end %>
+			</div>
+
+			<div class="col-xs-6 col-sm-6 col-md-8 col-lg-9">
+				<!--<div class="thumbnail thumbnail-navnav" align="center">-->
+					<% if $controller_list.include?(controller_name) and (action_name == "index") %>
+						<% @items = url_for(action: action_name, controller: controller_name) %>
+						<%= form_tag @items, method: 'get' do %>
+							<div class="form-inline">
+								<div class="form-group">
+									<div class="col-xs-8">
+									  <%= search_field_tag 'search', nil, class: 'text-nav form-control', placeholder: 'Search' %>
+									  <%= text_field_tag 'mtype', session[:mtype], class: 'hidden' %>
+									  <% if session[:msubtype] and session[:msubtype] != "" %>
+										  <%= text_field_tag 'msubtype', session[:msubtype], class: 'hidden'  %>
+									  <% end %>
+									</div>
+									<div class="col-xs-4">
+									  <%= button_tag "", type: 'submit', class: "btn btn-nav glyphicon glyphicon-search" %>
+									</div>
+								</div>
+							</div>
+						<% end %>
+				        <!--<small_cal>Home</small_cal>-->
+	        			<br>
+					<% else %>
+	        			<%= render 'layouts/advertise' %>
+					<% end %>
+		        <!--</div>-->
+				<% if false %>
+		    		    <% if user_signed_in? %>
+			  		        <%= link_to searches_path :search_domain => "Privatpersonen", :controller_name => controller_name do %>
+			  		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
+			  		        <% end %>
+		    		    <% end %>
+		        <% end %>
+			</div>
+
+<% if false %>
+			<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">
+				<% if $controller_list.include?(controller_name) and (action_name == "index") %>
 					<% @items = url_for(action: action_name, controller: controller_name) %>
 					<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
 					  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Search'  %>
@@ -24,35 +84,37 @@
         			<%= render 'layouts/advertise' %>
 				<% end %>
 			</div>
+<% end %>
 
-			<div class="col-xs-3 col-sm-2 col-md-1 col-lg-1 pull-right">
+			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 pull-right">
 				<% if user_signed_in? %>
 					<%= link_to current_user do %>
 						<div class="thumbnail thumbnail-navnav" align="center">
-				            <i class="glyphicon glyphicon-user" style="font-size:3em"></i><br>
+				            <i class="glyphicon glyphicon-user" style="font-size:2em"></i><br>
 							<small_cal><%= current_user.name[0] + "." + current_user.lastname %></small_cal>
 						</div>
 					<% end %>
 				<% else %>
 					<%= link_to new_user_session_path do %>
 						<div class="thumbnail thumbnail-navnav" align="center">
-			            <i class="glyphicon glyphicon-log-in" style="font-size:3em"></i><br>
+			            <i class="glyphicon glyphicon-log-in" style="font-size:2em"></i><br>
 							<small_cal>LogIn</small_cal>
 						</div>
 					<% end %> 
 				<% end %>
 			</div>
-		</div>
+			
+		<!--</div>-->
 	</div>
+	
     <% flash.each do |name, msg| %>
       <% content_tag(:div, msg, class:"alert alert-warning") %>
       <message><fade><%= msg %></fade></message> 
     <% end %>
     
-    
 </div>
 
-<br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 
 <script>
 $(document).ready(function(){

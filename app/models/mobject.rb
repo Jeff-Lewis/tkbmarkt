@@ -1,8 +1,5 @@
 class Mobject < ActiveRecord::Base
 
-#belongs_to :user
-#belongs_to :company
-
 belongs_to :owner, polymorphic: true
 belongs_to :mcategory
 
@@ -27,9 +24,17 @@ if cw != nil and year != nil
       start_date = Date.commercial(year,cw,1)
       end_date = Date.commercial(year,cw,7)
       if msubtype
-          where('mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', mtype, msubtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+          if search
+              where('name LIKE ? and mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", mtype, msubtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+          else     
+              where('mtype=? and msubtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', mtype, msubtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+          end
       else
-          where('mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+          if search
+              where('name LIKE ? and mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', "%#{search}%", mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+          else
+              where('mtype=? and active=? and ((date_from >=? and date_from<=?) or (date_to>=? and date_to<=?) or (date_from<=? and date_to>=?))', mtype, true, start_date, end_date, start_date, end_date, start_date, end_date)
+          end
       end
     else
         if filter

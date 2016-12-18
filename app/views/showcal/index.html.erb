@@ -1,11 +1,15 @@
+
+  <div class="row">
+      <%= header(@mtype + " " + @msubtype.to_s + "<span class='badge'>" + @mobanz.to_s + "</span>", true) %>
+  </div>
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-body">
-		    <% if user_signed_in? %>
-		        <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>
-		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
-		        <% end %>
-		    <% end %>
+		    <!--<% if user_signed_in? %>-->
+		    <!--    <%= link_to searches_path :search_domain => "Aktionen", :controller_name => controller_name do %>-->
+		    <!--      <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>-->
+		    <!--    <% end %>-->
+		    <!--<% end %>-->
         <%= link_to showcal_index_path(:page => session[:page], :dir => "<", :mtype => @mtype, :msubtype => @msubtype) do %>
           <i class="btn btn-primary btn-xs glyphicon glyphicon-arrow-left"></i>
         <% end %>
@@ -17,10 +21,6 @@
     </div>
   </div>
 
-  <div class="row">
-      <%= header(@mtype + " " + @msubtype.to_s + "<span class='badge'>" + @mobanz.to_s + "</span>", true) %>
-  </div>
-  
 	<div class="row">
     <div class="col-md-12">
       <div class="panel-body">

@@ -34,6 +34,8 @@ class ShowcalController < ApplicationController
     @mtype = params[:mtype]
     @msubtype = params[:msubtype]
 
+    session[:mtype] = params[:mtype]
+    session[:msubtype] = params[:msubtype]
 
      counter = 0 
      @locs = "["

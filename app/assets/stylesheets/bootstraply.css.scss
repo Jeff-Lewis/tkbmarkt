@@ -140,6 +140,18 @@ a:active {
 /*******************************************************************************************************/
 /* Button */
 /*******************************************************************************************************/
+.btn-nav {
+   background-color: black!important;
+   border-color: black!important;
+   color: $color1!important;
+}
+.btn-nav:hover {
+    background-color: $color1!important;
+    color: black!important;
+    border-color: $color1!important;
+    box-shadow: 2px 2px 10px $color1;
+}
+
 .btn-primary {
    background-color: $color3!important;
    border-color: $color4!important;
@@ -187,6 +199,19 @@ a:active {
 /*******************************************************************************************************/
 /* Text Elements */
 /*******************************************************************************************************/
+.text-nav {
+    background: black!important;
+    border-color: $color5!important;
+    color: $color5!important;
+    box-shadow: 4px 4px 10px $color5;
+ }
+.text-nav:hover {
+    background: black!important;
+    border-color: $color1!important;
+    color: $color1!important;
+    box-shadow: 4px 4px 10px $color1;
+}
+
 message {
     background: black!important;
     color: $color1!important;
@@ -306,63 +331,11 @@ geblockt {
 /*******************************************************************************************************/
 /* PANELS */
 /*******************************************************************************************************/
-.panel-list {
-    background: $color1!important;
-    color: white!important;
-    font-size: 120%!important;
-    a {
-        color: white!important;
-    }
-    a:hover {
-        color: $color2!important;
-    }}
-
-    .gmnoprint img {
-        max-width: none;
-    }
-
-    .panel:hover {
-#        background-color: rgb(237, 245, 252);
-        border-color: $color1!important;
-        box-shadow: 2px 2px 10px $color1;
-    }
-
-    .map {
-        min-width: 300px;
-        min-height: 470px;
-        width: 100%;
-        height: 100%;
-    }
-
-    img {
-        max-width: 110%;
-        height: auto;
-    }
-
-    .clearfix {
-        clear: both;
-    }
-
-    .rowcolor {
-        background-color: #CCCCCC;
-    }
-
-    .padall {
-        padding: 10px;
-    }
-
-    .padbig {
-        padding: 20px;
-    }
-
-    .icon {
-        font-size: 23px;
-        color: #197BB5;
-    }
-
 .panel-black {
   background: black!important;
   border-color: black!important;
+   padding: 0 !important;
+   margin: 0 !important;
 }
 
 .panel-top {
@@ -467,6 +440,8 @@ td {
 
 .thumbnail-navnav {
    background: transparent!important;
+   margin: 0px!important;
+   padding: 0px!important;
 }
 
 .thumbnail-list {

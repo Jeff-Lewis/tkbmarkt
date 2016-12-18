@@ -1,21 +1,21 @@
+  <div class="row">
+      <%= header(@mtype.to_s + " " + @msubtype.to_s + " " + @filter_id.to_s + " " + @search.to_s + "<span class='badge'>" + @mobanz.to_s + "</span>", true) %>
+  </div>
+
   <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
         <div class="digg_pagination">
-    		    <% if user_signed_in? %>
-  		        <%= link_to searches_path :search_domain => "Object", :controller_name => controller_name, :mtype => @mtype, :msubtype =>  @msubtype do %>
-  		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
-  		        <% end %>
-    		    <% end %>
+    		    <!--<% if user_signed_in? %>-->
+  		      <!--  <%= link_to searches_path :search_domain => "Object", :controller_name => controller_name, :mtype => @mtype, :msubtype =>  @msubtype do %>-->
+  		      <!--    <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>-->
+  		      <!--  <% end %>-->
+    		    <!--<% end %>-->
             <%= will_paginate @mobjects, :container => false, previous_label: "<", next_label: ">" %>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-      <%= header(@mtype.to_s + " " + @msubtype.to_s + " " + @filter_id.to_s + " " + @search.to_s + "<span class='badge'>" + @mobanz.to_s + "</span>", true) %>
-  </div>
-  
   <%= build_medialist2(@mobjects, @mtype, nil) %>
 

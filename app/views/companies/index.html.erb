@@ -1,22 +1,20 @@
-
+  <div class="row">
+      <%= header("Institutionen " + "<span class='badge'>" + @companz.to_s + "</span>", true) %>
+  </div>
   
     <div class="panel-body">
     <div class="row">
       <div class="col-md-12">
         <div class="digg_pagination">
-    		    <% if user_signed_in? %>
-  		        <%= link_to searches_path :search_domain => "Institutionen", :controller_name => controller_name do %>
-  		          <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>
-  		        <% end %>
-    		    <% end %>
+    		    <!--<% if user_signed_in? %>-->
+      		  <!--      <%= link_to searches_path :search_domain => "Institutionen", :controller_name => controller_name do %>-->
+      		  <!--        <i class="btn btn-primary btn-xs glyphicon glyphicon-filter"></i>-->
+      		  <!--      <% end %>-->
+    		    <!--<% end %>-->
             <%= will_paginate @companies, :container => false, previous_label: "<", next_label: ">" %>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="row">
-      <%= header("Institutionen " + "<span class='badge'>" + @companz.to_s + "</span>", true) %>
   </div>
 
   <% if false %>
