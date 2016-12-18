@@ -1,5 +1,4 @@
 <div class="nav-panel-black navbar-fixed-top">
-	<br>
 	<!--<div class="container-fluid">-->
 		<marquee height="100%" scrolldelay="150"><%= ticker() %></marquee>	
 		<div class="row">
@@ -37,8 +36,29 @@
 				<% end %>
 			</div>
 
-			<div class="col-xs-3 col-sm-6 col-md-8 col-lg-9">
-				<!--<div class="thumbnail thumbnail-navnav" align="center">-->
+			<div class="col-xs-3 col-sm-2 col-md-1 col-lg-1 pull-right">
+				<% if user_signed_in? %>
+					<%= link_to current_user do %>
+						<div class="thumbnail thumbnail-navnav" align="center">
+				            <i class="glyphicon glyphicon-user" style="font-size:2em"></i><br>
+							<small_cal><%= current_user.name[0] + "." + current_user.lastname %></small_cal>
+						</div>
+					<% end %>
+				<% else %>
+					<%= link_to new_user_session_path do %>
+						<div class="thumbnail thumbnail-navnav" align="center">
+			            <i class="glyphicon glyphicon-log-in" style="font-size:2em"></i><br>
+							<small_cal>LogIn</small_cal>
+						</div>
+					<% end %> 
+				<% end %>
+			</div>
+			
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="thumbnail thumbnail-navnav" align="center">
 					<% if $controller_list.include?(controller_name) and (action_name == "index") %>
 						<% @items = url_for(action: action_name, controller: controller_name) %>
 						<%= form_tag @items, method: 'get' do %>
@@ -58,40 +78,15 @@
 							</div>
 						<% end %>
 				        <!--<small_cal>Home</small_cal>-->
-	        			<br>
+	        			<br><br>
 					<% else %>
 	        			<%= render 'layouts/advertise' %>
 					<% end %>
-		        <!--</div>-->
-				<% if false %>
-		    		    <% if user_signed_in? %>
-			  		        <%= link_to searches_path :search_domain => "Privatpersonen", :controller_name => controller_name do %>
-			  		          <i class="btn btn-primary glyphicon glyphicon-filter"></i>
-			  		        <% end %>
-		    		    <% end %>
-		        <% end %>
+		        </div>
 			</div>
+		</div>
 
-			<div class="col-xs-3 col-sm-2 col-md-1 col-lg-1 pull-right">
-				<% if user_signed_in? %>
-					<%= link_to current_user do %>
-						<div class="thumbnail thumbnail-navnav" align="center">
-				            <i class="glyphicon glyphicon-user" style="font-size:2em"></i><br>
-							<small_cal><%= current_user.name[0] + "." + current_user.lastname %></small_cal>
-						</div>
-					<% end %>
-				<% else %>
-					<%= link_to new_user_session_path do %>
-						<div class="thumbnail thumbnail-navnav" align="center">
-			            <i class="glyphicon glyphicon-log-in" style="font-size:2em"></i><br>
-							<small_cal>LogIn</small_cal>
-						</div>
-					<% end %> 
-				<% end %>
-			</div>
-			
-		<!--</div>-->
-	</div>
+	<!--</div>-->
 	
     <% flash.each do |name, msg| %>
       <% content_tag(:div, msg, class:"alert alert-warning") %>
@@ -100,7 +95,7 @@
     
 </div>
 
-<br><br><br><br><br>
+<br><br><br><br><br><br>
 
 <script>
 $(document).ready(function(){

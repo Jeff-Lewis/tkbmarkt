@@ -11,7 +11,7 @@
 			  <% if pl.link and counter == r %>
 	    	      <%= link_to url_with_protocol(pl.link), :target => '_blank' do %>
 	    	      	<% if pl.avatar %>
-						<%= image_tag pl.avatar(:small), class:'img-rounded' %>
+						<%= image_tag pl.avatar(:medium), class:'img-rounded' %>
 					<% end %>
 				  <% end %>
 			  <% end %>
