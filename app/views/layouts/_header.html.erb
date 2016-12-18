@@ -72,20 +72,6 @@
 		        <% end %>
 			</div>
 
-<% if false %>
-			<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">
-				<% if $controller_list.include?(controller_name) and (action_name == "index") %>
-					<% @items = url_for(action: action_name, controller: controller_name) %>
-					<%= form_tag(@items, method: 'get', class: 'navbar-form navbar-left') do %>
-					  <%= search_field_tag 'search', nil, class: 'form-control', placeholder: 'Search'  %>
-					  <% submit_tag "Suchen", class: 'btn btn-default', :name => nil %>
-					<% end %>
-				<% else %>
-        			<%= render 'layouts/advertise' %>
-				<% end %>
-			</div>
-<% end %>
-
 			<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 pull-right">
 				<% if user_signed_in? %>
 					<%= link_to current_user do %>
@@ -114,7 +100,7 @@
     
 </div>
 
-<br><br><br><br><br><br><br>
+<br><br><br><br><br>
 
 <script>
 $(document).ready(function(){
