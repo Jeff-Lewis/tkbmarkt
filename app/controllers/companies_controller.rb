@@ -47,7 +47,7 @@ class CompaniesController < ApplicationController
     if params[:topic]
       @topic = params[:topic]
     else
-      @topic = "Company"
+      @topic = "Info"
     end
 
     @array_s = ""

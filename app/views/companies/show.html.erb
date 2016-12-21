@@ -1,7 +1,7 @@
 
   <div class="row">
     <action>
-    <%= action_buttons2("Company", @company, @topic) %>
+    <%= action_buttons2("Institutionen", @company, @topic) %>
     </action>
   </div>
 
@@ -13,7 +13,7 @@
       <div class='col-xs-10'>
 
       <% case @topic %>
-        <% when "Company" %>
+        <% when "Info" %>
           <%= header("Kontaktdaten", false) %>
           <div class="panel-body">
             <%= showImage2(:medium, @company, true) %>
@@ -39,12 +39,14 @@
             <br>
             <cite><%= @company.created_at.strftime("%d.%m.%Y") %></cite><br>
           </div>
-          <%= header("Aktivitätsübersicht", false) %>
-          <div class="panel-body">
-            <% @array_s %>
-            <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
-            <div id="piechart"></div>
-          </div>
+          <% if $activeapps.include?("InstitutionenAktivitaeten") %>
+            <%= header("Aktivitätsübersicht", false) %>
+            <div class="panel-body">
+              <% @array_s %>
+              <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
+              <div id="piechart"></div>
+            </div>
+          <% end %>
           <%= header("Ort (Karte)", false) %>
           <div class="panel-body">
             <i class="glyphicon glyphicon-map-marker pull-left" onclick="return init_map(0);"></i>
@@ -55,7 +57,10 @@
 
         <% when "Angebote" %>
           <%= header("Angebote", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Angebote"), "mobjects", nil) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard"), "mobjects", nil) %>
+        <% when "Aktionen" %>
+          <%= header("Aktionen", false) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion"), "mobjects", nil) %>
         <% when "Stellenanzeigen" %>
           <%= header("Stellenanzeigen", false) %>
           <%= build_medialist2(@company.mobjects.where('mtype=?',"Stellenanzeigen"), "mobjects", nil) %>
@@ -77,14 +82,26 @@
         <% when "Ausschreibungen" %>
           <%= header("Ausschreibungen", false) %>
           <%= build_medialist2(@company.mobjects.where('mtype=?',"Ausschreibungen"), "mobjects", nil) %>
-        <% when "Crowdfunding" %>
-          <%= header("Crowdfunding", false) %>
-          <%= build_medialist2(@company.mobjects.where('mtype=?',"Crowdfunding"), "mobjects", nil) %>
-        <% when "Crowdfunding Beitraege" %>
+        <% when "Crowdfunding (Spenden)" %>
+          <%= header("Crowdfunding Spenden", false) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden"), "mobjects", nil) %>
+        <% when "Crowdfunding (Belohnungen)" %>
+          <%= header("Crowdfunding Belohnungen", false) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen"), "mobjects", nil) %>
+        <% when "Crowdfunding (Zinsen)" %>
+          <%= header("Crowdfunding Zinsen", false) %>
+          <%= build_medialist2(@company.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen"), "mobjects", nil) %>
+        <% when "Crowdfunding (Beitraege)" %>
           <%= header("Crowdfunding Beitraege", false) %>
           <%= build_medialist2(@company.mstats, "mstats", nil) %>
 
         <% when "Favoriten" %>
+          <%= header("Favoriten", false) %>
+          <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
+          <div class="panel-body">
+            <%= build_medialist2(@company.user.favourits, "favourits", nil) %>
+          </div>
+
           <%= header("Favoriten", false) %>
           <div class="panel-body">
             <% @company.user.favourits.each do |f| %>
@@ -139,7 +156,7 @@
             <% end %>
           </div>
           
-    	 <% when "Kundenstatus" %>
+    	 <% when "Kundenbeziehungen" %>
           <% hash = Hash.new %>
           <% hash = {:company_id => @company.id} %>
           <%= header("Kundenstatus", false) %>
@@ -157,7 +174,7 @@
             <%= build_medialist2(@company.transactions, "transactions", hash) %>
           </div>
           
-        <% when "Links" %>
+        <% when "Links (Partner)" %>
           <%= header("Partner Links", false) %>
           <div class="panel-body">
             <% @company.partner_links.each do |pl| %>
@@ -193,7 +210,7 @@
             <% end %>
           </div>
           
-        <% when "Email" %>
+        <% when "eMail" %>
           <%= header("Emails", false) %>
           <div class="panel-body">
             <% emails = Email.where('m_to=? or m_from=?', @company.user.id, @company.user.id).order(created_at: :desc) %>
@@ -214,7 +231,7 @@
     </div>
     
       <div class='col-xs-2'>
-        <%= navigate("Company", @company) %>
+        <%= navigate("Institutionen", @company) %>
       </div>
 
   </div>

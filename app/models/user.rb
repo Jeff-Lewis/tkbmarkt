@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
     has_many :customers, as: :owner, dependent: :destroy 
     has_many :transactions, as: :owner, dependent: :destroy 
 
+    has_many :credentials, dependent: :destroy 
     has_many :webmasters, dependent: :destroy 
     has_many :companies, dependent: :destroy 
     has_many :ratings, dependent: :destroy 

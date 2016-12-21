@@ -1,6 +1,6 @@
 <div class="row">
     <action>
-    <%= action_buttons2("Object", @mobject, @topic) %>
+    <%= action_buttons2("Objekte", @mobject, @topic) %>
     </action> 
   </div>
 
@@ -14,7 +14,7 @@
       <div class='col-xs-10'>
 
       <% case @topic %>
-        <% when "Informationen" %>
+        <% when "Info" %>
           <%= header("Informationen", false) %>
           <div class="panel-body">
             <%= carousel2(@mobject, :medium) %>
@@ -214,19 +214,19 @@
             <%= build_medialist2(@mobject.mdetails.where('mtype=?', "Ausschreibungsangebote"), "mdetails", nil) %>
           </div>
 
-        <% when "Sponsoren" %>
+        <% when "Sponsorenengagements" %>
           <%= header("Sponsoren", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.msponsors, "msponsors", hash) %>
           </div>
           
-        <% when "Ratings" %>
+        <% when "Bewertungen" %>
           <%= header("Bewertungen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mratings, "mratings", hash) %>
           </div>
 
-        <% when "Advisors" %>
+        <% when "Ansprechpartner" %>
           <%= header("Ansprechpartner", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.madvisors, "madvisors", "User") %>
@@ -316,7 +316,7 @@
            	</table>
           </div>
           
-        <% when "CF_Statistik" %>
+        <% when "CF Statistik" %>
           <%= header("Statistik (Anzahl)", false) %>
           <div class="panel-body">
             <div id="curve_chart1"></div>
@@ -326,7 +326,7 @@
             <div id="curve_chart2"></div>
           </div>
           
-        <% when "CF_Transaktionen" %>
+        <% when "CF Transaktionen" %>
           <%= header("Transaktionen", false) %>
           <div class="panel-body">
             <%= build_medialist2(@mobject.mstats.order(amount: :desc), "mstats", "Owner") %>
@@ -344,7 +344,7 @@
     </div>
     
       <div class='col-xs-2'>
-        <%= navigate("Object", @mobject) %>
+        <%= navigate("Objekte", @mobject) %>
       </div>
     
   </div>

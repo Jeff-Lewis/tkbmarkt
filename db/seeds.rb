@@ -8,31 +8,6 @@
 
 path=File.join(Rails.root, "/app/assets/images/")
 
-#create Params
-appparams = Appparam.create({name:"Kleinanzeigen", description:"Kleinanzeigen für Private Anbieten & Suchen", active:true})
-appparams = Appparam.create({name:"Stellenanzeigen", description:"Stellenanzeigen für Institutionen", active:true})
-appparams = Appparam.create({name:"Vermietungen", description:"Mieten von Mobilen incl. Reservationskalender", active:true})
-appparams = Appparam.create({name:"Veranstaltungen", description:"Veranstaltungskalender für Private & Institutionen", active:true})
-appparams = Appparam.create({name:"Ausschreibungen", description:"Ausschreibungskalender für Private", active:true})
-appparams = Appparam.create({name:"Aktionen", description:"Befristete Sonderaktionen für Institutionen", active:true})
-appparams = Appparam.create({name:"Angebote", description:"Serviceangebot von Institutionen & Privaten", active:true})
-appparams = Appparam.create({name:"Institutionen", description:"Institutionen", active:true})
-appparams = Appparam.create({name:"Sponsoring", description:"Sponsoring von Events für Institutionen", active:true})
-appparams = Appparam.create({name:"Crowdfunding (Spenden)", description:"Spendeninitiativen für gemeinnützige Institutionen ", active:true})
-appparams = Appparam.create({name:"Crowdfunding (Belohnungen)", description:"Rewardinitiativen mit nicht-monetären Gegenleistungen", active:true})
-appparams = Appparam.create({name:"Crowdfunding (Zinsen)", description:"Kreditinitiativen mit Verzinsung", active:true})
-appparams = Appparam.create({name:"Crowdfunding (Beiträge)", description:"Spenden von Privaten & Institutionen für Spendeninitiativen", active:true})
-appparams = Appparam.create({name:"Bewertungen", description:"Bewertung von Produkten & Services von Institutionen & Privaten", active:true})
-appparams = Appparam.create({name:"Privatpersonen", description:"Privatpersonen", active:true})
-appparams = Appparam.create({name:"Favoriten", description:"Personen & Institutionen folgen", active:true})
-appparams = Appparam.create({name:"Ausflugsziele", description:"Lohnenswerte Ausflugsziele in der Region", active:true})
-appparams = Appparam.create({name:"Partnerlinks", description:"Links der Partnerfirmen", active:true})
-appparams = Appparam.create({name:"Wer ist wo", description:"wer ist online", active:true})
-appparams = Appparam.create({name:"Kundenberater", description:"Kundenberater für Services", active:true})
-appparams = Appparam.create({name:"Kundenstatus", description:"Kundenstatus für Kunden von Partner", active:true})
-appparams = Appparam.create({name:"Accounts", description:"Konten für Kunden von Partner", active:true})
-appparams = Appparam.create({name:"Transaktionen", description:"Transaktionen", active:true})
-
 #OBJECT Branchen 1..27
 mcategories = Mcategory.create({ctype:"Branche", name:"Bau- und Erdarbeiten"})
 mcategories = Mcategory.create({ctype:"Branche", name:"Dachdeckerarbeiten"})

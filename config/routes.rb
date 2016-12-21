@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :credentials
   root 'home#index3'
   
   resources :webmasters

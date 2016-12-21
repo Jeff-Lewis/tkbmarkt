@@ -14,15 +14,15 @@ def carousel2(mobject, size)
     end
     html = ""
     if mobject.mdetails == nil
-      html = html + image_tag(image_def("Object", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
+      html = html + image_tag(image_def("Objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
     else
       if mobject.mdetails.count == 0
-        html = html + image_tag(image_def("Object", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
+        html = html + image_tag(image_def("Objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" )
       else
         html = html +  '<div class="owl-show">'
         mobject.mdetails.each do |p|
           if p.avatar_file_name == nil
-            html = html + "<div>" + image_tag(image_def("Object", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" ) + "</div>"
+            html = html + "<div>" + image_tag(image_def("Objekte", mobject.mtype, mobject.msubtype), :size => size, class:"card-img-top img-responsive" ) + "</div>"
           else
             html = html + "<div>"+ (image_tag p.avatar(size), class:"img-rounded") + "</div>"
           end
@@ -176,7 +176,7 @@ def build_medialist2(items, cname, par)
                           html_string = html_string + link_to(companies_path(:filter_id => item.id)) do
                             image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                           end
-                        when "Object"
+                        when "Objekte"
                           html_string = html_string + link_to(mobjects_path(:filter_id => item.id)) do
                             image_tag(image_def(item.search_domain, item.mtype, item.msubtype))
                           end
@@ -472,10 +472,10 @@ def showFirstImage2(size, item, details)
         if pic.avatar_file_name
           image_tag pic.avatar(size), class:"img-rounded"
         else
-          image_tag(image_def("Object", item.mtype, item.msubtype), :size => si, class:"card-img-top img-responsive" )
+          image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => si, class:"card-img-top img-responsive" )
         end
       else
-        image_tag(image_def("Object", item.mtype, item.msubtype), :size => si, class:"card-img-top img-responsive" )
+        image_tag(image_def("Objekte", item.mtype, item.msubtype), :size => si, class:"card-img-top img-responsive" )
       end
     end
 end
@@ -537,66 +537,72 @@ def navigate(object,item)
     html_string = "<navigate>"
     
     case object
-      when "User"
-        html_string = html_string + build_nav("User",item,"User","user",item)
-        html_string = html_string + build_nav("User",item,"Kalendereintraege","calendar",Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
-        html_string = html_string + build_nav("User",item,"Angebote","shopping-cart",item.mobjects.where('mtype=?',"Angebote").count > 0)
-        html_string = html_string + build_nav("User",item,"Ansprechpartner","question-sign",item.madvisors.count > 0)
-        html_string = html_string + build_nav("User",item,"Institutionen","copyright-mark",item.companies.count > 0)
-        html_string = html_string + build_nav("User",item,"Stellenanzeigen","briefcase",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
-        html_string = html_string + build_nav("User",item,"Kleinanzeigen","pushpin",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
-        html_string = html_string + build_nav("User",item,"Vermietungen","retweet",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
-        html_string = html_string + build_nav("User",item,"Veranstaltungen","glass",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
-        html_string = html_string + build_nav("User",item,"Tickets","barcode",item.user_tickets.count > 0)
-        html_string = html_string + build_nav("User",item,"Ausflugsziele","camera",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
-        html_string = html_string + build_nav("User",item,"Ausschreibungen","pencil",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
-        html_string = html_string + build_nav("User",item,"Crowdfunding","grain", item.mobjects.where('mtype=?',"Crowdfunding").count > 0)
-        html_string = html_string + build_nav("User",item,"Crowdfunding Beitraege","gift", item.mstats.count > 0)
-        html_string = html_string + build_nav("User",item,"Bewertungen","star", item.mratings.count > 0)
-        html_string = html_string + build_nav("User",item,"Favoriten","heart", item.favourits.count > 0)
-        html_string = html_string + build_nav("User",item,"Kundenstatus","check", item.customers.count > 0)
-        html_string = html_string + build_nav("User",item,"Transaktionen","list", item.transactions.where('ttype=?', "Payment").count > 0)
-        html_string = html_string + build_nav("User",item,"Email","envelope", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
+      when "Privatpersonen"
+        html_string = html_string + build_nav("Privatpersonen",item,"Info","user",item)
+        html_string = html_string + build_nav("Privatpersonen",item,"Kalendereintraege","calendar",Appointment.where('user_id1=? or user_id2=?',item,item).count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Angebote","shopping-cart",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Aktionen","shopping-cart",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Ansprechpartner","question-sign",item.madvisors.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Institutionen","copyright-mark",item.companies.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Stellenanzeigen","briefcase",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Kleinanzeigen","pushpin",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Vermietungen","retweet",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Veranstaltungen","glass",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Tickets","barcode",item.user_tickets.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Ausflugsziele","camera",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Ausschreibungen","pencil",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Spenden)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Belohnungen)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Zinsen)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Crowdfunding (Beitraege)","gift", item.mstats.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Bewertungen","star", item.mratings.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Favoriten","heart", item.favourits.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Kundenbeziehungen","check", item.customers.count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"Transaktionen","list", item.transactions.where('ttype=?', "Payment").count > 0)
+        html_string = html_string + build_nav("Privatpersonen",item,"eMail","envelope", Email.where('m_to=? or m_from=?', item.id, item.id).count > 0)
 
-      when "Company"
-        html_string = html_string + build_nav("Company",item,"Company","copyright-mark",item)
-        html_string = html_string + build_nav("Company",item,"Angebote","shopping-cart",item.mobjects.where('mtype=?',"Angebote").count > 0)
-        html_string = html_string + build_nav("Company",item,"Stellenanzeigen","briefcase",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
-        html_string = html_string + build_nav("Company",item,"Kleinanzeigen","pushpin",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
-        html_string = html_string + build_nav("Company",item,"Vermietungen","retweet",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
-        html_string = html_string + build_nav("Company",item,"Veranstaltungen","glass",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
-        html_string = html_string + build_nav("Company",item,"Sponsorenengagements","barcode",item.msponsors.count > 0)
-        html_string = html_string + build_nav("Company",item,"Ausflugsziele","camera",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
-        html_string = html_string + build_nav("Company",item,"Ausschreibungen","pencil",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
-        html_string = html_string + build_nav("Company",item,"Crowdfunding","grain", item.mobjects.where('mtype=?',"Crowdfunding").count > 0)
-        html_string = html_string + build_nav("Company",item,"Crowdfunding Beitraege","gift", item.mstats.count > 0)
-        html_string = html_string + build_nav("Company",item,"Kundenstatus","check", item.customers.count > 0)
-        html_string = html_string + build_nav("Company",item,"Transaktionen","list", item.transactions.where('ttype=?', "Payment").count > 0)
-        html_string = html_string + build_nav("Company",item,"Email","envelope", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
+      when "Institutionen"
+        html_string = html_string + build_nav("Institutionen",item,"Info","copyright-mark",item)
+        html_string = html_string + build_nav("Institutionen",item,"Angebote","shopping-cart",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Aktionen","shopping-cart",item.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Stellenanzeigen","briefcase",item.mobjects.where('mtype=?',"Stellenanzeigen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Kleinanzeigen","pushpin",item.mobjects.where('mtype=?',"Kleinanzeigen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Vermietungen","retweet",item.mobjects.where('mtype=?',"Vermietungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Veranstaltungen","glass",item.mobjects.where('mtype=?',"Veranstaltungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Sponsorenengagements","barcode",item.msponsors.count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Ausflugsziele","camera",item.mobjects.where('mtype=?',"Ausflugsziele").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Ausschreibungen","pencil",item.mobjects.where('mtype=?',"Ausschreibungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Spenden)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Belohnungen)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Zinsen)","grain", item.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Crowdfunding (Beitraege)","gift", item.mstats.count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Kundenbeziehungen","check", item.customers.count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"Transaktionen","list", item.transactions.where('ttype=?', "Payment").count > 0)
+        html_string = html_string + build_nav("Institutionen",item,"eMail","envelope", Email.where('m_to=? or m_from=?', item.user.id, item.user.id).count > 0)
         if item.partner
-          html_string = html_string + build_nav("Company",item,"Links", "volume-up", PartnerLink.where('company_id=?', item.id).count > 0)
+          html_string = html_string + build_nav("Institutionen",item,"Links (Partner)", "globe", item.partner_links.count > 0)
         end
 
-      when "Object"
-        html_string = html_string + build_nav("Object",item,"Informationen","info-sign",item)
-        html_string = html_string + build_nav("Object",item,"Details","book",item.mdetails.where('mtype=?',"Details").count > 0)
+      when "Objekte"
+        html_string = html_string + build_nav("Objekte",item,"Info","info-sign",item)
+        html_string = html_string + build_nav("Objekte",item,"Details","book",item.mdetails.where('mtype=?',"Details").count > 0)
         if item.mtype == "Veranstaltungen"
-          html_string = html_string + build_nav("Object",item,"Sponsoren","heart",item.msponsors.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Sponsorenengagements","heart",item.msponsors.count > 0)
         end
         if item.mtype == "Angebote" or item.mtype == "Stellenanzeigen"
-          html_string = html_string + build_nav("Object",item,"Advisors","user",item.madvisors.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Ansprechpartner","user",item.madvisors.count > 0)
         end
         if item.mtype == "Vermietungen"
-          html_string = html_string + build_nav("Object",item,"Kalender","calendar",item.mcalendars.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Kalender","calendar",item.mcalendars.count > 0)
         end
         if item.mtype == "Ausschreibungen"
-          html_string = html_string + build_nav("Object",item,"Ausschreibungsangebote","inbox",item.mdetails.where('mtype=?',"Ausschreibungsangebote").count > 0)
+          html_string = html_string + build_nav("Objekte",item,"Ausschreibungsangebote","inbox",item.mdetails.where('mtype=?',"Ausschreibungsangebote").count > 0)
         end
         if item.mtype == "Crowdfunding"
-          html_string = html_string + build_nav("Object",item,"CF_Statistik","stats",item.mstats.count > 0)
-          html_string = html_string + build_nav("Object",item,"CF_Transaktionen","user",item.mstats.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"CF Statistik","stats",item.mstats.count > 0)
+          html_string = html_string + build_nav("Objekte",item,"CF Transaktionen","euro",item.mstats.count > 0)
         end
-        html_string = html_string + build_nav("Object",item,"Ratings","star",item.mratings.count > 0)
+        html_string = html_string + build_nav("Objekte",item,"Bewertungen","star",item.mratings.count > 0)
 
     end
     
@@ -607,26 +613,32 @@ def navigate(object,item)
 end
 
 def build_nav(object, item, topic, glyphicon, condition)
-  if condition
-    btn = "active"
-  else
-    btn = "inactive"
+  
+  html_string=""
+  if $activeapps.include?(object+topic)
+
+    if condition
+      btn = "active"
+    else
+      btn = "inactive"
+    end
+    
+    case object
+      when "Privatpersonen"
+        html_string = link_to(user_path(item, :topic => topic)) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+        end
+      when "Institutionen"
+        html_string = link_to(company_path(item, :topic => topic)) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+        end
+      when "Objekte"
+        html_string = link_to(mobject_path(item, :topic => topic)) do
+          content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
+        end
+    end
   end
   
-  case object
-    when "User"
-      html_string = link_to(user_path(item, :topic => topic)) do
-        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
-      end
-    when "Company"
-      html_string = link_to(company_path(item, :topic => topic)) do
-        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
-      end
-    when "Object"
-      html_string = link_to(mobject_path(item, :topic => topic)) do
-        content_tag(:i, nil, class:"btn btn-"+btn+" glyphicon glyphicon-" + glyphicon)
-      end
-  end
   return html_string.html_safe
 end
 
@@ -641,13 +653,15 @@ def action_buttons2(object, item, topic)
         html_string = html_string + link_to(new_mcategory_path(:ctype => item)) do
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
         end
-      when "User"
+      when "Privatpersonen"
         html_string = html_string + link_to(users_path :page => session[:page]) do
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
         end
         if user_signed_in?
-          html_string = html_string + link_to(new_favourit_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
-            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-heart")
+          if $activeapps.include?("PrivatpersonenFavoriten")
+            html_string = html_string + link_to(new_favourit_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-heart")
+            end
           end
           if current_user.id == item.id or current_user.superuser
               html_string = html_string + link_to(edit_user_path(item)) do
@@ -660,11 +674,15 @@ def action_buttons2(object, item, topic)
           html_string = html_string + link_to(new_webmaster_path :object_name => "User", :object_id => item.id, :user_id => current_user.id) do
             content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
           end
-          html_string = html_string + link_to(listaccount_index_path :user_id => current_user.id, :user_id_ver => item.id, :company_id_ver => nil, :ref => "Vergütung an "+item.name + " " + item.lastname, :object_name => "User", :object_id => item.id, :amount => nil) do
-            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
+          if $activeapps.include?("PrivatpersonenTransaktionen")
+            html_string = html_string + link_to(listaccount_index_path :user_id => current_user.id, :user_id_ver => item.id, :company_id_ver => nil, :ref => "Vergütung an "+item.name + " " + item.lastname, :object_name => "User", :object_id => item.id, :amount => nil) do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
+            end
           end
-          html_string = html_string + link_to(new_user_position_path(:user_id => current_user.id)) do
-            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-map-marker")
+          if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen")
+            html_string = html_string + link_to(new_user_position_path(:user_id => current_user.id)) do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-map-marker")
+            end
           end
           
           case topic
@@ -678,7 +696,7 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_appointment_path :user_id1 => current_user.id, :user_id2 => @user.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Angebote", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding"
+            when "Angebote", "Aktionen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)"
               html_string = html_string + link_to(home_index8_path :user_id => current_user.id, :mtype => topic) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -690,11 +708,11 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_mobject_path :user_id => current_user.id, :mtype => topic, :msubtype => nil) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Kundenstatus"
+            when "Kundenbeziehungn"
               html_string = html_string + link_to(new_customer_path :user_id => item.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Email"
+            when "eMail"
               html_string = html_string + link_to(new_email_path(:m_from_id => current_user.id, :m_to_id => item.id)) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -702,13 +720,15 @@ def action_buttons2(object, item, topic)
           
         end
 
-      when "Company"
+      when "Institutionen"
         html_string = html_string + link_to(companies_path :page => session[:page]) do
           content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-list")
         end
         if user_signed_in?
-          html_string = html_string + link_to(new_favourit_path :object_name => "Company", :object_id => item.id, :user_id => current_user.id) do
-            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-heart")
+          if $activeapps.include?("InstitutionenFavoriten")
+            html_string = html_string + link_to(new_favourit_path :object_name => "Company", :object_id => item.id, :user_id => current_user.id) do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-heart")
+            end
           end
           if current_user.id == item.user_id or current_user.superuser
             if item.partner
@@ -726,11 +746,13 @@ def action_buttons2(object, item, topic)
           html_string = html_string + link_to(new_webmaster_path :object_name => "Company", :object_id => item.id, :user_id => current_user.id) do
             content_tag(:i, nil, class: "btn btn-warning pull-right glyphicon glyphicon-eye-open")
           end
-          html_string = html_string + link_to(listaccount_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => item.id, :ref => "Vergütung an "+item.name, :object_name => "Company", :object_id => item.id, :amount => nil) do
-            content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
+          if $activeapps.include?("InstitutionenTransaktionen")
+            html_string = html_string + link_to(listaccount_index_path :user_id => current_user.id, :user_id_ver => nil, :company_id_ver => item.id, :ref => "Vergütung an "+item.name, :object_name => "Company", :object_id => item.id, :amount => nil) do
+              content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-euro")
+            end
           end
           case topic
-            when "Angebote", "Kleinanzeigen", "Crowdfunding","Stellenanzeigen"
+            when "Angebote", "Aktionen", "Kleinanzeigen", "Stellenanzeigen", "Crowdfunding (Spenden)", "Crowdfunding (Belohnungen)", "Crowdfunding (Zinsen)"
               html_string = html_string + link_to(home_index8_path :company_id => item.id, :mtype => topic) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
@@ -738,14 +760,18 @@ def action_buttons2(object, item, topic)
               html_string = html_string + link_to(new_mobject_path :company_id => item.id, :mtype => topic, :msubtype => nil) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
-            when "Kundenstatus"
+            when "Kundenbeziehungen"
               html_string = html_string + link_to(customers_path :company_id => item.id) do
+                content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
+              end
+            when "Links (Partner)"
+              html_string = html_string + link_to(new_partner_link_path :company_id => item.id) do
                 content_tag(:i, nil, class: "btn btn-primary glyphicon glyphicon-plus")
               end
           end
         end
         
-      when "Object"
+      when "Objekte"
          html_string = html_string + link_to(mobjects_path :mtype => item.mtype, :msubtype => item.msubtype, :page => session[:page]) do
           content_tag(:i, nil, class:"btn btn-primary glyphicon glyphicon-list")
          end
@@ -849,7 +875,11 @@ def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
     return
   else
     case domain
-      when "mein xConnect"
+      when "mein Markt"
+        path = credentials_path(:user_id => current_user.id)
+        pic = image_def(domain, domain, nil)
+        icon = "record"
+      when "meine Abfragen"
         path = home_index6_path
         pic = image_def(domain, domain, nil)
         icon = "question-sign"
@@ -1007,6 +1037,39 @@ def build_kachel_color(domain, name, path_param, logon, user_id, company_id)
   end
 end
 
+def build_kachel_access(credentials, mode)
+
+  if mode == "System"
+    cpath = appparams_path
+  end
+  if mode == "User"  
+    cpath = credentials_path
+  end
+  
+  html_string = ""
+  credentials.each do |c|
+    
+    if c.access == nil or c.access == true
+      thumbnail_state = 'thumbnail-active'
+    else
+      thumbnail_state = 'thumbnail-inactive'
+    end
+
+    html_string = html_string + link_to(appparams_path(:id => c.id)) do
+      content_tag(:div, nil, class:"col-xs-4 col-sm-4 col-md-3 col-lg-2") do 
+        content_tag(:div, nil, class:"thumbnail " + thumbnail_state, align:"center") do
+          content_tag(:span, nil) do
+            icon_size = "4"
+            content_tag(:i, nil, class:"glyphicon glyphicon-" + c.icon, style:"font-size:" + icon_size + "em") + content_tag(:small_cal, "<br>".html_safe+c.right)
+          end
+        end
+      end
+    end
+
+  end    
+  return html_string.html_safe
+end
+
 def image_def (domain, mtype, msubtype)
     case domain
       when "mein xConnect"
@@ -1016,7 +1079,7 @@ def image_def (domain, mtype, msubtype)
       when "Institutionen"
         pic = "company.jpg"
         
-      when "Object"
+      when "Objekte"
         case mtype
           when "Angebote"
             if msubtype == "Standard"

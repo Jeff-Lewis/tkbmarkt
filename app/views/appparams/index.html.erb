@@ -1,68 +1,14 @@
+<div class="row">
+    <%= header("Funktionen Privatpersonen", true) %>
+</div>
+<%= build_kachel_access(@appparams.where("domain=?","Privatpersonen"), "System") %>
 
-	<div class="row">
-    <div class="col-md-12">
-      <div class="panel-heading header">
-        <li_header>
-        <%= link_to new_appparam_path do %>
-          <i class="btn btn-primary btn-lg glyphicon glyphicon-plus"></i>
-        <% end %>
-        App Parameter
-        <span class="badge"><%= @appanz %></span>
-        </li_header>
-      </div>
-    </div>
-  </div>
-	<div class="row">
-    <div class="col-md-12">
-  		<table class="table table-striped">
-        <thead>
-          <tr>
-            <td colspan="3">
-              <div class="digg_pagination">
-                  <%= will_paginate @appparams, :container => false, previous_label: "<", next_label: ">" %>
-              </div>	  
-            </td>
-          </tr>
-          <tr>
-            <th>Status</th>
-            <th></th>
-            <th>Modulname</th>
-            <th>Modulbeschreibung</th>
-          </tr>
-        </thead>
-        
-        <tbody>
+<div class="row">
+    <%= header("Funktionen Institutionen", true) %>
+</div>
+<%= build_kachel_access(@appparams.where("domain=?","Institutionen"), "System") %>
 
-            <% @appparams.each do |a| %>
-
-              <tr>
-    				    <td>
-                  <% if a.active %>
-                      <i class="glyphicon glyphicon-ok"></i>
-                    <% else %>
-                      <i class="glyphicon glyphicon-remove"></i>
-                  <% end %>
-                </td>
-                <td>
-        	        <%= link_to edit_appparam_path(a) do %>
-                    <i class="btn btn-primary btn-lg glyphicon glyphicon-wrench"></i>
-                  <% end %>
-        	        <%= link_to a, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                    <i class="btn btn-danger btn-lg glyphicon glyphicon-trash"></i>
-                  <% end %>
-                </td>
-                <td>
-                  <anzeigetext>
-                  <%= a.name %>
-                  </anzeigetext>
-                </td>
-                <td>
-                  <%= a.description %>
-                </td>
-              </tr>
-            <% end %>
-
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="row">
+    <%= header("Funktionen Business Objekte", true) %>
+</div>
+<%= build_kachel_access(@appparams.where("domain=?","Objekte"), "System") %>

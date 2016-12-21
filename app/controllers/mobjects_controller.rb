@@ -18,7 +18,7 @@ class MobjectsController < ApplicationController
   # GET /mobjects/1
   def show
     if !params[:topic]
-      @topic = "Informationen"
+      @topic = "Info"
     else
       @topic = params[:topic]
     end

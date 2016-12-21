@@ -86,7 +86,7 @@ class UsersController < ApplicationController
      if params[:topic]
        @topic = params[:topic]
      else 
-       @topic = "User"
+       @topic = "Info"
      end 
      
    if !session[:cw]

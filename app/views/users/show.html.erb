@@ -1,7 +1,7 @@
 
   <div class="row">
     <action>
-    <%= action_buttons2("User", @user, @topic) %>
+    <%= action_buttons2("Privatpersonen", @user, @topic) %>
     </action>
   </div>
 
@@ -15,7 +15,7 @@
 
       <div class='col-xs-10'>
       <% case @topic %>
-        <% when "User" %>
+        <% when "Info" %>
 
               <%= header("Kontaktdaten", false) %>
               <!--<div class='col-xs-12'><div class="panel-body">-->
@@ -56,11 +56,13 @@
                   <%= @user.email %><br>
                 <% end %>
             </div>
-            <%= header("Aktivitätsübersicht", false) %>
-            <div class="panel-body">
-              <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
-              <div id="piechart"></div>
-            </div>
+            <% if $activeapps.include?("PrivatpersonenAktivitaeten") %>
+              <%= header("Aktivitätsübersicht", false) %>
+              <div class="panel-body">
+                <i class="glyphicon glyphicon-map-marker pull-left" onclick="return drawChart();"></i>
+                <div id="piechart"></div>
+              </div>
+            <% end %>
 
             <%= header("Ort (Karte)", false) %>
             <i class="glyphicon glyphicon-map-marker pull-left" onclick="return init_map(0);"></i>
@@ -69,26 +71,35 @@
                 <div id="map-canvas"></div>
               </div>
             </div>
-            <%= header("Wo war ich?", false) %>
-            <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
-            <div class="panel-body">
-              <div id="map2">
-                <div id="map-canvas2"></div>
-                </div>
-            </div>
+
+            <% if $activeapps.include?("PrivatpersonenPositionen (Privatpersonen)") %>
+              <%= header("Wo war ich?", false) %>
+              <i class="glyphicon glyphicon-map-marker pull-left" onclick="return initialize();"></i>
+              <div class="panel-body">
+                <div id="map2">
+                  <div id="map-canvas2"></div>
+                  </div>
+              </div>
+            <% end %>
         
         <% when "Institutionen" %>
           <%= header("Institutionen", false) %>
           <%= build_medialist2(@user.companies, "companies", nil) %>
         <% when "Angebote" %>
           <%= header("Angebote", false) %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"Angebote"), "mobjects", nil) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Angebote", "Standard"), "mobjects", nil) %>
+        <% when "Aktionen" %>
+          <%= header("Aktionen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Angebote", "Aktion"), "mobjects", nil) %>
         <% when "Ansprechpartner" %>
           <%= header("Ansprechpartner", false) %>
           <%= build_medialist2(@user.madvisors, "madvisors", "Object") %>
         <% when "Kleinanzeigen" %>
           <%= header("Kleinanzeigen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Kleinanzeigen"), "mobjects", nil) %>
+        <% when "Stellenanzeigen" %>
+          <%= header("Stellenanzeigen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=?',"Stellenanzeigen"), "mobjects", nil) %>
         <% when "Stellenanzeigen" %>
           <%= header("Stellenanzeigen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Stellenanzeigen"), "mobjects", nil) %>
@@ -104,10 +115,16 @@
         <% when "Ausschreibungen" %>
           <%= header("Ausschreibungen", false) %>
           <%= build_medialist2(@user.mobjects.where('mtype=?',"Ausschreibungen"), "mobjects", nil) %>
-        <% when "Crowdfunding" %>
-          <%= header("Crowdfunding", false) %>
-          <%= build_medialist2(@user.mobjects.where('mtype=?',"Crowdfunding"), "mobjects", nil) %>
-        <% when "Crowdfunding Beitraege" %>
+        <% when "Crowdfunding (Spenden)" %>
+          <%= header("Crowdfunding Spenden", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Spenden"), "mobjects", nil) %>
+        <% when "Crowdfunding (Belohnungen)" %>
+          <%= header("Crowdfunding Belohnungen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Belohnungen"), "mobjects", nil) %>
+        <% when "Crowdfunding (Zinsen)" %>
+          <%= header("Crowdfunding Zinsen", false) %>
+          <%= build_medialist2(@user.mobjects.where('mtype=? and msubtype=?',"Crowdfunding", "Zinsen"), "mobjects", nil) %>
+        <% when "Crowdfunding (Beitraege)" %>
           <%= header("Crowdfunding Beitraege", false) %>
           <%= build_medialist2(@user.mstats, "mstats", "CF") %>
       <% when "Bewertungen" %>
@@ -318,14 +335,16 @@
           <div class="panel-body">
             <%= build_medialist2(@user.favourits, "favourits", nil) %>
           </div>
-          <%= header("Wo sind meine Favoriten?", false) %>
-          <div class="panel-body">
-            <div id="map2">
-              <div id="map-canvas2"></div>
-              </div>
-          </div>
+          <% if $activeapps.include?("PrivatpersonenPositionen (Favoriten)") %>
+            <%= header("Wo sind meine Favoriten?", false) %>
+            <div class="panel-body">
+              <div id="map2">
+                <div id="map-canvas2"></div>
+                </div>
+            </div>
+          <% end %>
           
-    	 <% when "Kundenstatus" %>
+    	 <% when "Kundenbeziehungen" %>
           <% hash = Hash.new %>
           <% hash = {:user_id => @user.id} %>
           <%= header("Kundenstatus", false) %>
@@ -343,7 +362,7 @@
             <%= build_medialist2(@user.transactions, "transactions", hash) %>
           </div>
 
-    	 <% when "Email" %>
+    	 <% when "eMail" %>
           <%= header("Kommunikation", false) %>
           <div class="panel-body">
             <table class="table-striped" width="100%">
@@ -395,7 +414,7 @@
       </div>
       
       <div class='col-xs-2'>
-          <%= navigate("User", @user) %>
+          <%= navigate("Privatpersonen", @user) %>
       </div>
       
   </div>

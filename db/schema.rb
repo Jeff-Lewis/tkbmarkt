@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161116095533) do
+ActiveRecord::Schema.define(version: 20161219164938) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "customer_id"
@@ -50,9 +50,10 @@ ActiveRecord::Schema.define(version: 20161116095533) do
   end
 
   create_table "appparams", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.boolean  "active"
+    t.string   "domain"
+    t.string   "right"
+    t.string   "icon"
+    t.boolean  "access"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -82,6 +83,16 @@ ActiveRecord::Schema.define(version: 20161116095533) do
     t.datetime "avatar_updated_at"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "credentials", force: :cascade do |t|
+    t.string   "domain"
+    t.string   "right"
+    t.string   "icon"
+    t.integer  "user_id"
+    t.boolean  "access"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "customers", force: :cascade do |t|
@@ -176,8 +187,6 @@ ActiveRecord::Schema.define(version: 20161116095533) do
     t.integer  "mcategory_id"
     t.integer  "owner_id"
     t.string   "owner_type"
-    #t.integer  "company_id"
-    #t.integer  "user_id"
     t.string   "status"
     t.string   "name"
     t.text     "description"
@@ -224,7 +233,6 @@ ActiveRecord::Schema.define(version: 20161116095533) do
 
   create_table "msponsors", force: :cascade do |t|
     t.string   "status"
-#    t.integer  "user_id"
     t.integer  "company_id"
     t.integer  "mobject_id"
     t.boolean  "active"
@@ -238,8 +246,6 @@ ActiveRecord::Schema.define(version: 20161116095533) do
     t.integer  "mobject_id"
     t.integer  "owner_id"
     t.string   "owner_type"
-    #t.integer  "user_id"
-    #t.integer  "company_id"
     t.float    "amount"
     t.boolean  "anonymous"
     t.datetime "created_at", null: false

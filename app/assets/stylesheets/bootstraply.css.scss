@@ -449,6 +449,21 @@ td {
     padding: 0px!important;
 }
 
+.thumbnail-active {
+    color: $color1!important;
+    margin: 5px!important;
+    padding: 0px!important;
+}
+.thumbnail-inactive {
+    margin: 5px!important;
+    padding: 0px!important;
+}
+
+.thumbnail-inactive:hover {
+    color: $color5!important;
+    box-shadow: 2px 2px 10px $color1;
+}
+
 /*******************************************************************************************************/
 /* JUMBOTRONS */
 /*******************************************************************************************************/

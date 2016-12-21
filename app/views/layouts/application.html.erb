@@ -16,7 +16,7 @@
     <% $activeapps = [] %>
     <% apps = Appparam.all %>
     <% apps.each do |a| %>
-      <%   $activeapps << a.name if a.active %>
+      <%   $activeapps << a.domain+a.right if a.access %>
     <% end %>
     <% $wochentage = %w[Mo Di Mi Do Fr Sa So] %>
 
